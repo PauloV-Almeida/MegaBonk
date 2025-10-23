@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GerenciadorGrafico.cpp" />
     <ClCompile Include="Megabonk++\Megabonk++.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
   </ItemGroup>
@@ -29,6 +30,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GerenciadorGrafico.h" />
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
