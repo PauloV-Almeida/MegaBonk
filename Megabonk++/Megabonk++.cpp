@@ -1,5 +1,6 @@
 #include "../stdafx/stdafx.h"
 
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(700, 700), "SFML works!");
