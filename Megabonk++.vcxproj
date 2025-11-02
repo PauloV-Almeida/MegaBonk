@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GerenciadorGrafico.cpp" />
+    <ClCompile Include="Lista.cpp" />
     <ClCompile Include="Megabonk++\Megabonk++.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
   </ItemGroup>
@@ -31,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GerenciadorGrafico.h" />
+    <ClInclude Include="Lista.h" />
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
