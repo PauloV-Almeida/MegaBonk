@@ -1195,7 +1195,7 @@
 											"top": 54,
 											"width": 3655,
 											"height": 11,
-											"text": "ColiRun"
+											"text": "MegaBonk"
 										},
 										{
 											"_type": "LabelView",
@@ -6164,7 +6164,7 @@
 											"top": 426,
 											"width": 206.7236328125,
 											"height": 11,
-											"text": "Gerenciador_Grafico"
+											"text": "GerenciadorGrafico"
 										},
 										{
 											"_type": "LabelView",
@@ -18542,7 +18542,7 @@
 											"top": 434,
 											"width": 188.408203125,
 											"height": 11,
-											"text": "Event_Manager"
+											"text": "GerenciadorEventos"
 										},
 										{
 											"_type": "LabelView",
@@ -22227,7 +22227,7 @@
 					"_parent": {
 						"$ref": "IoH8RzmxEE6xOc9zvj2jawAA"
 					},
-					"name": "Gerenciador_Grafico",
+					"name": "GerenciadorGrafico",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -24322,7 +24322,7 @@
 					"_parent": {
 						"$ref": "IoH8RzmxEE6xOc9zvj2jawAA"
 					},
-					"name": "ColiRun",
+					"name": "MegaBonk",
 					"ownedElements": [
 						{
 							"_type": "UMLArtifactInstance",
@@ -24549,7 +24549,7 @@
 					"_parent": {
 						"$ref": "IoH8RzmxEE6xOc9zvj2jawAA"
 					},
-					"name": "Event_Manager",
+					"name": "GerenciadorEventos",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -25003,5 +25003,6 @@
 				}
 			]
 		}
-	]
+	],
+	"documentVersion": 1
 }

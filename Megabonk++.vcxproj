@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GerenciadorGrafico.cpp" />
-    <ClCompile Include="Lista.cpp" />
-    <ClCompile Include="Megabonk++\Megabonk++.cpp" />
+    <ClCompile Include="src\MegaBonk.cpp" />
+    <ClCompile Include="src\Ente.cpp" />
+    <ClCompile Include="src\GerenciadorEventos.cpp" />
+    <ClCompile Include="src\GerenciadorGrafico.cpp" />
+    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -31,8 +33,9 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GerenciadorGrafico.h" />
-    <ClInclude Include="Lista.h" />
+    <ClInclude Include="include\Ente.h" />
+    <ClInclude Include="include\GerenciadorGrafico.h" />
+    <ClInclude Include="include\Megabonk.h" />
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
