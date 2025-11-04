@@ -1,11 +1,9 @@
 #pragma once
-#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <stdlib.h>
 
-#define LARGURA 1200
-#define ALTURA 720
+#define LARGURA 800
+#define ALTURA 600
 
 namespace Gerenciadores
 {
@@ -14,7 +12,7 @@ namespace Gerenciadores
 	private:
 		sf::RenderWindow* janela;	
 
-		//
+		//Sigleton
 		static GerenciadorGrafico* instance;
 		GerenciadorGrafico();
 	public:

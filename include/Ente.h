@@ -12,7 +12,7 @@ class Ent
 protected:
 
     const int id;
-    static Gerenciadores::GerenciadorGrafico* pGM;
+    static Gerenciadores::GerenciadorGrafico* pGG;
     sf::Texture* texture;
 public:
     Ent();
