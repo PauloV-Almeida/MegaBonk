@@ -1,30 +1,36 @@
 #include "../MegaBonk/Personagem.h"
 
-Personagem::Personagem(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f tam)
+namespace Entidades
 {
-	corpo.setPosition(pos);
-	velocidade = vel;
-	corpo.setSize(tam);
-}
-Personagem::Personagem()
-{
+	namespace Personagens
+	{
+		Personagem::Personagem(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f tam)
+		{
+			corpo.setPosition(pos);
+			velocidade = vel;
+			corpo.setSize(tam);
+		}
+		Personagem::Personagem()
+		{
 
-}
+		}
 
-Personagem::~Personagem()
-{
-}
+		Personagem::~Personagem()
+		{
+		}
 
-void Personagem::setColor(sf::Color cor)
-{
-	corpo.setFillColor(cor);
-}
+		void Personagem::setColor(sf::Color cor)
+		{
+			corpo.setFillColor(cor);
+		}
 
-const sf::RectangleShape Personagem::getCorpo()
-{
-	return corpo;
-}
+		const sf::RectangleShape Personagem::getCorpo()
+		{
+			return corpo;
+		}
 
-void Personagem::move()
-{
+		void Personagem::mover()
+		{
+		}
+	}
 }
