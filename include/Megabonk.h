@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GerenciadorGrafico.h"  
-//#include "GerenciadorEventos.h"  
+#include "GerenciadorEventos.h"  
 //#include "Coliseu.h"  
 //#include "Masmorra.h"  
 //#include "Jogador.h"  
@@ -13,6 +13,8 @@ class MegaBonk
 {
 private:
 	Gerenciadores::GerenciadorGrafico* pGG;
+	//Gerenciadores::GerenciadorEventos* pGE;
+	//Gerenciadores::GerenciadorEstados* pGEst;
 public:
 	MegaBonk();
 	~MegaBonk();

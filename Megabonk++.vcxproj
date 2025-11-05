@@ -36,6 +36,8 @@
     <ClInclude Include="include\Ente.h" />
     <ClInclude Include="include\GerenciadorEventos.h" />
     <ClInclude Include="include\GerenciadorGrafico.h" />
+    <ClInclude Include="include\Lista.h" />
+    <ClInclude Include="include\ListaEntidades.h" />
     <ClInclude Include="include\Megabonk.h" />
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>

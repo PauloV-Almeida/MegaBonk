@@ -2,8 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#define LARGURA 800
-#define ALTURA 600
+#define LARGURA 1200
+#define ALTURA 800
 
 namespace Gerenciadores
 {
