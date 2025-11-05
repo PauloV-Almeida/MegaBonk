@@ -7,18 +7,18 @@
 #define VELOCIDADE 0.1
 #define VEL_MAX 10.0
 
-class Ent
+class Ente
 {
 protected:
 
     const int id;
     static Gerenciadores::GerenciadorGrafico* pGG;
-    sf::Texture* texture;
+    sf::Texture* textura;
 public:
-    Ent();
-    virtual ~Ent();
+    Ente();
+    virtual ~Ente();
 
-    virtual void desenho() = 0;
+    virtual void desenhar() = 0;
 
     virtual void executar() = 0;
 };

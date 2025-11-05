@@ -1,12 +1,12 @@
 #include "../include/Ente.h"
 
-Gerenciadores::GerenciadorGrafico* Ent::pGG = Gerenciadores::GerenciadorGrafico::get_instance();
+Gerenciadores::GerenciadorGrafico* Ente::pGG = Gerenciadores::GerenciadorGrafico::get_instance();
 
-Ent::Ent() : id()
+Ente::Ente() : id()
 {
 
 }
 
-Ent::~Ent()
+Ente::~Ente()
 {
 }

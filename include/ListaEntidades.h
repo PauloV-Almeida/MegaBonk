@@ -1,30 +1,29 @@
 #pragma once
 
-/*#include "../entities/Entity.h"
+#include "../include/Entidades.h"
 #include "../include/Lista.h"
 
-namespace Lists
+namespace Listas
 {
-    class EntityList
+	class ListaEntidades
     {
     private:
-        Lists::List<Entes::Entity> list;
+        Listas::Lista<Entidades::Entidade> list;
     public:
-        EntityList();
-        ~EntityList();
+        ListaEntidades();
+        ~ListaEntidades();
 
-        void execute();
-        void draw();
-        void add(Entes::Entity* ent);
+        void executar();
+        void desanhar();
+        void add(Entidades::Entidade* ent);
 
-        void clear();
-        void save(std::ofstream& file);
+        void limpar();
+        //void save(std::ofstream& file);
 
-        void set_position(sf::Vector2f pos);
+        void set_posicao(sf::Vector2f pos);
 
-        const int get_size() const { return list.get_size(); }
-        const int get_nkilled();
-        Lists::List<Entes::Entity>::Iterator<Entes::Entity> get_first() { return list.get_first(); }
+        const int get_tamanho() const { return list.get_Tamanho(); }
+        const int get_nNeutralizados();
+        Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> get_Primeiro() { return list.get_Primeiro(); }
     };
 }
-*/

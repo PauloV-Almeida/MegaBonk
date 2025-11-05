@@ -2,33 +2,33 @@
 
 #include <iostream>
 
-namespace Lists
+namespace Listas
 {
     template<class TYPE>
-    class List
+    class Lista
     {
     public:
-        List() :
-            pfirst(NULL),
-            size(0)
+        Lista() :
+            pPrimeiro(NULL),
+            tamanho(0)
         {
         }
-        ~List()
+        ~Lista()
         {
-            clear();
-            pfirst = NULL;
+            limpar();
+            pPrimeiro = NULL;
         }
         template <class TE>
-        class Element
+        class Elemento
         {
         private:
             TE* data;
-            Element<TE>* pnext;
+            Elemento<TE>* pProximo;
         public:
-            Element() :data(NULL), pnext(NULL)
+            Elemento() :data(NULL), pProximo(NULL)
             {
             }
-            ~Element()
+            ~Elemento()
             {
                 if (data)
                 {
@@ -37,85 +37,85 @@ namespace Lists
                 data = NULL;
             }
             TE* get_data() { return data; }
-            Element<TE>* get_next() { return pnext; }
+            Elemento<TE>* get_Proximo() { return pProximo; }
 
             void set_data(TE* dt) { data = dt; }
-            void set_next(Element<TE>* next) { pnext = next; }
+            void set_Proximo(Elemento<TE>* prox) { pProximo = prox; }
         };
         template <class TE>
         class Iterator
         {
         private:
-            Element<TE>* current;
+            Elemento<TE>* atual;
         public:
-            Iterator(Element<TE>* c = nullptr) :
-                current(c) {
+            Iterator(Elemento<TE>* c = nullptr) :
+                atual(c) {
             }
             ~Iterator() {}
 
             Iterator& operator++()
             {
-                current = current->next;
+                atual = atual->prox;
                 return *this;
             }
             Iterator& operator++(int)
             {
-                current = current->get_next();
+                atual = atual->get_Proximo();
                 return *this;
             }
-            bool operator==(const Element<TE>* other) const
+            bool operator==(const Elemento<TE>* outro) const
             {
-                return current == other;
+                return atual == outro;
             }
 
-            bool operator!=(const Element<TE>* other) const
+            bool operator!=(const Elemento<TE>* outro) const
             {
-                return !(current == other);
+                return !(atual == outro);
             }
-            void operator=(const Element<TE>* other)
+            void operator=(const Elemento<TE>* outro)
             {
-                current = other;
+                atual = outro;
             }
             TE* operator*()
             {
-                return current->get_data();
+                return atual->get_data();
             }
-            const Element<TE>* get_current() const { return current; }
+            const Elemento<TE>* get_atual() const { return atual; }
         };
     private:
-        Element<TYPE>* pfirst;
-        int size;
+        Elemento<TYPE>* pPrimeiro;
+        int atual;
     public:
-        Iterator<TYPE> get_first() { return Iterator<TYPE>(pfirst); }
+        Iterator<TYPE> get_Primeiro() { return Iterator<TYPE>(pPrimeiro); }
         void clear()
         {
-            Element<TYPE>* aux = NULL;
-            while (pfirst)
+            Elemento<TYPE>* aux = NULL;
+            while (pPrimeiro)
             {
-                aux = pfirst;
-                pfirst = pfirst->get_next();
+                aux = pPrimeiro;
+                pPrimeiro = pPrimeiro->get_Proximo();
                 if (aux)
                     delete aux;
             }
-            size = 0;
+            tamanho = 0;
             //novo:
-            pfirst = nullptr;
+            pPrimeiro = nullptr;
         }
-        const int get_size() const
+        const int get_Tamanho() const
         {
-            return size;
+            return tamanho;
         }
-        void push(TYPE* elem)
+        void empurrar(TYPE* elem)
         {
             if (!elem)
                 return;
-            Element<TYPE>* aux = new Element<TYPE>();
+            Elemento<TYPE>* aux = new Elemento<TYPE>();
             if (aux)
             {
                 aux->set_data(elem);
-                aux->set_next(pfirst);
-                pfirst = aux;
-                size++;
+                aux->set_Proximo(pPrimeiro);
+                pPrimeiro = aux;
+                tamanho++;
             }
         }
     };
