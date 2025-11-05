@@ -15,6 +15,7 @@ namespace Entidades
 		{
 		private:
 			Jogador* j;
+			int nivel_maldade;
 		public:
 			Inimigo(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f tam);
 			Inimigo();
@@ -23,10 +24,10 @@ namespace Entidades
 			void mover();
 			void movimentoaleatorio();
 			void persegue(sf::Vector2f posJogador, sf::Vector2f posInimigo);
-			void salvarDataBuffer;
+			void salvarDataBuffer() {};
 			virtual void executar() = 0;
-			virtual void danificar(p: *Jogador) = 0;
-			virtual void salva();
+			virtual void danificar(Jogador* p) = 0;
+			virtual void salva() {};
 
 		};
 	}

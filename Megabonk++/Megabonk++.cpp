@@ -2,6 +2,8 @@
 #include "../Jogador.h"
 #include "../Inimigo.h"
 
+using namespace Entidades;
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1400, 1400), "SFML works!");

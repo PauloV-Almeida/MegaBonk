@@ -18,9 +18,9 @@ namespace Entidades
 			Jogador();
 			~Jogador();
 			void mover();
-			void colidir(Inimigo* pIn);
+			void colidir(Inimigo* pIn) {};
 			void executar();
-			void salvar();
+			void salvar() {};
 			
 		};
 	}
