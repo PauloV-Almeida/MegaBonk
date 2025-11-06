@@ -15,7 +15,7 @@ namespace Listas
         }
         ~Lista()
         {
-            limpar();
+            clear();
             pPrimeiro = NULL;
         }
         template <class TE>
@@ -84,7 +84,7 @@ namespace Listas
         };
     private:
         Elemento<TYPE>* pPrimeiro;
-        int atual;
+        int tamanho;
     public:
         Iterator<TYPE> get_Primeiro() { return Iterator<TYPE>(pPrimeiro); }
         void clear()

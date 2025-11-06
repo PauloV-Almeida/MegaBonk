@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entidades.cpp" />
+    <ClCompile Include="src\GerenciadorColisoes.cpp" />
+    <ClCompile Include="src\ListaEntidades.cpp" />
     <ClCompile Include="src\MegaBonk.cpp" />
     <ClCompile Include="src\Ente.cpp" />
     <ClCompile Include="src\GerenciadorEventos.cpp" />
@@ -34,6 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Ente.h" />
+    <ClInclude Include="include\Entidades.h" />
+    <ClInclude Include="include\GerenciadorColisoes.h" />
     <ClInclude Include="include\GerenciadorEventos.h" />
     <ClInclude Include="include\GerenciadorGrafico.h" />
     <ClInclude Include="include\Lista.h" />

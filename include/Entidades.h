@@ -22,16 +22,16 @@ namespace Entidades
         sf::Vector2f vel;
         static sf::Vector2f posJogador;
 
-        Gerenciadores::GerenciadorColisoes* gColisao;
+        //Gerenciadores::GerenciadorColisoes* gColisao;
 
     public:
         Entidade(int indice = -1, sf::Vector2f velo = sf::Vector2f(0.f, 0.f));
         virtual ~Entidade();
         virtual void desenhar() = 0;
         virtual void executar() = 0;
-        virtual void mover(char direcao = ' ') { vel.y += GRAVIDADE; };
+        //virtual void mover(char direcao = ' ') { vel.y += GRAVIDADE; };
 
-        virtual void colidir(Entidade* outro, std::string  direcao = "") = 0;
+        /*virtual void colidir(Entidade* outro, std::string  direcao = "") = 0;
         virtual void infligir_dano(int dmg) = 0;
 
         virtual void set_posicao(sf::Vector2f pos) = 0;
@@ -47,7 +47,7 @@ namespace Entidades
         virtual sf::Vector2f get_tamanho() = 0;
         const int get_id() const { return id; }
 
-        virtual const bool get_vivo() const { return true; }
+        virtual const bool get_vivo() const { return true; }*/
 
         
     };

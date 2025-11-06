@@ -11,6 +11,9 @@ namespace Gerenciadores
 	{
 	private:
 		sf::RenderWindow* janela;	
+		sf::View cam;
+
+
 
 		//Sigleton
 		static GerenciadorGrafico* instance;
