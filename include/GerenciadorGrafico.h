@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <map>
 #include <iostream>
 
 #define LARGURA 1200
