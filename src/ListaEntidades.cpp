@@ -43,18 +43,18 @@ namespace Listas
 			aux++;
 		}
 	}
-	const int ListaEntidades::get_nNeutralizados()
+	/*const int ListaEntidades::get_nNeutralizados()
 	{
 		int n = 0;
 		Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> aux = list.get_Primeiro();
 		while (aux != nullptr)
 		{
-			if (!(*aux)->get_vivo())
+			if (!((*aux)->get_vivo()))
 			{
 				n++;
 			}
 			aux++;
 		}
 		return n;
-	}
+	}*/
 }

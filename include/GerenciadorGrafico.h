@@ -12,8 +12,8 @@ namespace Gerenciadores
 	{
 	private:
 		sf::RenderWindow* janela;	
-		sf::View cam;
-
+		//sf::View cam;
+		std::map<const std::string, sf::Texture*> texturas;
 
 
 		//Sigleton
@@ -25,10 +25,10 @@ namespace Gerenciadores
 		static GerenciadorGrafico* get_instance();
 		sf::RenderWindow* get_janela();
 
-		void desenhar(sf::RectangleShape corpo);
-		void desenhar(sf::CircleShape corpo);
 		void mostrar();
 		void limpar();
+		void desenhar(sf::RectangleShape* corpo);
+		void desenhar(sf::CircleShape* corpo);
 		void fechaJanela();
 		const bool abreJanela();
 

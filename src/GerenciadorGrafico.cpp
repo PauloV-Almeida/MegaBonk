@@ -12,27 +12,23 @@ namespace Gerenciadores
 		return instance;
 	}
 	GerenciadorGrafico::GerenciadorGrafico(): 
-		janela(new sf::RenderWindow(sf::VideoMode(LARGURA, ALTURA), "Megabonk++"))
+		janela(new sf::RenderWindow(sf::VideoMode(LARGURA, ALTURA), "Megabonk++")),
+		texturas()
 
 	{
-
+		janela->setFramerateLimit(60);
 	}
 
 	GerenciadorGrafico::~GerenciadorGrafico()
 	{
+		for (std::map<const std::string, sf::Texture*>::iterator it = texturas.begin(); it != texturas.end(); it++)
+			delete it->second;
+		texturas.clear();
 		delete(janela);
 	}
 
 	sf::RenderWindow* GerenciadorGrafico::get_janela() {
 		return janela;
-	}
-
-	void GerenciadorGrafico::desenhar(sf::RectangleShape corpo) {
-		janela->draw(corpo);
-	}
-
-	void GerenciadorGrafico::desenhar(sf::CircleShape corpo) {
-		janela->draw(corpo);
 	}
 
 	void GerenciadorGrafico::mostrar() {
@@ -43,18 +39,16 @@ namespace Gerenciadores
 	void GerenciadorGrafico::limpar() {
 		if(abreJanela())
 			janela->clear();
-
-		sf::Event evento;
-		while (janela->pollEvent(evento)) {
-			switch (evento.type) {
-			case sf::Event::Closed:
-				fechaJanela();
-				break;
-			default:
-				break;
-			}
-		}
 	}
+
+	void GerenciadorGrafico::desenhar(sf::RectangleShape* corpo) {
+		janela->draw(*corpo);
+	}
+
+	void GerenciadorGrafico::desenhar(sf::CircleShape* corpo) {
+		janela->draw(*corpo);
+	}
+
 	void GerenciadorGrafico::fechaJanela() {
 		janela->close();
 	}
