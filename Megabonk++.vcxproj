@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Entidades.cpp" />
+    <ClCompile Include="src\Fase.cpp" />
+    <ClCompile Include="src\Floresta.cpp" />
     <ClCompile Include="src\GerenciadorColisoes.cpp" />
     <ClCompile Include="src\Inimigo.cpp" />
     <ClCompile Include="src\Jogador.cpp" />
@@ -37,10 +39,13 @@
     <None Include=".gitignore" />
     <None Include="LICENSE" />
     <None Include="README.md" />
+    <None Include="salvar\fase1\cenario.dat" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Ente.h" />
     <ClInclude Include="include\Entidades.h" />
+    <ClInclude Include="include\Fase.h" />
+    <ClInclude Include="include\Floresta.h" />
     <ClInclude Include="include\GerenciadorColisoes.h" />
     <ClInclude Include="include\GerenciadorEventos.h" />
     <ClInclude Include="include\GerenciadorGrafico.h" />

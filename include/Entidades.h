@@ -30,26 +30,7 @@ namespace Entidades
         virtual void desenhar() = 0;
         virtual void executar() = 0;
         virtual void set_posicao(sf::Vector2f pos) = 0;
-        //virtual void mover(char direcao = ' ') { vel.y += GRAVIDADE; };
-
-        /*virtual void colidir(Entidade* outro, std::string  direcao = "") = 0;
-        virtual void infligir_dano(int dmg) = 0;
-
         
 
-        void set_vel(sf::Vector2f v) { vel = v; }
-        void set_GerenciadorColisao(Gerenciadores::GerenciadorColisoes* cm) { gColisao = cm; }
-        
-        virtual void set_vivo(bool a) = 0;
-
-        sf::Vector2f get_vel() { return vel; }
-        int get_velocidade() { return velocidade; }
-        virtual sf::Vector2f get_posicao() = 0;
-        virtual sf::Vector2f get_tamanho() = 0;
-        const int get_id() const { return id; }
-
-        virtual const bool get_vivo() const { return true; }*/
-
-        
     };
 }
