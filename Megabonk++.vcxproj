@@ -52,6 +52,9 @@
     <ClInclude Include="include\Personagem.h" />
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\jogador1.png" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

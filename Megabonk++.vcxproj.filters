@@ -96,4 +96,9 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\jogador1.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
