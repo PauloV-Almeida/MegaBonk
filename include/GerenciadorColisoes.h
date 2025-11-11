@@ -1,35 +1,42 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-//#include "../entities/Player.h"
-//#include "../entities/Enemy.h"
-//#include "../entities/Boss.h"
-//#include "../entities/Obstacle.h"
-#include "../include/ListaEntidades.h"
-
-
+#include "../stdafx/stdafx.h"
+#include "Personagem.h"
+#include "Jogador.h"
+#include "Inimigo.h"
+#include "ListaEntidades.h"
 
 
 namespace Gerenciadores
 {
 	class GerenciadorColisoes
-    {
-    private:
-        //Listas::ListaEntidades* lista_Inimigos;
-        Listas::ListaEntidades* lista_Jogadores;
-        //Listas::ListaEntidades* lista_Obstaculos;
+	{
+	private:
+		std::vector<Entidades::Personagens::Inimigo*> LIs;
+		//std::list<Entidades::Obstaculos::Obstaculo*> LOs;
+		//std::set <Entidades::Projetil*> LPs;
 
-        const bool tratar_colisao(Entidades::Entidade* A, Entidades::Entidade* B);
-    public:
-        GerenciadorColisoes();
-        ~GerenciadorColisoes();
+		Entidades::Personagens::Jogador* pJog;
 
-        void set_ListaInimigos(Listas::ListaEntidades* list) { if (list) { lista_Jogadores = list; } }
-        //void set_ListaJogadores(Listas::ListaEntidades* list) { if (list) { lista_Inimigos = list; } }
-        //void set_ListaObstaculos(Listas::ListaEntidades* list) { if (list) { lista_Obstaculos = list; } }
 
-        void colide();
-        
-  
-    };
+	private:
+		const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2)const;
+		void tratarColisoesJogsObstacs();
+		void tratarColisoesJogsInimigs();
+		void tratarColisoesJogsProjeteis();
+
+		static GerenciadorColisoes* instance;
+		GerenciadorColisoes();
+	public:
+
+		~GerenciadorColisoes();
+		static GerenciadorColisoes* get_instance();
+		void setJogadores(Entidades::Personagens::Jogador* j);
+		void incluirInimigo(Entidades::Personagens::Inimigo* i);
+		//void incluirObstaculo(Obstaculo* o);
+		//void incluirProjetil(Projetil* p);
+
+		void executar();
+	};
 }

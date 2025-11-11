@@ -10,22 +10,21 @@ namespace Entidades
 {
 	namespace Personagens
 	{
+		class Inimigo;
+
 		class Jogador : public Personagem
 		{
-		private:
-
-			int player_id;
-
+		protected:
+			int pontos;
 		public:
-			Jogador(int index = 1, sf::Vector2f pos = sf::Vector2f(10.f, 0.f), sf::Vector2f velo = sf::Vector2f(0.f, 0.f), sf::Vector2f tamanho = sf::Vector2f(50.f, 50.f));
-			Jogador(int index,int vida, sf::Vector2f pos, sf::Vector2f velo, sf::Vector2f tamanho);
+			Jogador(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f tam);
+			Jogador();
 			~Jogador();
-			
+			void mover();
+			void colidir(Inimigo* pIn) {};
 			void executar();
-			void mover(char direcao = '0');
-
-
-			void desenhar();
+			void salvar() {};
 		};
+			
 	}
 }

@@ -6,24 +6,21 @@ namespace Entidades
 {
 	namespace Personagens
 	{
-		class Personagem : public Entidade
+		class Personagem
 		{
 		protected:
+			int num_vidas;
 			sf::RectangleShape corpo;
-			int life;
+			sf::Vector2f velocidade;
 		public:
-			Personagem(int indice = -1, sf::Vector2f pos = sf::Vector2f(0.f, 0.f), sf::Vector2f velo = sf::Vector2f(0.f, 0.f), sf::Vector2f tamanho = sf::Vector2f(0.f, 0.f));
-			virtual ~Personagem();
+			Personagem(const sf::Vector2f pos, const sf::Vector2f vel, const sf::Vector2f tam);
+			Personagem();
+			~Personagem();
+			const sf::RectangleShape getCorpo();
+			void setColor(sf::Color cor);
+			void salvarDataBuffer();
 			virtual void executar() = 0;
-			//virtual void collide(Entity* other, std::string direction = "") = 0;
-			//void inflict_damage(int dmg) { life -= dmg; }
-			//void set_alive(bool a) { alive = a; }
-			virtual void desenhar();
-			sf::Vector2f get_posicao() { return corpo.getPosition(); }
-			sf::Vector2f get_Tamanho() { return corpo.getSize(); }
-			void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
-			//const bool get_alive() const { return alive; }
-			const int get_life() const { return life; }
+			virtual void mover() = 0;
 		};
 	}
 }

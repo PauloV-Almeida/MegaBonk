@@ -31,7 +31,9 @@
     <ClCompile Include="src\GerenciadorEventos.cpp" />
     <ClCompile Include="src\GerenciadorGrafico.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Obstaculo.cpp" />
     <ClCompile Include="src\Personagem.cpp" />
+    <ClCompile Include="src\Plataforma.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +56,9 @@
     <ClInclude Include="include\Lista.h" />
     <ClInclude Include="include\ListaEntidades.h" />
     <ClInclude Include="include\Megabonk.h" />
+    <ClInclude Include="include\Obstaculo.h" />
     <ClInclude Include="include\Personagem.h" />
+    <ClInclude Include="include\Plataforma.h" />
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
