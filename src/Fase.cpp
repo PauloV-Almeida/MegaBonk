@@ -40,6 +40,25 @@ namespace Fases
 		Entidades::Entidade* aux = nullptr;
 		int j = 0;
 		
+		std::srand(std::time(nullptr));
+		int n_aleatorio = 0;
+
+		for(int i=0; std::getline(entrada, linha); i++)
+		{
+			j = 0;
+			for (char character : linha)
+			{
+				switch (character)
+				{
+				case '0':
+					//aux = new Entidades::Obstaculos::Plataforma(sf::Vector2f(j * OBSTACULO_TAMANHO, i * OBSTACULO_TAMANHO));
+				default:
+					break;
+				}
+				j++;
+			}	
+		}
+		entrada.close();
 		
 	}
 }
