@@ -13,7 +13,7 @@ protected:
 
     const int id;
     static Gerenciadores::GerenciadorGrafico* pGG;
-    sf::Texture* textura;
+    sf::Texture* texturas;
 public:
     Ente();
     virtual ~Ente();

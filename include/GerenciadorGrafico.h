@@ -29,6 +29,8 @@ namespace Gerenciadores
 		void limpar();
 		void desenhar(sf::RectangleShape* corpo);
 		void desenhar(sf::CircleShape* corpo);
+		sf::Texture* carregar_texturas(std::string path);
+
 		void fechaJanela();
 		const bool abreJanela();
 
