@@ -705,7 +705,7 @@
 					"_parent": {
 						"$ref": "XqTvRQqsnkuWZZwgQBMH+AAA"
 					},
-					"name": "Gerenciador_Colisões",
+					"name": "GerenciadorColisoes",
 					"stereotype": "Mediador - STL",
 					"attributes": [
 						{
@@ -14464,7 +14464,7 @@
 											"top": 390,
 											"width": 444.18115234375,
 											"height": 15,
-											"text": "Gerenciador_Colisões"
+											"text": "GerenciadorColisoes"
 										},
 										{
 											"_type": "LabelView",
