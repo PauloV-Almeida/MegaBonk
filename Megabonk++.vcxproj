@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Entidades.cpp" />
     <ClCompile Include="src\Fase.cpp" />
-    <ClCompile Include="src\Floresta.cpp" />
+    <ClCompile Include="src\Deserto.cpp" />
     <ClCompile Include="src\GerenciadorColisoes.cpp" />
     <ClCompile Include="src\Inimigo.cpp" />
     <ClCompile Include="src\Jogador.cpp" />
@@ -47,7 +47,7 @@
     <ClInclude Include="include\Ente.h" />
     <ClInclude Include="include\Entidades.h" />
     <ClInclude Include="include\Fase.h" />
-    <ClInclude Include="include\Floresta.h" />
+    <ClInclude Include="include\Deserto.h" />
     <ClInclude Include="include\GerenciadorColisoes.h" />
     <ClInclude Include="include\GerenciadorEventos.h" />
     <ClInclude Include="include\GerenciadorGrafico.h" />

@@ -21,6 +21,8 @@ namespace Entidades
         static float velocidade;
         sf::Vector2f vel;
         static sf::Vector2f posJogador;
+        bool deCastigo;
+        float massa;
 
         Gerenciadores::GerenciadorColisoes* gColisao;
 
@@ -35,6 +37,7 @@ namespace Entidades
         virtual void infligir_dano(int dmg) = 0;
 
         virtual void set_posicao(sf::Vector2f pos) = 0;
+        void set_deCastigo(bool deCast) { deCastigo = deCast; };
 
         void set_vel(sf::Vector2f v) { vel = v; }
         void set_GerenciadorColisao(Gerenciadores::GerenciadorColisoes* cm) { gColisao = cm; }
@@ -48,5 +51,6 @@ namespace Entidades
         const int get_id() const { return id; }
 
         virtual const bool get_vivo() const { return true; }
+		const float get_massa() const { return massa; }
     };
 }

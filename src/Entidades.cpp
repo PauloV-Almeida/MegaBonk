@@ -11,7 +11,10 @@ namespace Entidades
 	Entidade::Entidade(int indice, sf::Vector2f velo):
 		Ente(),
 		id(indice),
-		vel(velo)
+		gColisao(nullptr),
+		vel(velo),
+		deCastigo(false),
+		massa(1)
 	{
 	
 	}

@@ -28,7 +28,7 @@ namespace Gerenciadores
 		delete(janela);
 	}
 
-	sf::RenderWindow* GerenciadorGrafico::get_janela() {
+	sf::RenderWindow* GerenciadorGrafico::get_janela() const {
 		return janela;
 	}
 
