@@ -10,16 +10,16 @@ namespace Listas
 	}
 	void ListaEntidades::executar()
 	{
-		Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> aux = list.get_Primeiro();
+		Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> aux = lEnt.get_Primeiro();
 		while (aux != nullptr)
 		{
 			(*aux)->executar();
 			aux++;
 		}
 	}
-	void ListaEntidades::desanhar()
+	void ListaEntidades::desenhar()
 	{
-		Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> aux = list.get_Primeiro();
+		Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> aux = lEnt.get_Primeiro();
 		while (aux != nullptr)
 		{
 			(*aux)->desenhar();
@@ -28,15 +28,15 @@ namespace Listas
 	}
 	void ListaEntidades::add(Entidades::Entidade* ent)
 	{
-		list.empurrar(ent);
+		lEnt.empurrar(ent);
 	}
 	void ListaEntidades::limpar()
 	{
-		list.clear();
+		lEnt.clear();
 	}
 	void ListaEntidades::set_posicao(sf::Vector2f pos)
 	{
-		Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> aux = list.get_Primeiro();
+		Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> aux = lEnt.get_Primeiro();
 		while (aux != nullptr)
 		{
 			(*aux)->set_posicao(pos);

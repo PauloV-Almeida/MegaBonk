@@ -8,13 +8,13 @@ namespace Listas
 	class ListaEntidades
     {
     private:
-        Listas::Lista<Entidades::Entidade> list;
+        Listas::Lista<Entidades::Entidade> lEnt;
     public:
         ListaEntidades();
         ~ListaEntidades();
 
         void executar();
-        void desanhar();
+        void desenhar();
         void add(Entidades::Entidade* ent);
 
         void limpar();
@@ -22,8 +22,8 @@ namespace Listas
 
         void set_posicao(sf::Vector2f pos);
 
-        const int get_tamanho() const { return list.get_Tamanho(); }
+        const int get_tamanho() const { return lEnt.get_Tamanho(); }
         //const int get_nNeutralizados();
-        Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> get_Primeiro() { return list.get_Primeiro(); }
+        Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> get_Primeiro() { return lEnt.get_Primeiro(); }
     };
 }

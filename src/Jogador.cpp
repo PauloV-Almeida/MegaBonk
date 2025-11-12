@@ -18,6 +18,11 @@ namespace Entidades
 		{
 		}
 
+		void Jogador::executar()
+		{
+			mover();
+		}
+
 		void Jogador::mover()
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||

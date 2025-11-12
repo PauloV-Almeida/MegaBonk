@@ -6,7 +6,7 @@ namespace Entidades
 {
 	namespace Personagens
 	{
-		class Personagem
+		class Personagem : public Entidade
 		{
 		protected:
 			int num_vidas;

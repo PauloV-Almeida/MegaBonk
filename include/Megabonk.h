@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "GerenciadorGrafico.h"  
-#include "GerenciadorEventos.h"  
-//#include "Coliseu.h"  
+//#include "GerenciadorEventos.h"  
+//#include "Floresta.h"  
 //#include "Masmorra.h"  
 //#include "Jogador.h"  
 //#include "Menu.h"

@@ -13,6 +13,7 @@ namespace Entidades
         protected:
             sf::RectangleShape corpo;
             bool existir;
+            bool danoso;
         public:
             Obstaculo(int index = -1, sf::Vector2f pos = sf::Vector2f(100.f, 600.f));
             ~Obstaculo();

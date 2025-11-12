@@ -9,8 +9,6 @@ namespace Entidades
 {
 	namespace Personagens
 	{
-		class Jogador;
-
 		class Inimigo :public Personagem
 		{
 		private:

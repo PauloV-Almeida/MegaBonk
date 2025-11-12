@@ -11,6 +11,7 @@ namespace Gerenciadores
 		}
 		return instance;
 	}
+
 	GerenciadorGrafico::GerenciadorGrafico(): 
 		janela(new sf::RenderWindow(sf::VideoMode(LARGURA, ALTURA), "Megabonk++")),
 		texturas()
@@ -49,6 +50,22 @@ namespace Gerenciadores
 		janela->draw(*corpo);
 	}
 
+	sf::Texture* GerenciadorGrafico::carregar_texturas(std::string path)
+	{
+		std::map<const std::string, sf::Texture*>::iterator it = texturas.find(path);
+		if (it != texturas.end())
+			return it->second;
+
+		sf::Texture* text = new sf::Texture();
+
+		if (!text->loadFromFile(path))
+		{
+			std::cout << "Erro ao carregar textura: " << path << std::endl;
+		}
+		texturas[path] = text;
+
+		return text;
+	}
 	void GerenciadorGrafico::fechaJanela() {
 		janela->close();
 	}
