@@ -15,7 +15,7 @@ namespace Entidades
             else
             {
                 texturas = pGG->carregar_texturas("carregar png");
-               corpo.setTexture(texturas);
+                corpo.setTexture(texturas);
             }
         }
         Plataforma:: ~Plataforma()
@@ -26,7 +26,7 @@ namespace Entidades
         {
             if (pVerifica)
             {
-               Entidades::Personagens::Jogador* jogador = dynamic_cast<Entidades::Personagens::Jogador*>(outro);
+                Entidades::Personagens::Jogador* jogador = dynamic_cast<Entidades::Personagens::Jogador*>(outro);
                 /*if (jogador != nullptr)
                 {
                     jogador->set_win(true);
@@ -40,7 +40,7 @@ namespace Entidades
         void Plataforma::mover()
         {
             vel.y += GRAVIDADE;
-            
+
             corpo.setPosition(corpo.getPosition() + vel);
         }
     }

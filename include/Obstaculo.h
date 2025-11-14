@@ -29,6 +29,9 @@ namespace Entidades
             void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
             //Não criamos nenhuma plataforma capaz de receber dano:
             void infligir_dano(int dmg) {}
+            sf::RectangleShape getCorpo() { return corpo; }
+            void setColor(sf::Color c) { corpo.setFillColor(c); }
+            void setTam(sf::Vector2f tam);
         };
     }
 

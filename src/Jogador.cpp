@@ -21,15 +21,23 @@ namespace Entidades
 		void Jogador::executar()
 		{
 			mover();
+			desenhar();
+		}
+
+		void Jogador::desenhar()
+		{
+			if (pGG)
+				pGG->desenhar(&corpo);
 		}
 
 		void Jogador::mover()
 		{
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
-			}
 
+			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 				corpo.move(-velocidade.x, velocidade.y);
 

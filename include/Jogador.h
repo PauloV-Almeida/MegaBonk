@@ -21,10 +21,16 @@ namespace Entidades
 			Jogador();
 			~Jogador();
 			void mover();
-			void colidir(Inimigo* pIn) {};
+			void colidir(Inimigo* pIn) { num_vidas--; };
 			void executar();
 			void salvar() {};
+			void colidir(Entidade* outro, std::string  direcao = "") {}
+			void desenhar();
+			sf::Vector2f get_posicao() { return corpo.getPosition(); }
+			sf::Vector2f get_tamanho() { return corpo.getSize(); }
+			void set_vivo(bool a) { if (!a) num_vidas = 0; }
+			void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
+			virtual void infligir_dano(int dmg) {}
 		};
-			
 	}
 }

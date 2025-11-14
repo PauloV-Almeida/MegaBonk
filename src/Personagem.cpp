@@ -6,9 +6,10 @@ namespace Entidades
 	{
 		Personagem::Personagem(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f tam)
 		{
+			corpo.setSize(tam); // define o tamanho primeiro
+			corpo.setOrigin(tam.x / 2.f, tam.y / 2.f); // agora a origem centraliza corretamente
 			corpo.setPosition(pos);
 			velocidade = vel;
-			corpo.setSize(tam);
 		}
 		Personagem::Personagem()
 		{
@@ -24,7 +25,7 @@ namespace Entidades
 			corpo.setFillColor(cor);
 		}
 
-		const sf::RectangleShape Personagem::getCorpo()
+		sf::RectangleShape Personagem::getCorpo()
 		{
 			return corpo;
 		}

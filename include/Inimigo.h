@@ -23,8 +23,8 @@ namespace Entidades
 			void movimentoaleatorio();
 			void persegue(sf::Vector2f posJogador, sf::Vector2f posInimigo);
 			void salvarDataBuffer() {};
-			virtual void executar() = 0;
-			virtual void danificar(Jogador* p) = 0;
+			//virtual void executar() = 0;
+			//virtual void danificar(Jogador* p) = 0;
 			virtual void salva() {};
 
 		};

@@ -6,6 +6,7 @@
 #include "Jogador.h"
 #include "Inimigo.h"
 #include "ListaEntidades.h"
+#include "Plataforma.h"
 
 
 namespace Gerenciadores
@@ -14,7 +15,7 @@ namespace Gerenciadores
 	{
 	private:
 		std::vector<Entidades::Personagens::Inimigo*> LIs;
-		//std::list<Entidades::Obstaculos::Obstaculo*> LOs;
+		std::list<Entidades::Obstaculos::Obstaculo*> LOs;
 		//std::set <Entidades::Projetil*> LPs;
 
 		Entidades::Personagens::Jogador* pJog;
@@ -22,6 +23,7 @@ namespace Gerenciadores
 
 	private:
 		const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2)const;
+		void colisor(Entidades::Entidade* pe1, Entidades::Entidade* pe2, bool vertical)const;
 		void tratarColisoesJogsObstacs();
 		void tratarColisoesJogsInimigs();
 		void tratarColisoesJogsProjeteis();
@@ -34,7 +36,7 @@ namespace Gerenciadores
 		static GerenciadorColisoes* get_instance();
 		void setJogadores(Entidades::Personagens::Jogador* j);
 		void incluirInimigo(Entidades::Personagens::Inimigo* i);
-		//void incluirObstaculo(Obstaculo* o);
+		void incluirObstaculo(Entidades::Obstaculos::Obstaculo* o);
 		//void incluirProjetil(Projetil* p);
 
 		void executar();

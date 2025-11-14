@@ -16,7 +16,7 @@ namespace Entidades
 			Personagem(const sf::Vector2f pos, const sf::Vector2f vel, const sf::Vector2f tam);
 			Personagem();
 			~Personagem();
-			const sf::RectangleShape getCorpo();
+			sf::RectangleShape getCorpo();
 			void setColor(sf::Color cor);
 			void salvarDataBuffer();
 			virtual void executar() = 0;
