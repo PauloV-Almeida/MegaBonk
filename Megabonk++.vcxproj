@@ -24,6 +24,7 @@
     <ClCompile Include="src\Fase.cpp" />
     <ClCompile Include="src\Deserto.cpp" />
     <ClCompile Include="src\GerenciadorColisoes.cpp" />
+    <ClCompile Include="src\GerenciadorEstado.cpp" />
     <ClCompile Include="src\Inimigo.cpp" />
     <ClCompile Include="src\Jogador.cpp" />
     <ClCompile Include="src\ListaEntidades.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="src\GerenciadorEventos.cpp" />
     <ClCompile Include="src\GerenciadorGrafico.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Observer.cpp" />
     <ClCompile Include="src\Obstaculo.cpp" />
     <ClCompile Include="src\Personagem.cpp" />
     <ClCompile Include="src\Plataforma.cpp" />
@@ -46,6 +48,7 @@
     <None Include="salvar\fase1\cenario.dat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Botao.h" />
     <ClInclude Include="include\Ente.h" />
     <ClInclude Include="include\Entidades.h" />
     <ClInclude Include="include\Estado.h" />
@@ -59,16 +62,23 @@
     <ClInclude Include="include\Jogador.h" />
     <ClInclude Include="include\Lista.h" />
     <ClInclude Include="include\ListaEntidades.h" />
+    <ClInclude Include="include\MainMenu.h" />
     <ClInclude Include="include\Megabonk.h" />
+    <ClInclude Include="include\Menu.h" />
+    <ClInclude Include="include\MenuObserver.h" />
     <ClInclude Include="include\Observer.h" />
     <ClInclude Include="include\Obstaculo.h" />
     <ClInclude Include="include\Personagem.h" />
     <ClInclude Include="include\Plataforma.h" />
     <ClInclude Include="include\Subject.h" />
+    <ClInclude Include="include\Texto.h" />
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\jogador1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\PressStart2P-Regular.ttf" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

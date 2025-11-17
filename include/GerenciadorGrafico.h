@@ -6,6 +6,8 @@
 #define LARGURA 1200
 #define ALTURA 800
 
+#define FONT_PATH "../assets/PressStar2P-Regular.ttf"
+
 namespace Gerenciadores
 {
 	class GerenciadorGrafico
@@ -13,6 +15,7 @@ namespace Gerenciadores
 	private:
 		sf::RenderWindow* janela;	
 		std::map<const std::string, sf::Texture*> texturas;
+		sf::Font* fonte;
 
 		//Sigleton
 		static GerenciadorGrafico* instance;
@@ -26,11 +29,12 @@ namespace Gerenciadores
 		void limpar();
 		void desenhar(sf::RectangleShape* corpo);
 		void desenhar(sf::CircleShape* corpo);
+		void desenhar(sf::Text* texto);
 		sf::Texture* carregar_texturas(std::string path);
 
 		void fechaJanela();
 		const bool abreJanela();
-
+		sf::Font* getFonte() const;
 	};
 }
 

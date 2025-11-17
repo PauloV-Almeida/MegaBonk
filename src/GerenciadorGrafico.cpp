@@ -18,6 +18,12 @@ namespace Gerenciadores
 
 	{
 		janela->setFramerateLimit(60);
+		fonte = new sf::Font;
+		if (!fonte->loadFromFile(FONT_PATH))
+		{
+			std::cout << "ERROR: FONTE N CARREGADA" << std::endl;
+			exit(1);
+		}
 	}
 
 	GerenciadorGrafico::~GerenciadorGrafico()
@@ -26,6 +32,7 @@ namespace Gerenciadores
 			delete it->second;
 		texturas.clear();
 		delete(janela);
+		delete(fonte);
 	}
 
 	sf::RenderWindow* GerenciadorGrafico::get_janela() const {
@@ -50,6 +57,10 @@ namespace Gerenciadores
 		janela->draw(*corpo);
 	}
 
+	void GerenciadorGrafico::desenhar(sf::Text* texto) {
+		janela->draw(*texto);
+	}
+
 	sf::Texture* GerenciadorGrafico::carregar_texturas(std::string path)
 	{
 		std::map<const std::string, sf::Texture*>::iterator it = texturas.find(path);
@@ -72,6 +83,10 @@ namespace Gerenciadores
 
 	const bool GerenciadorGrafico::abreJanela() {
 		return (janela->isOpen());
+	}
+
+	sf::Font* GerenciadorGrafico::getFonte() const {
+		return fonte;
 	}
 
 }

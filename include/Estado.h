@@ -17,7 +17,7 @@ namespace Estados
 
 		virtual ~Estado();
 
-		void setGerenciadorEstado(Gerenciadores::GerenciadorEstado* pEG);
+		void setGerenciadorEstado(Gerenciadores::GerenciadorEstado* p);
 
 		int getId() const;
 
