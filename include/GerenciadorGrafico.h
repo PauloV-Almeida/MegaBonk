@@ -3,10 +3,10 @@
 #include <map>
 #include <iostream>
 
-#define LARGURA 1200
-#define ALTURA 800
 
-#define FONT_PATH "../assets/PressStar2P-Regular.ttf"
+#define LARGURA 800
+#define ALTURA 600
+#define FONTE_PATH "./assets/PressStart2P-Regular.ttf"
 
 namespace Gerenciadores
 {

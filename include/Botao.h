@@ -4,8 +4,8 @@
 
 #include "GerenciadorGrafico.h"
 
-#define BOTAO_X 600.f
-#define BOTAO_Y 80.f
+#define TAM_X 600.f
+#define TAM_Y 80.f
 
 namespace Menus {
 	class Botao

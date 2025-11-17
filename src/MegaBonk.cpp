@@ -3,7 +3,8 @@
 MegaBonk::MegaBonk() :
 	pGG(Gerenciadores::GerenciadorGrafico::get_instance()),
 	pGE(Gerenciadores::GerenciadorEventos::get_instance()),
-	pGEst(Gerenciadores::GerenciadorEstado::get_instance())
+	pGEst(Gerenciadores::GerenciadorEstado::get_instance()),
+	main_menu()
 {
 	executar();
 }

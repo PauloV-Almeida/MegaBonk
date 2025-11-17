@@ -80,10 +80,14 @@
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\Deserto.png" />
     <Image Include="assets\jogador1.png" />
+    <Image Include="assets\plataform.png" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="assets\PressStart2P-Regular.ttf" />
+    <Font Include="assets\PressStart2P-Regular.ttf">
+      <DeploymentContent>true</DeploymentContent>
+    </Font>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

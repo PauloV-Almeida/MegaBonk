@@ -51,7 +51,8 @@ namespace Gerenciadores
 
 	void GerenciadorEstado::reseta_AtualEstado()
 	{
-		vector_estados[AtualEstado]->reiniciar();
+		if (vector_estados[AtualEstado])
+			vector_estados[AtualEstado]->reiniciar();
 	}
 
 	void GerenciadorEstado::executar()

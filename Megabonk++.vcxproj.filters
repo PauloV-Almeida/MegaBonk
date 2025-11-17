@@ -179,6 +179,12 @@
     <Image Include="assets\jogador1.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="assets\plataform.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="assets\Deserto.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\PressStart2P-Regular.ttf" />

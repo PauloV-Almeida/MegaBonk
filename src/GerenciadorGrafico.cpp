@@ -1,4 +1,11 @@
 #include "../include/GerenciadorGrafico.h"
+#include <windows.h>
+#include <direct.h>
+#include <vector>
+#include <fstream>
+#include <iostream>
+
+#define GETCWD_BUF_SIZE 1024
 
 namespace Gerenciadores
 {
@@ -19,7 +26,7 @@ namespace Gerenciadores
 	{
 		janela->setFramerateLimit(60);
 		fonte = new sf::Font;
-		if (!fonte->loadFromFile(FONT_PATH))
+		if (!fonte->loadFromFile(FONTE_PATH))
 		{
 			std::cout << "ERROR: FONTE N CARREGADA" << std::endl;
 			exit(1);
