@@ -9,6 +9,8 @@
 #include "GerenciadorColisoes.h"
 #include "GerenciadorEventos.h"
 #include "GerenciadorEstado.h"
+#include "Estado.h"
+
 
 
 #include <fstream>
@@ -17,15 +19,20 @@
 
 namespace Fases
 {
-	class Fase : public Ente, public E
+	class Fase : public Ente, public Estados::Estado
 	{
 	protected:
 		Listas::ListaEntidades jogadores;
 		Listas::ListaEntidades inimigos;
+		Listas::ListaEntidades obstaculos;
+
+
+		Gerenciadores::GerenciadorColisoes gColisoes;
+		Gerenciadores::GerenciadorEventos* pGE;
 
 		sf::RectangleShape corpo;
 	public:
-		Fase(int id=-1);
+		Fase(int id = -1);
 		virtual ~Fase();
 		virtual void executar() = 0;
 		void desenhar();
