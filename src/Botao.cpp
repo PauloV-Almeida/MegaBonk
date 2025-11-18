@@ -9,7 +9,7 @@ namespace Menus {
 		text()
 	{
 		corpo.setOrigin(TAM_X / 2, TAM_Y / 2);
-		text.setOrigin(TAM_X / 2 - 50, TAM_Y / 2 - 50);
+		text.setOrigin(TAM_X / 2 - 20, TAM_Y / 2 - 20);
 
 		corpo.setFillColor(sf::Color(240, 230, 140));
 		corpo.setOutlineThickness(6);

@@ -2,7 +2,9 @@
 #include "../include/MainMenu.h"
 
 namespace Observers {
-	MenuObserver::MenuObserver() : Observer()
+	MenuObserver::MenuObserver() : 
+		Observer(),
+		pMenu(nullptr)
 	{
 		pGE->attach(this);
 	}
@@ -38,7 +40,7 @@ namespace Observers {
 
 		if (key_code == sf::Keyboard::Right || key_code == sf::Keyboard::Left) { pMenu->moverHorizontal(1); }
 
-		if (key_code == sf::Keyboard::LControl || key_code == sf::Keyboard::RControl) {}pMenu->moverHorizontal(2);
+		if (key_code == sf::Keyboard::LControl || key_code == sf::Keyboard::RControl) { pMenu->moverHorizontal(2); }
 	}
 
 }
