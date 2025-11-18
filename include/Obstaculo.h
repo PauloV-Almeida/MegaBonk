@@ -20,8 +20,8 @@ namespace Entidades
             virtual void executar() = 0;
             virtual void mover();
             void desenhar();
-            virtual void colidir(Entidades::Entidade* outro, std::string  direcao = "") = 0;
-            //virtual void save(std::ofstream& file) {}
+            virtual void obstaculizar(Entidades::Entidade* outro, std::string  direcao = "") = 0;
+            
             void set_vivo(bool a) { existir = a; }
             const bool get_vivo() const { return existir; }
             sf::Vector2f get_posicao() { return corpo.getPosition(); }
@@ -29,9 +29,7 @@ namespace Entidades
             void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
             //Não criamos nenhuma plataforma capaz de receber dano:
             void infligir_dano(int dmg) {}
-            sf::RectangleShape getCorpo() { return corpo; }
-            void setColor(sf::Color c) { corpo.setFillColor(c); }
-            void setTam(sf::Vector2f tam);
+            
         };
     }
 

@@ -4,34 +4,24 @@ namespace Entidades
 {
 	namespace Personagens
 	{
-		Personagem::Personagem(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f tam)
+		Personagem::Personagem(int indice, sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f tam) :
+			Entidade::Entidade(indice, vel),
+			corpo(tam),
+			vivo(true),
+			n_vidas(1)
 		{
-			corpo.setSize(tam); // define o tamanho primeiro
-			corpo.setOrigin(tam.x / 2.f, tam.y / 2.f); // agora a origem centraliza corretamente
+			corpo.setOrigin(corpo.getSize()/2.f);
 			corpo.setPosition(pos);
-			velocidade = vel;
-		}
-		Personagem::Personagem()
-		{
-
 		}
 
 		Personagem::~Personagem()
 		{
 		}
 
-		void Personagem::setColor(sf::Color cor)
+		void Personagem::desenhar()
 		{
-			corpo.setFillColor(cor);
-		}
-
-		sf::RectangleShape Personagem::getCorpo()
-		{
-			return corpo;
-		}
-
-		void Personagem::mover()
-		{
+			if (vivo)
+				pGG->desenhar(&corpo);
 		}
 	}
 }

@@ -9,18 +9,22 @@ namespace Entidades
 		class Personagem : public Entidade
 		{
 		protected:
-			int num_vidas;
 			sf::RectangleShape corpo;
-			sf::Vector2f velocidade;
+			bool vivo;
+			int n_vidas;
 		public:
-			Personagem(const sf::Vector2f pos, const sf::Vector2f vel, const sf::Vector2f tam);
-			Personagem();
-			~Personagem();
-			sf::RectangleShape getCorpo();
-			void setColor(sf::Color cor);
-			void salvarDataBuffer();
+			Personagem(int indice = -1, sf::Vector2f pos = sf::Vector2f(0.f, 0.f), sf::Vector2f vel = sf::Vector2f(50.f, 50.f), sf::Vector2f tam = sf::Vector2f(0.f, 0.f));
+			virtual ~Personagem();
 			virtual void executar() = 0;
-			virtual void mover() = 0;
+			
+			void infligir_dano(int dmg) { n_vidas -= dmg; }
+			void set_vivo(bool a) { vivo = a; }
+			virtual void desenhar();
+			sf::Vector2f get_posicao() { return corpo.getPosition(); }
+			sf::Vector2f get_tamanho() { return corpo.getSize(); }
+			void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
+			const bool get_vivo() const { return vivo; }
+			const int get_vidas() const { return n_vidas; }
 		};
 	}
 }

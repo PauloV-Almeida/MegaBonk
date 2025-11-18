@@ -14,7 +14,7 @@ namespace Entidades
                 corpo.setFillColor(sf::Color::Cyan);
             else
             {
-                texturas = pGG->carregar_texturas("carregar png");
+                texturas = pGG->carregar_texturas("./assets/obstaculo3.png");
                 corpo.setTexture(texturas);
             }
         }
@@ -22,17 +22,8 @@ namespace Entidades
         {
 
         }
-        void Plataforma::colidir(Entidade* outro, std::string  direcao)
-        {
-            if (pVerifica)
-            {
-                Entidades::Personagens::Jogador* jogador = dynamic_cast<Entidades::Personagens::Jogador*>(outro);
-                /*if (jogador != nullptr)
-                {
-                    jogador->set_win(true);
-                }*/
-            }
-        }
+        //void Plataforma::obstaculizar(Entidade* outro, std::string  direcao)
+        
         void Plataforma::executar()
         {
             mover();
@@ -40,7 +31,10 @@ namespace Entidades
         void Plataforma::mover()
         {
             vel.y += GRAVIDADE;
-
+            if (deCastigo)
+            {
+                vel.y -= GRAVIDADE;
+            }
             corpo.setPosition(corpo.getPosition() + vel);
         }
     }

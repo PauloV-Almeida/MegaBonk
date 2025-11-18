@@ -1,8 +1,5 @@
 #pragma once
 
-#define RAIOX 200.0f
-#define RAIOY 200.0f
-
 #include "Personagem.h"
 #include "Jogador.h"
 namespace Entidades
@@ -11,21 +8,13 @@ namespace Entidades
 	{
 		class Inimigo :public Personagem
 		{
-		private:
-			Jogador* j;
-			int nivel_maldade;
+		protected:
+			int dano;
 		public:
-			Inimigo(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f tam);
-			Inimigo();
+			Inimigo(int indice = -1,sf::Vector2f pos = sf::Vector2f(10.f, 0.f), sf::Vector2f vel = sf::Vector2f(0.f, 0.f), sf::Vector2f tam = sf::Vector2f(50.f, 50.f));
 			~Inimigo();
-			void setJogado(Jogador* jog);
-			void mover();
-			void movimentoaleatorio();
-			void persegue(sf::Vector2f posJogador, sf::Vector2f posInimigo);
-			void salvarDataBuffer() {};
-			//virtual void executar() = 0;
-			//virtual void danificar(Jogador* p) = 0;
-			virtual void salva() {};
+			virtual void executar()= 0;
+			virtual void danificar() = 0;
 
 		};
 	}

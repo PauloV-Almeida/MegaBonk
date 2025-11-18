@@ -18,25 +18,62 @@ namespace Gerenciadores
 		std::list<Entidades::Obstaculos::Obstaculo*> LOs;
 		//std::set <Entidades::Projetil*> LPs;
 
-		Entidades::Personagens::Jogador* pJog;
+		Listas::ListaEntidades* LJogs;
 
 
 	private:
 		const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2)const;
-		void colisor(Entidades::Entidade* pe1, Entidades::Entidade* pe2, bool vertical)const;
+		void colisor(Entidades::Entidade* pe1, Entidades::Entidade* pe2, bool vertica) const;
 		void tratarColisoesJogsObstacs();
 		void tratarColisoesJogsInimigs();
-		void tratarColisoesJogsProjeteis();
+		//void tratarColisoesJogsProjeteis();
 
-		static GerenciadorColisoes* instance;
-		GerenciadorColisoes();
+		
+		
 	public:
-
+		GerenciadorColisoes();
 		~GerenciadorColisoes();
 		static GerenciadorColisoes* get_instance();
-		void setJogadores(Entidades::Personagens::Jogador* j);
-		void incluirInimigo(Entidades::Personagens::Inimigo* i);
-		void incluirObstaculo(Entidades::Obstaculos::Obstaculo* o);
+		void incluirJogadores(Listas::ListaEntidades* ListaJg) {if(ListaJg){ LJogs = ListaJg;}}
+		void incluirInimigos(Listas::ListaEntidades* ListaIni) {
+			if (!ListaIni) return;
+
+			// percorre todos os elementos
+			auto itr = ListaIni->get_Primeiro();
+
+			while (itr != NULL)
+			{
+				Entidades::Entidade* e = *itr;
+
+				// tenta converter para inimigo
+				Entidades::Personagens::Inimigo* ini =
+					dynamic_cast<Entidades::Personagens::Inimigo*>(e);
+
+				if (ini)
+				{
+					LIs.push_back(ini);
+				}
+
+				itr++; // avança
+			}
+		}
+		void incluirObstaculos(Listas::ListaEntidades* ListaObs) {
+			if (!ListaObs) return;
+			// percorre todos os elementos
+			auto itr = ListaObs->get_Primeiro();
+			while (itr != NULL)
+			{
+				Entidades::Entidade* e = *itr;
+				// tenta converter para obstaculo
+				Entidades::Obstaculos::Obstaculo* obs =
+					dynamic_cast<Entidades::Obstaculos::Obstaculo*>(e);
+				if (obs)
+				{
+					LOs.push_back(obs);
+				}
+				itr++; // avança
+			}
+		}
 		//void incluirProjetil(Projetil* p);
 
 		void executar();

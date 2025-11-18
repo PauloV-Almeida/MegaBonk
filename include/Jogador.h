@@ -6,6 +6,8 @@
 
 #include "Personagem.h"
 
+#define DMG 3
+
 namespace Entidades
 {
 	namespace Personagens
@@ -15,22 +17,31 @@ namespace Entidades
 		class Jogador : public Personagem
 		{
 		protected:
-			int pontos;
+			sf::RectangleShape ataque_corpo;
+			bool atacando;
+			int id_jogador;
+			bool venceu;
+			bool direita;
+			std::string ataque_direcao;
+			int dano;
 		public:
-			Jogador(sf::Vector2f pos, sf::Vector2f vel, sf::Vector2f tam);
-			Jogador();
+			Jogador(int indice = 1, sf::Vector2f pos = sf::Vector2f(10.f, 0.f), sf::Vector2f vel = sf::Vector2f(0.f, 0.f), sf::Vector2f tam = sf::Vector2f(50.f, 50.f));
+			Jogador(int indice, bool viv, int nV, sf::Vector2f pos, sf::Vector2f velo, sf::Vector2f tam);
 			~Jogador();
-			void mover();
-			void colidir(Inimigo* pIn) { num_vidas--; };
+
 			void executar();
-			void salvar() {};
-			void colidir(Entidade* outro, std::string  direcao = "") {}
+			void mover(char direcao = '0');
+			//void colidir(Inimigo* pIn, std::string direcao = "");
+			void ataque();
+			void set_venceu(bool v) { venceu = v; };
+			bool get_venceu() { return venceu; };
+
+			sf::Vector2f get_ataque_posicao() { return ataque_corpo.getPosition(); }
+			sf::Vector2f get_ataque_tamanho() { return ataque_corpo.getSize(); }
+			const int get_dano() const { return dano; }
+
 			void desenhar();
-			sf::Vector2f get_posicao() { return corpo.getPosition(); }
-			sf::Vector2f get_tamanho() { return corpo.getSize(); }
-			void set_vivo(bool a) { if (!a) num_vidas = 0; }
-			void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
-			virtual void infligir_dano(int dmg) {}
+			
 		};
 	}
 }

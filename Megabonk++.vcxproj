@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Botao.cpp" />
     <ClCompile Include="src\Entidades.cpp" />
+    <ClCompile Include="src\Esqueleto.cpp" />
     <ClCompile Include="src\Estado.cpp" />
     <ClCompile Include="src\Fase.cpp" />
     <ClCompile Include="src\Deserto.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="include\Botao.h" />
     <ClInclude Include="include\Ente.h" />
     <ClInclude Include="include\Entidades.h" />
+    <ClInclude Include="include\Esqueleto.h" />
     <ClInclude Include="include\Estado.h" />
     <ClInclude Include="include\Fase.h" />
     <ClInclude Include="include\Deserto.h" />
@@ -81,9 +83,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Deserto.png" />
+    <Image Include="assets\Esqueleto.png" />
     <Image Include="assets\Floresta.png" />
     <Image Include="assets\imgMenu.png" />
+    <Image Include="assets\jogador1-direita.png" />
+    <Image Include="assets\jogador1-esquerda.png" />
     <Image Include="assets\jogador1.png" />
+    <Image Include="assets\obstaculo3.png" />
     <Image Include="assets\plataform.png" />
   </ItemGroup>
   <ItemGroup>

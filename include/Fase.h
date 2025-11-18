@@ -31,16 +31,19 @@ namespace Fases
 		Gerenciadores::GerenciadorEventos* pGE;
 
 		sf::RectangleShape corpo;
+	protected:
+		Entidades::Entidade* criarEsqueleto(std::ifstream& arquivo);
+		Entidades::Entidade* criarPlataformas(std::ifstream& arquivo);
+		
+
+		virtual void criarInimigos(Entidades::Entidade* ini) = 0;
+		virtual void criarObstaculos(Entidades::Entidade* obs) = 0;
+		void criarCenario(std::string arquivo);
+
 	public:
 		Fase(int id = -1);
 		virtual ~Fase();
 		virtual void executar() = 0;
 		void desenhar();
-
-		void add_jogador(Entidades::Entidade* jogador);
-		//void add_inimigo(Entidades::Entidade* inimigo);
-
-		//Entidades::Entidade* criar_Inimigos(std::ifstream& arquivo);
-		void criar_scenario(std::string arquivo);
 	};
 }

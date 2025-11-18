@@ -3,24 +3,16 @@
 
 namespace Gerenciadores
 {
-	GerenciadorColisoes* GerenciadorColisoes::instance = nullptr;
-
-	GerenciadorColisoes* GerenciadorColisoes::get_instance()
-	{
-		if (instance == nullptr) {
-			instance = new GerenciadorColisoes();
-		}
-		return instance;
-	}
-
 	GerenciadorColisoes::GerenciadorColisoes() :
-		LIs(),
-		pJog(nullptr)
+		LIs(), LOs(), LJogs(nullptr)
 	{
+		LIs.clear();
+		LOs.clear();
 	}
-
 	GerenciadorColisoes::~GerenciadorColisoes()
 	{
+		LIs.clear();
+		LOs.clear();
 	}
 
 	const bool GerenciadorColisoes::verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2) const
@@ -94,47 +86,4 @@ namespace Gerenciadores
 		}
 	}
 
-	void GerenciadorColisoes::tratarColisoesJogsObstacs()
-	{
-		std::list<Entidades::Obstaculos::Obstaculo*>::iterator it;
-		if (!LOs.empty())
-		{
-			if (pJog)
-				for (it = LOs.begin(); it != LOs.end(); ++it)
-					verificarColisao(pJog, *it);
-			//if (pJog2) for (it = LOs.begin(); it != LOs.end(); ++it) 
-				//verificarColisao(pJog2, *it); 
-		}
-	}
-
-
-	void GerenciadorColisoes::tratarColisoesJogsInimigs()
-	{
-		if (!LIs.empty() && pJog)
-		{
-			for (size_t i = 0; i < LIs.size(); ++i)
-				verificarColisao(static_cast<Entidades::Entidade*>(pJog), static_cast<Entidades::Entidade*>(LIs[i]));
-		}
-	}
-
-	void GerenciadorColisoes::tratarColisoesJogsProjeteis()
-	{
-		// LPs está comentado no header; implementar quando disponível.
-	}
-
-	void GerenciadorColisoes::setJogadores(Entidades::Personagens::Jogador* j)
-	{
-		if (!pJog)
-			pJog = j;
-	}
-
-	void GerenciadorColisoes::incluirInimigo(Entidades::Personagens::Inimigo* i) { LIs.push_back(i); }
-
-	void GerenciadorColisoes::incluirObstaculo(Entidades::Obstaculos::Obstaculo* o) { LOs.push_back(o); }
-	void GerenciadorColisoes::executar()
-	{
-		tratarColisoesJogsInimigs();
-		tratarColisoesJogsObstacs();
-		tratarColisoesJogsProjeteis();
-	}
 }
