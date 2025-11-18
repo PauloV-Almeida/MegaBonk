@@ -2,10 +2,14 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../include/Entidades.h"
-#include "../include/Jogador.h"
-#include "../include/ListaEntidades.h"
-#include "../include/GerenciadorGrafico.h"
+#include "Entidades.h"
+#include "Jogador.h"
+#include "ListaEntidades.h"
+#include "GerenciadorGrafico.h"
+#include "GerenciadorColisoes.h"
+#include "GerenciadorEventos.h"
+#include "GerenciadorEstado.h"
+
 
 #include <fstream>
 #include <string>
@@ -13,7 +17,7 @@
 
 namespace Fases
 {
-	class Fase : public Ente
+	class Fase : public Ente, public E
 	{
 	protected:
 		Listas::ListaEntidades jogadores;

@@ -94,7 +94,7 @@ namespace Menus
             if (AtualFase == 1)
             {
                 AtualFase = 2;
-                texturas = pGG->carregar_texturas("./assets/Deserto.png");
+                texturas = pGG->carregar_texturas("./assets/Floresta.png");
                 corpo.setTexture(texturas);
             }
             else

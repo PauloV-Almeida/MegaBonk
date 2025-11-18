@@ -185,6 +185,12 @@
     <Image Include="assets\Deserto.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="assets\Floresta.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="assets\imgMenu.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\PressStart2P-Regular.ttf" />

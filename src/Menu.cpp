@@ -16,7 +16,7 @@ namespace Menus
 		botoes[0]->escolherCor();
 
 		corpo.setSize(sf::Vector2f(800.f , 600.f));
-		texturas = pGG->carregar_texturas("./assets/Deserto.png");
+		texturas = pGG->carregar_texturas("./assets/imgMenu.png");
 		corpo.setTexture(texturas);
 	}
 	Menu::~Menu()

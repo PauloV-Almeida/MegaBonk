@@ -81,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Deserto.png" />
+    <Image Include="assets\Floresta.png" />
+    <Image Include="assets\imgMenu.png" />
     <Image Include="assets\jogador1.png" />
     <Image Include="assets\plataform.png" />
   </ItemGroup>
