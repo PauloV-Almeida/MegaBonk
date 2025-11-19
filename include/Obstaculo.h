@@ -20,7 +20,7 @@ namespace Entidades
             virtual void executar() = 0;
             virtual void mover();
             void desenhar();
-            virtual void obstaculizar(Entidades::Entidade* outro, std::string  direcao = "") = 0;
+            //virtual void obstaculizar(Entidades::Entidade* outro, std::string  direcao = "") = 0;
             
             void set_vivo(bool a) { existir = a; }
             const bool get_vivo() const { return existir; }

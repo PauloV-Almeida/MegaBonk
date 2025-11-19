@@ -4,6 +4,8 @@
 
 #include "Entidades.h"
 #include "Jogador.h"
+#include "Esqueleto.h"
+#include "Plataforma.h"
 #include "ListaEntidades.h"
 #include "GerenciadorGrafico.h"
 #include "GerenciadorColisoes.h"
@@ -33,11 +35,11 @@ namespace Fases
 		sf::RectangleShape corpo;
 	protected:
 		Entidades::Entidade* criarEsqueleto(std::ifstream& arquivo);
-		Entidades::Entidade* criarPlataformas(std::ifstream& arquivo);
+		//Entidades::Entidade* criarPlataformas(std::ifstream& arquivo);
 		
 
-		virtual void criarInimigos(Entidades::Entidade* ini) = 0;
-		virtual void criarObstaculos(Entidades::Entidade* obs) = 0;
+		//virtual void criarInimigos(Entidades::Entidade* ini) = 0;
+		//virtual void criarObstaculos(Entidades::Entidade* obs) = 0;
 		void criarCenario(std::string arquivo);
 
 	public:

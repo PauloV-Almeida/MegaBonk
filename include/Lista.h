@@ -36,7 +36,7 @@ namespace Listas
                 }
                 data = NULL;
             }
-            TE* get_data() { return data; }
+            TE* get_data() {if(data) return data; }
             Elemento<TE>* get_Proximo() { return pProximo; }
 
             void set_data(TE* dt) { data = dt; }
@@ -78,7 +78,8 @@ namespace Listas
             }
             TE* operator*()
             {
-                return atual->get_data();
+                if(atual)
+                 return atual->get_data();
             }
             const Elemento<TE>* get_atual() const { return atual; }
         };

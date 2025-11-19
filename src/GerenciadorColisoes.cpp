@@ -56,15 +56,13 @@ namespace Gerenciadores
 			{
 				sf::Vector2f aux(pos1.x, pos2.y - (tam2.y + tam1.y) / 2.f);
 				pe1->set_posicao(aux);
-				pe1->colidir(pe2, "Embaixo");
-				pe2->colidir(pe1, "Emcima");
+				
 			}
 			else
 			{
 				sf::Vector2f aux(pos1.x, pos2.y + (tam2.y + tam1.y) / 2.f);
 				pe1->set_posicao(aux);
-				pe1->colidir(pe2, "Emcima");
-				pe2->colidir(pe1, "Embaixo");
+				
 			}
 		}
 		else
@@ -73,15 +71,13 @@ namespace Gerenciadores
 			{
 				sf::Vector2f aux(pos2.x - (tam2.x + tam1.x) / 2.f, pos1.y);
 				pe1->set_posicao(aux);
-				pe1->colidir(pe2, "Direita");
-				pe2->colidir(pe1, "Esquerda");
+				
 			}
 			else
 			{
 				sf::Vector2f aux(pos2.x + (tam2.x + tam1.x) / 2.f, pos1.y);
 				pe1->set_posicao(aux);
-				pe1->colidir(pe2, "Esquerda");
-				pe2->colidir(pe1, "Direita");
+				
 			}
 		}
 	}

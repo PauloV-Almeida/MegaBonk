@@ -15,6 +15,8 @@ private:
 	Gerenciadores::GerenciadorGrafico* pGG;
 	Gerenciadores::GerenciadorEventos* pGE;
 	Gerenciadores::GerenciadorEstado* pGEst;
+	Fases::Deserto fDeserto;
+	Fases::Deserto fDeserto_2p;
 	Menus::MainMenu main_menu;
 public:
 	MegaBonk();

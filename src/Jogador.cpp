@@ -28,7 +28,7 @@ namespace Entidades
 			corpo.setTexture(texturas);
 		}
 
-		Jogador::Jogador(int indice, bool viv, int nV, sf::Vector2f pos, sf::Vector2f velo, sf::Vector2f tam):
+		Jogador::Jogador(int indice, bool viv, int nV, sf::Vector2f pos, sf::Vector2f velo, sf::Vector2f tam) :
 			ataque_corpo(corpo.getSize() * 2.f),
 			atacando(false),
 			Personagem(0, pos, velo, tam),
@@ -46,7 +46,8 @@ namespace Entidades
 			{
 				pGG->carregar_texturas("./assets/jogador1-esquerda.png");
 				texturas = pGG->carregar_texturas("./assets/jogador1-direita.png");
-			}else if (id_jogador == 2)
+			}
+			else if (id_jogador == 2)
 			{
 				pGG->carregar_texturas("./assets/jogador1-esquerda.png");
 				texturas = pGG->carregar_texturas("./assets/jogador1-direita.png");
@@ -73,17 +74,20 @@ namespace Entidades
 						ataque_corpo.rotate(90);
 						pGG->desenhar(&ataque_corpo);
 						ataque_corpo.rotate(-90);
-					}else if (ataque_direcao == "Esquerda")
+					}
+					else if (ataque_direcao == "Esquerda")
 					{
 						ataque_corpo.rotate(-90);
 						pGG->desenhar(&ataque_corpo);
 						ataque_corpo.rotate(90);
-					}else if (ataque_direcao == "Abaixo")
+					}
+					else if (ataque_direcao == "Abaixo")
 					{
 						ataque_corpo.rotate(180);
 						pGG->desenhar(&ataque_corpo);
 						ataque_corpo.rotate(180);
-					}else
+					}
+					else
 					{
 						pGG->desenhar(&ataque_corpo);
 					}
@@ -97,16 +101,32 @@ namespace Entidades
 		{
 			if (n_vidas <= 0)
 				vivo = false;
+
+			// aplica gravidade (comportamento da Entidade base)
+			Entidade::mover();
+
+			// processa entrada e altera velocidade horizontal/vertical
 			mover();
+
+			// processa ataque (pode desenhar ataque)
 			ataque();
 
+			// aplica velocidade à posição (movimenta o corpo)
+			corpo.setPosition(corpo.getPosition() + vel);
 		}
 
 		void Jogador::mover(char direcao)
 		{
-			if(id_jogador == 1)
-			{ 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			// constante de velocidade vertical de voo (ajuste conforme necessário)
+			const float VOAR_SPEED = 5.f;
+
+			if (id_jogador == 1)
+			{
+				// voo contínuo enquanto W pressionado
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+				{
+					vel.y = -VOAR_SPEED;
+				}else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 				{
 					if (vel.x <= VEL_MAX)
 						vel.x += 2 * velocidade;
@@ -130,6 +150,12 @@ namespace Entidades
 
 			if (id_jogador == 2)
 			{
+				// voo contínuo enquanto seta cima pressionada
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+				{
+					vel.y = -VOAR_SPEED;
+				}
+
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 				{
 					if (vel.x <= VEL_MAX)
@@ -151,7 +177,7 @@ namespace Entidades
 					}
 				}
 			}
-			
+
 		}
 
 		//void colidir(Inimigo* pIn, std::string direcao = ""){}
@@ -189,7 +215,7 @@ namespace Entidades
 					direcao = "Abaixo";
 					ataque_direcao = "Abaixo";
 				}
-				
+
 			}
 			else if (id_jogador == 2)
 			{
@@ -231,7 +257,7 @@ namespace Entidades
 				ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x - corpo.getSize().x / 2 - ataque_corpo.getSize().x / 2, corpo.getPosition().y));
 			}
 			pGG->desenhar(&ataque_corpo);
-			
+
 			dano = 0;
 		}
 
