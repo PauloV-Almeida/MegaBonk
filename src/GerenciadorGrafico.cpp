@@ -24,7 +24,7 @@ namespace Gerenciadores
 		texturas()
 
 	{
-		janela->setFramerateLimit(60);
+		janela->setFramerateLimit(120);
 		fonte = new sf::Font;
 		if (!fonte->loadFromFile(FONTE_PATH))
 		{

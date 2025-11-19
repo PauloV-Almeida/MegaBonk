@@ -7,10 +7,10 @@ namespace Entidades
     namespace Obstaculos
     {
         Plataforma::Plataforma(sf::Vector2f pos, bool veri) :
-            Obstaculo(11, pos)
+            Obstaculo(11, pos),
+            pVerifica(veri)
         {
-            pVerifica = veri;
-            if (veri)
+            if (pVerifica)
                 corpo.setFillColor(sf::Color::Cyan);
             else
             {
@@ -22,20 +22,27 @@ namespace Entidades
         {
 
         }
-        //void Plataforma::obstaculizar(Entidade* outro, std::string  direcao)
-        
         void Plataforma::executar()
         {
             mover();
         }
         void Plataforma::mover()
         {
-            vel.y += GRAVIDADE;
-            if (deCastigo)
+            if (pVerifica)
             {
-                vel.y -= GRAVIDADE;
+                // plataforma móvel: aplica gravidade/movimento
+                vel.y += GRAVIDADE;
+                if (deCastigo)
+                {
+                    vel.y -= GRAVIDADE;
+                }
+                corpo.setPosition(corpo.getPosition() + vel);
             }
-            corpo.setPosition(corpo.getPosition() + vel);
+            else
+            {
+                // plataforma fixa: garante velocidade zero (não cai)
+                vel = sf::Vector2f(0.f, 0.f);
+            }
         }
     }
 }

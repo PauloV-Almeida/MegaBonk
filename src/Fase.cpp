@@ -2,7 +2,7 @@
 
 namespace Fases
 {
-	Fase::Fase(int id):
+	Fase::Fase(int id) :
 		Estados::Estado(id),
 		jogadores(),
 		inimigos(),
@@ -62,9 +62,10 @@ namespace Fases
 	{
 		std::ifstream entrada(arquivo);
 
-		if (entrada)
+		// CORREÇÃO: testar se o arquivo NÃO abriu
+		if (!entrada)
 		{
-			std::cout<<"Arquivo não encontrado"<<std::endl;
+			std::cout << "Arquivo não encontrado: " << arquivo << std::endl;
 			exit(1);
 		}
 
@@ -81,7 +82,7 @@ namespace Fases
 				switch (character)
 				{
 				case '0':
-					aux = new Entidades::Obstaculos::Plataforma(sf::Vector2f(j* OBSTACULO_TAMANHO, i * OBSTACULO_TAMANHO));
+					aux = new Entidades::Obstaculos::Plataforma(sf::Vector2f(j * OBSTACULO_TAMANHO, i * OBSTACULO_TAMANHO));
 					if (aux)
 					{
 						Entidades::Entidade* pObs = nullptr;
@@ -90,7 +91,7 @@ namespace Fases
 					}
 					break;
 				default:
-					
+
 					break;
 				}
 				j++;
@@ -98,7 +99,6 @@ namespace Fases
 		}
 		entrada.close();
 	}//cenario
-	
-	
-}
 
+
+}
