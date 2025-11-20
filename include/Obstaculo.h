@@ -27,9 +27,8 @@ namespace Entidades
             sf::Vector2f get_posicao() { return corpo.getPosition(); }
             sf::Vector2f get_tamanho() { return corpo.getSize(); }
             void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
-            //Não criamos nenhuma plataforma capaz de receber dano:
-            void infligir_dano(int dmg) {}
-            
+			void set_danoso(bool d) { danoso = d; }
+            const bool get_danoso() const { return danoso; }
         };
     }
 

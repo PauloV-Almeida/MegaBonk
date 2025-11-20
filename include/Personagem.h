@@ -17,7 +17,7 @@ namespace Entidades
 			virtual ~Personagem();
 			virtual void executar() = 0;
 			
-			void infligir_dano(int dmg) { n_vidas -= dmg; }
+			void receber_dano(int dmg) { n_vidas -= dmg; }
 			void set_vivo(bool a) { vivo = a; }
 			virtual void desenhar();
 			sf::Vector2f get_posicao() { return corpo.getPosition(); }
@@ -25,6 +25,7 @@ namespace Entidades
 			void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
 			const bool get_vivo() const { return vivo; }
 			const int get_vidas() const { return n_vidas; }
+
 		};
 	}
 }

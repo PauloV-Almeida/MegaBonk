@@ -22,10 +22,10 @@ namespace Gerenciadores
 
 
 	private:
-		const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2)const;
-		void colisor(Entidades::Entidade* pe1, Entidades::Entidade* pe2, bool vertica) const;
-		void tratarColisoesJogsObstacs();
-		void tratarColisoesJogsInimigs();
+		const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2, std::string* direcao1, std::string* direcao2)const;
+		void colisor() const;
+		void tratarColisoesJogsObstacs(Entidades::Personagens::Jogador* pJog, Entidades::Obstaculos* pObs, std::string* dir1, std::string* dir2);
+		void tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni, std::string* dir1, std::string* dir2);
 		//void tratarColisoesJogsProjeteis();
 
 		

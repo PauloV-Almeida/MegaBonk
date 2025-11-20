@@ -5,7 +5,7 @@
 
 #define GRAVIDADE 0.3
 #define VELOCIDADE 0.1
-#define VEL_MAX 10.0
+#define VEL_MAX 5.0
 
 class Ente
 {

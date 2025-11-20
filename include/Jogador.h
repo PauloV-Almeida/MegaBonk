@@ -23,7 +23,6 @@ namespace Entidades
 			bool venceu;
 			bool direita;
 			std::string ataque_direcao;
-			int dano;
 		public:
 			Jogador(int indice = 1, sf::Vector2f pos = sf::Vector2f(10.f, 0.f), sf::Vector2f vel = sf::Vector2f(0.f, 0.f), sf::Vector2f tam = sf::Vector2f(100.f, 100.f));
 			Jogador(int indice, bool viv, int nV, sf::Vector2f pos, sf::Vector2f velo, sf::Vector2f tam);
@@ -38,7 +37,6 @@ namespace Entidades
 
 			sf::Vector2f get_ataque_posicao() { return ataque_corpo.getPosition(); }
 			sf::Vector2f get_ataque_tamanho() { return ataque_corpo.getSize(); }
-			const int get_dano() const { return dano; }
 
 			void desenhar();
 			
