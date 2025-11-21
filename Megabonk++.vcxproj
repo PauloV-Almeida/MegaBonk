@@ -27,6 +27,7 @@
     <ClCompile Include="src\Deserto.cpp" />
     <ClCompile Include="src\GerenciadorColisoes.cpp" />
     <ClCompile Include="src\GerenciadorEstado.cpp" />
+    <ClCompile Include="src\Goblin.cpp" />
     <ClCompile Include="src\Inimigo.cpp" />
     <ClCompile Include="src\Jogador.cpp" />
     <ClCompile Include="src\ListaEntidades.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="include\GerenciadorEstado.h" />
     <ClInclude Include="include\GerenciadorEventos.h" />
     <ClInclude Include="include\GerenciadorGrafico.h" />
+    <ClInclude Include="include\Goblin.h" />
     <ClInclude Include="include\Inimigo.h" />
     <ClInclude Include="include\Jogador.h" />
     <ClInclude Include="include\Lista.h" />
