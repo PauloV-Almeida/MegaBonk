@@ -9,10 +9,10 @@ namespace Entidades
 			atacando(false),
 			Personagem(0, pos, velo, tam),
 			venceu(false),
-			dano(0),
 			id_jogador(indice),
 			direita(true)
 		{
+			dano = DMG;
 			ataque_corpo.setOrigin(ataque_corpo.getSize().x / 2, ataque_corpo.getSize().y / 2);
 			ataque_corpo.setTexture(pGG->carregar_texturas("./assets/jogador1.png"));
 			n_vidas = 20;
@@ -117,96 +117,79 @@ namespace Entidades
 
 		void Jogador::mover(char direcao)
 		{
-			// constante de velocidade vertical de voo (ajuste conforme necessário)
-			const float VOAR_SPEED = 5.f;
-			// aceleração horizontal (usa a variável 'velocidade' definida na Entidade)
-			const float H_ACCEL = 2.f * velocidade;
-			// amortecimento quando nenhuma tecla horizontal está pressionada
-			const float FRICTION = 0.80f;
-
-			// --- MOVIMENTO VERTICAL ---
 			if (id_jogador == 1)
 			{
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-				{
-					vel.y = -VOAR_SPEED;
+				if (!noChao)
+					vel.y += GRAVIDADE;
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+					vel.x -= VELOCIDADE;
+					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-direita.png"));
 				}
-			}
-			else if (id_jogador == 2)
-			{
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				{
-					vel.y = -VOAR_SPEED;
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+					vel.x += VELOCIDADE;
+					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
 				}
+				else
+					vel.x *= 0.8f;
+
+				if (vel.x > VEL_MAX)
+					vel.x = VEL_MAX;
+				if (vel.x < -VEL_MAX)
+					vel.x = -VEL_MAX;
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && noChao)
+				{
+					vel.y -= 20.0;
+					noChao = false;
+				}
+				corpo.move(vel.x, vel.y);
+
+				noChao = false;
 			}
 
-			// --- MOVIMENTO HORIZONTAL (verifica independemente do vertical) ---
-			if (id_jogador == 1)
-			{
-				// mover para a direita
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				{
-					vel.x += H_ACCEL;
-					if (vel.x > VEL_MAX) vel.x = VEL_MAX;
-					if (!direita)
-					{
-						corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-direita.png"));
-						direita = true;
-					}
-				}
-				// mover para a esquerda
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-				{
-					vel.x -= H_ACCEL;
-					if (vel.x < -VEL_MAX) vel.x = -VEL_MAX;
-					if (direita)
-					{
-						corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
-						direita = false;
-					}
-				}
-				else
-				{
-					// amortecimento quando nenhuma tecla horizontal é pressionada
-					vel.x *= FRICTION;
-					if (std::abs(vel.x) < 0.05f) vel.x = 0.f;
-				}
-			}
 			else if (id_jogador == 2)
 			{
-				// direita
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-				{
-					vel.x += H_ACCEL;
-					if (vel.x > VEL_MAX) vel.x = VEL_MAX;
-					if (!direita)
-					{
-						corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-direita.png"));
-						direita = true;
-					}
+				if (!noChao)
+					vel.y += GRAVIDADE;
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+					vel.x -= VELOCIDADE;
+					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-direita.png"));
 				}
-				// esquerda
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				{
-					vel.x -= H_ACCEL;
-					if (vel.x < -VEL_MAX) vel.x = -VEL_MAX;
-					if (direita)
-					{
-						corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
-						direita = false;
-					}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+					vel.x += VELOCIDADE;
+					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
 				}
 				else
+					vel.x *= 0.8f;
+
+				if (vel.x > VEL_MAX)
+					vel.x = VEL_MAX;
+				if (vel.x < -VEL_MAX)
+					vel.x = -VEL_MAX;
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && noChao)
 				{
-					vel.x *= FRICTION;
-					if (std::abs(vel.x) < 0.05f) vel.x = 0.f;
+					vel.y -= 20.0;
+					noChao = false;
 				}
+				corpo.move(vel.x, vel.y);
+
+				noChao = false;
 			}
 		}
 
-		void colidir(Inimigo* pIni, std::string direcao);
-		void colidir(Obstaculos::Obstaculo* pObs, std::string direcao)
-
+		void colidir(Inimigo* pIni, std::string direcao) 
+		{
+			if (pIni->get_id() == 1)
+			{
+				if(direcao == "Direita")
+					vel.x
+			}
+		}
+		void colidir(Obstaculos::Obstaculo* pObs, std::string direcao) {}
+			
 		void Jogador::ataque()
 		{
 			if ((id_jogador == 1 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ||

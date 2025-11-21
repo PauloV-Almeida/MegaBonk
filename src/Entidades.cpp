@@ -7,7 +7,7 @@ float Entidades::Entidade::velocidade(2.f);
 sf::Vector2f Entidades::Entidade::posJogador(200.f, 200.f);
 
 namespace Entidades
-{
+{				
 	Entidade::Entidade(int indice, sf::Vector2f velo):
 		Ente(),
 		id(indice),

@@ -8,7 +8,8 @@ namespace Entidades
 			Entidade::Entidade(indice, vel),
 			corpo(tam),
 			vivo(true),
-			n_vidas(1)
+			n_vidas(1),
+			noChao(false)
 		{
 			corpo.setOrigin(corpo.getSize()/2.f);
 			corpo.setPosition(pos);
