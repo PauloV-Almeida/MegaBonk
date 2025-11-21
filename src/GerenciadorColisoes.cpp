@@ -4,17 +4,14 @@
 
 namespace Gerenciadores
 {
-	 GerenciadorColisoes* GerenciadorColisoes::get_instance()
+	GerenciadorColisoes* GerenciadorColisoes::get_instance()
 	{
-		if (instance == nullptr)
-		{
-			instance = new GerenciadorColisoes();
-		}
-		return instance;
+		static GerenciadorColisoes instancia;
+		return &instancia;
 	}
 
 	GerenciadorColisoes::GerenciadorColisoes() :
-		LIs(), LOs(), LJogs(nullptr), instance(nullptr)
+		LIs(), LOs(), LJogs(nullptr)
 	{
 		LIs.clear();
 		LOs.clear();
@@ -87,7 +84,7 @@ namespace Gerenciadores
 
 		return colidiu;
 	}
-	void GerenciadorColisoes::colisor()const
+	void GerenciadorColisoes::colisor()
 	{
 		std::string dir1, dir2;
 
@@ -123,13 +120,13 @@ namespace Gerenciadores
 			Entidades::Personagens::Jogador* jog =
 				dynamic_cast<Entidades::Personagens::Jogador*>(e);
 
-			for (std::list<Entidades::Obstaculos::Obstaculo*>::const_iterator it = LOs.begin();
+			for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin();
 				it != LOs.end(); ++it)
 			{
 				if (verificarColisao(jog, *it, &dir1, &dir2))
 					tratarColisoesJogsObstacs(jog, *it, &dir1, &dir2);
 			}
-			for (std::vector<Entidades::Personagens::Inimigo*>::const_iterator itI = LIs.begin();
+			for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin();
 				itI != LIs.end(); ++itI)
 			{
 				Entidades::Personagens::Inimigo* ini = *itI;

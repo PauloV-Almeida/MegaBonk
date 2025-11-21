@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Inimigo.h"
-
+#include "Jogador.h"
 namespace Entidades
 {
 	namespace Personagens

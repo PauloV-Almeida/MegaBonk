@@ -22,6 +22,7 @@ namespace Entidades
 		void Esqueleto::executar()
 		{
 			mover();
+			desenhar();
 		}
 		void Esqueleto::danificar()
 		{
@@ -71,6 +72,11 @@ namespace Entidades
 			{
 				vel.x = 0.0f;
 			}
+		}
+
+		void Esqueleto::desenhar()
+		{
+			pGG->desenhar(&corpo);
 		}
 	}
 }
