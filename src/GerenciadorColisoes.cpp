@@ -4,6 +4,15 @@
 
 namespace Gerenciadores
 {
+	 GerenciadorColisoes* GerenciadorColisoes::get_instance()
+	{
+		if (instance == nullptr)
+		{
+			instance = new GerenciadorColisoes();
+		}
+		return instance;
+	}
+
 	GerenciadorColisoes::GerenciadorColisoes() :
 		LIs(), LOs(), LJogs(nullptr), instance(nullptr)
 	{
@@ -15,14 +24,7 @@ namespace Gerenciadores
 		LIs.clear();
 		LOs.clear();
 	}
-	static GerenciadorColisoes* GerenciadorColisoes::get_instance()
-	{
-		if (instance == nullptr)
-		{
-			instance = new GerenciadorColisoes();
-		}
-		return instance;
-	}
+	
 
 	const bool GerenciadorColisoes::verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2, std::string* direcao1, std::string* direcao2) const
 	{
