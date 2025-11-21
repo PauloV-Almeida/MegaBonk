@@ -33,11 +33,11 @@ namespace Entidades
 			atacando(false),
 			Personagem(0, pos, velo, tam),
 			venceu(false),
-			dano(0),
 			id_jogador(indice),
 			direita(true),
 			ataque_direcao("Acima")
 		{
+			dano = DMG;
 			vivo = viv;
 			n_vidas = nV;
 
@@ -102,17 +102,9 @@ namespace Entidades
 			if (n_vidas <= 0)
 				vivo = false;
 
-			// aplica gravidade (comportamento da Entidade base)
-			Entidade::mover();
-
-			// processa entrada e altera velocidade horizontal/vertical
 			mover();
 
-			// processa ataque (pode desenhar ataque)
 			ataque();
-
-			// aplica velocidade à posição (movimenta o corpo)
-			corpo.setPosition(corpo.getPosition() + vel);
 		}
 
 		void Jogador::mover(char direcao)
@@ -180,15 +172,41 @@ namespace Entidades
 			}
 		}
 
-		void colidir(Inimigo* pIni, std::string direcao) 
+		void Jogador::colidir(Inimigo* pIni, std::string direcao) 
 		{
-			if (pIni->get_id() == 1)
+			receber_dano(pIni->get_dano());
+
+			if (direcao == "Embaixo")
 			{
-				if(direcao == "Direita")
-					vel.x
+				noChao = true;
+				vel.y = 0.0f;
+			}
+			else if (direcao == "Cima")
+			{
+				vel.y = 0.0f;
+			}
+			else if (direcao == "Esquerda" || direcao == "Direita")
+			{
+				vel.x = 0.0f;
 			}
 		}
-		void colidir(Obstaculos::Obstaculo* pObs, std::string direcao) {}
+
+		void Jogador::colidir(Obstaculos::Obstaculo* pObs, std::string direcao) 
+		{
+			if (direcao == "Embaixo")
+			{
+				noChao = true;
+				vel.y = 0.0f;
+			}
+			else if (direcao == "Cima")
+			{
+				vel.y = 0.0f;
+			}
+			else if (direcao == "Esquerda" || direcao == "Direita")
+			{
+				vel.x = 0.0f;
+			}
+		}
 			
 		void Jogador::ataque()
 		{

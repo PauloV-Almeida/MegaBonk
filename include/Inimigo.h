@@ -15,6 +15,9 @@ namespace Entidades
 			~Inimigo();
 			virtual void executar()= 0;
 			virtual void danificar() = 0;
+			virtual void colidir(Jogador* pJog, std::string direcao = "") = 0;
+			virtual void colidir(Obstaculos::Obstaculo* pObs, std::string direcao = "") = 0;
+			void mover();
 		};
 	}
 }

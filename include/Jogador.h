@@ -6,6 +6,7 @@
 
 #include "Personagem.h"
 #include "Obstaculo.h"
+#include "Inimigo.h"
 
 #define DMG 3
 
@@ -14,7 +15,6 @@ namespace Entidades
 	namespace Personagens
 	{
 		class Inimigo;
-
 		class Jogador : public Personagem
 		{
 		protected:

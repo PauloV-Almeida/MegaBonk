@@ -29,6 +29,7 @@ namespace Entidades
             void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
 			void set_danoso(bool d) { danoso = d; }
             const bool get_danoso() const { return danoso; }
+			virtual void obstaculizar(Entidades::Entidade* outro, std::string  direcao = "") = 0;
         };
     }
 

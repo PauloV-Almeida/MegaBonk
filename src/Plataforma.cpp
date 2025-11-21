@@ -44,5 +44,8 @@ namespace Entidades
                 vel = sf::Vector2f(0.f, 0.f);
             }
         }
+        void Plataforma::obstaculizar(Entidade* outro, std::string direcao)
+        {
+        }
     }
 }

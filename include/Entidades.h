@@ -33,8 +33,6 @@ namespace Entidades
         virtual void executar() = 0;
         virtual void mover(char direcao = ' ') { vel.y += GRAVIDADE; };
 
-        //virtual void colidir(Entidade* outro, std::string  direcao = "") = 0;
-
         virtual void set_posicao(sf::Vector2f pos) = 0;
         void set_deCastigo(bool deCast) { deCastigo = deCast; };
 

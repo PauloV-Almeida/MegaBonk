@@ -206,7 +206,6 @@ namespace Gerenciadores
 	{
 		pJog->colidir(pIni, *dir1);
 		pIni->colidir(pJog, *dir2);
-		pJog->receber_dano(pIni->get_dano());
 	}
 
 	void GerenciadorColisoes::tratarColisoesInimigsObstacs(Entidades::Personagens::Inimigo* pIni, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1, std::string* dir2)const
