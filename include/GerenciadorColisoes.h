@@ -20,12 +20,14 @@ namespace Gerenciadores
 
 		Listas::ListaEntidades* LJogs;
 
+		static GerenciadorColisoes* instance;
 
 	private:
-		const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2, std::string* direcao1, std::string* direcao2)const;
-		void colisor() const;
-		void tratarColisoesJogsObstacs(Entidades::Personagens::Jogador* pJog, Entidades::Obstaculos* pObs, std::string* dir1, std::string* dir2);
-		void tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni, std::string* dir1, std::string* dir2);
+		const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2, std::string* direcao1 = nullptr, std::string* direcao2 = nullptr)const;
+		void colisor()const;
+		void tratarColisoesJogsObstacs(Entidades::Personagens::Jogador* pJog, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1 = nullptr, std::string* dir2 = nullptr)const;
+		void tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni, std::string* dir1 = nullptr, std::string* dir2 = nullptr)const;
+		void tratarColisoesInimigsObstacs(Entidades::Personagens::Inimigo* pIni, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1 = nullptr, std::string* dir2 = nullptr)const;
 		//void tratarColisoesJogsProjeteis();
 
 		

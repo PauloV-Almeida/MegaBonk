@@ -204,7 +204,7 @@ namespace Entidades
 			}
 		}
 
-		//void colidir(Inimigo* pIn, std::string direcao = ""){}
+		void colidir(Inimigo* pIn, std::string direcao = ""){}
 
 		void Jogador::ataque()
 		{

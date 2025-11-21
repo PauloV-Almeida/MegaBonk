@@ -30,7 +30,7 @@ namespace Entidades
 
 			void executar();
 			void mover(char direcao = '0');
-			//void colidir(Inimigo* pIn, std::string direcao = "");
+			void colidir(Inimigo* pIn, std::string direcao = "");
 			void ataque();
 			void set_venceu(bool v) { venceu = v; };
 			bool get_venceu() { return venceu; };

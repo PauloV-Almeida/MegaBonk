@@ -5,7 +5,7 @@
 namespace Gerenciadores
 {
 	GerenciadorColisoes::GerenciadorColisoes() :
-		LIs(), LOs(), LJogs(nullptr)
+		LIs(), LOs(), LJogs(nullptr), instance(nullptr)
 	{
 		LIs.clear();
 		LOs.clear();
@@ -14,6 +14,14 @@ namespace Gerenciadores
 	{
 		LIs.clear();
 		LOs.clear();
+	}
+	static GerenciadorColisoes* GerenciadorColisoes::get_instance()
+	{
+		if (instance == nullptr)
+		{
+			instance = new GerenciadorColisoes();
+		}
+		return instance;
 	}
 
 	const bool GerenciadorColisoes::verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2, std::string* direcao1, std::string* direcao2) const
@@ -116,8 +124,8 @@ namespace Gerenciadores
 			for (std::list<Entidades::Obstaculos::Obstaculo*>::const_iterator it = LOs.begin();
 				it != LOs.end(); ++it)
 			{
-				if (verificarColisao(jog, it, &dir1, &dir2))
-					tratarColisoesJogsObstacs(jog, it, &dir1, &dir2);
+				if (verificarColisao(jog, *it, &dir1, &dir2))
+					tratarColisoesJogsObstacs(jog, *it, &dir1, &dir2);
 			}
 			for (std::vector<Entidades::Personagens::Inimigo*>::const_iterator itI = LIs.begin();
 				itI != LIs.end(); ++itI)
@@ -127,7 +135,7 @@ namespace Gerenciadores
 
 				if (verificarColisao(jog, ini, &dir1, &dir2))
 				{
-					tratarColisoesJogsInimigs();
+					tratarColisoesJogsInimigs(jog, ini, &dir1, &dir2);
 				}
 			}
 
@@ -152,27 +160,57 @@ namespace Gerenciadores
 
 					// proj->set_vivo(false); // or proj->destruir();
 					// jog->sofrer_Dano(proj->get_dano());
-				}*/
+				}
+			}*/
+
+			for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin(); itI != LIs.end(); ++itI)
+			{
+				Entidades::Personagens::Inimigo* ini = *itI;
+				if (!ini || !ini->get_vivo()) continue;
+
+				for (std::list<Entidades::Obstaculos::Obstaculo*>::const_iterator itO = LOs.begin(); itO != LOs.end(); ++itO)
+				{
+					Entidades::Obstaculos::Obstaculo* obs = *itO;
+					if (!obs || !obs->get_vivo()) continue;
+
+					// resolve collision (verificarColisao will push ini out of penetration)
+					if (verificarColisao(ini, obs, &dir1, &dir2))
+					{
+						// stop movement on the collided axis so enemy doesn't fall through
+						sf::Vector2f vel = ini->get_vel();
+						if (dir1 == "Emcima" || dir1 == "Embaixo")
+							vel.y = 0.f;
+						else
+							vel.x = 0.f;
+						ini->set_vel(vel);
+
+						// optional: let obstacle or enemy react (uncomment if methods exist)
+						// ini->colidir(obs, dir1); // if Inimigo::colidir accepts Obstaculo*
+						// obs->obstaculizar(ini, dir2);
+					}
+				}
 			}
 		}
 
 	}
 
-	void GerenciadorColisoes::tratarColisoesJogsObstacs(Entidades::Personagens::Jogador* pJog, Entidades::Obstaculos* pObs, std::string* dir1, std::string* dir2)
+	void GerenciadorColisoes::tratarColisoesJogsObstacs(Entidades::Personagens::Jogador* pJog, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1, std::string* dir2)const
 	{
 		pJog->colidir(pObs, *dir1);
 		pObs->obstaculizar(pJog, *dir2);
+	}
 
-		if (pObs->get_danoso())
-		{
-			pJog->receber_dano(pObs->get_dano());
-		}
-
-	void GerenciadorColisoes::tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo pIni, std::string * dir1, std::string * dir2)
+	void GerenciadorColisoes::tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni, std::string * dir1, std::string * dir2)const
 	{
 		pJog->colidir(pIni, *dir1);
 		pIni->colidir(pJog, *dir2);
 		pJog->receber_dano(pIni->get_dano());
+	}
+
+	void GerenciadorColisoes::tratarColisoesInimigsObstacs(Entidades::Personagens::Inimigo* pIni, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1, std::string* dir2)const
+	{
+		pIni->colidir(pObs, *dir1);
+		pObs->obstaculizar(pIni, *dir2);
 	}
 
 	/*
