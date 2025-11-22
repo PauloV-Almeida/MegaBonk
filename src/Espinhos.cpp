@@ -46,7 +46,8 @@ namespace Entidades
         }
         void Espinhos::obstaculizar(Entidades::Personagens::Jogador* p)
         {
-            outro->
+			p->receber_dano(dano);
+            p->set_vel(sf::Vector2f(0.f, -5.f));
         }
     }
 } 

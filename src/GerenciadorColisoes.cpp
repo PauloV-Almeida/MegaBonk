@@ -172,10 +172,15 @@ namespace Gerenciadores
 					Entidades::Obstaculos::Obstaculo* obs = *itO;
 					if (!obs || !obs->get_vivo()) continue;
 
-					// resolve collision (verificarColisao will push ini out of penetration)
 					if (verificarColisao(ini, obs, &dir1, &dir2))
 					{
-						tratarColisoesInimigsObstacs(ini, obs, &dir1);
+						sf::Vector2f vel = ini->get_vel();
+						if (dir1 == "Emcima" || dir1 == "Embaixo")
+							vel.y = 0.f;
+						else
+							vel.x = 0.f;
+						ini->set_vel(vel);
+
 					}
 				}
 			}
@@ -221,11 +226,11 @@ namespace Gerenciadores
 		pIni->colidir(pJog, *dir2);
 	}
 
-	void GerenciadorColisoes::tratarColisoesInimigsObstacs(Entidades::Personagens::Inimigo* pIni, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1)const
+	/*void GerenciadorColisoes::tratarColisoesInimigsObstacs(Entidades::Personagens::Inimigo* pIni, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1)const
 	{
 		pIni->colidir(pObs, *dir1);
 		pObs->obstaculizar(pIni, *dir2);
-	}
+	}*/
 
 	/*
 	* void GerenciadorColisoes::tratarColisoesJogsProjeteis()
