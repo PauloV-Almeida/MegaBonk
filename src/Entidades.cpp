@@ -12,9 +12,7 @@ namespace Entidades
 		Ente(),
 		id(indice),
 		gColisao(nullptr),
-		vel(velo),
-		deCastigo(false),
-		massa(1)
+		vel(velo)
 	{
 	
 	}
