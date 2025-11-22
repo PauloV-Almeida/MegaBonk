@@ -130,9 +130,9 @@ namespace Entidades
 				if (vel.x < -VEL_MAX)
 					vel.x = -VEL_MAX;
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && noChao)
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && noChao)
 				{
-					vel.y -= 20.0;
+					vel.y -= 8.0;
 					noChao = false;
 				}
 				corpo.move(vel.x, vel.y);
@@ -161,9 +161,9 @@ namespace Entidades
 				if (vel.x < -VEL_MAX)
 					vel.x = -VEL_MAX;
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && noChao)
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
 				{
-					vel.y -= 20.0;
+					vel.y -= 8.0;
 					noChao = false;
 				}
 				corpo.move(vel.x, vel.y);
@@ -172,7 +172,7 @@ namespace Entidades
 			}
 		}
 
-		void Jogador::colidir(Inimigo* pIni, std::string direcao) 
+		void Jogador::colidir(Inimigo* pIni, std::string direcao)
 		{
 			receber_dano(pIni->get_dano());
 
@@ -181,7 +181,7 @@ namespace Entidades
 				noChao = true;
 				vel.y = 0.0f;
 			}
-			else if (direcao == "Cima")
+			else if (direcao == "Cima" || direcao == "Emcima")
 			{
 				vel.y = 0.0f;
 			}
@@ -191,14 +191,14 @@ namespace Entidades
 			}
 		}
 
-		void Jogador::colidir(Obstaculos::Obstaculo* pObs, std::string direcao) 
+		void Jogador::colidir(Obstaculos::Obstaculo* pObs, std::string direcao)
 		{
 			if (direcao == "Embaixo")
 			{
 				noChao = true;
 				vel.y = 0.0f;
 			}
-			else if (direcao == "Cima")
+			else if (direcao == "Cima" || direcao == "Emcima")
 			{
 				vel.y = 0.0f;
 			}

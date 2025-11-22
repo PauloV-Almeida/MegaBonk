@@ -8,6 +8,8 @@ namespace Fases
 		inimigos(),
 		obstaculos(),
 		gColisoes(),
+		n_nasceu(0),
+		carregado(false),
 		corpo()
 	{
 		gColisoes.incluirJogadores(&jogadores);
@@ -49,17 +51,18 @@ namespace Fases
 		default:
 			break;
 		}
+		if (!aux) {
+			std::cerr << "Criar entidade falhou para indice=" << indice << "\n";
+			return nullptr;
+		}
 		aux->set_GerenciadorColisao(&gColisoes);
-
-		Entidades::Entidade* inimigo = nullptr;
-		inimigo = static_cast<Entidades::Entidade*>(aux);
-		if (inimigo)
-		{
+		Entidades::Entidade* inimigo = aux;
+		if (inimigo) {
 			inimigo->set_GerenciadorColisao(&gColisoes);
 			inimigos.add(inimigo);
 		}
-		return static_cast<Entidades::Entidade*>(aux);
-		
+		return aux;
+
 	}
 	void Fase::criarCenario(std::string arquivo, std::string save)
 	{
@@ -73,7 +76,7 @@ namespace Fases
 			exit(1);
 		}
 
-		if(!saida)
+		if (!saida)
 		{
 			std::cout << "Não foi possível criar o arquivo de salvamento: " << save << std::endl;
 			exit(1);
@@ -99,7 +102,7 @@ namespace Fases
 						pObs = static_cast<Entidades::Entidade*>(aux);
 						obstaculos.add(pObs);
 					}
-					saida << 0;
+					saida << '0';
 					break;
 				default:
 					saida << ' ';
@@ -107,6 +110,8 @@ namespace Fases
 				}
 				j++;
 			}
+			// adicionar quebra de linha para preservar o layout original
+			saida << '\n';
 		}
 		entrada.close();
 		saida.close();
@@ -114,12 +119,12 @@ namespace Fases
 
 	void Fase::carregaCenario(std::string saveCenarioArq)
 	{
-		if(obstaculos.get_tamanho() > 0)
+		if (obstaculos.get_tamanho() > 0)
 			obstaculos.limpar();
 
 		std::ifstream entrada(saveCenarioArq);
 
-		if(!entrada)
+		if (!entrada)
 		{
 			std::cout << "Arquivo de salvamento do cenario não encontrado: " << saveCenarioArq << std::endl;
 			exit(1);
@@ -133,23 +138,19 @@ namespace Fases
 			j = 0;
 			for (char character : linha)
 			{
-				switch (character)
+				if (character == '0')
 				{
-				case '0':
 					aux = new Entidades::Obstaculos::Plataforma(sf::Vector2f(j * OBSTACULO_TAMANHO, i * OBSTACULO_TAMANHO));
 					if (aux)
 					{
-						Entidades::Entidade* pObs = nullptr;
-						pObs = static_cast<Entidades::Entidade*>(aux);
+						Entidades::Entidade* pObs = static_cast<Entidades::Entidade*>(aux);
 						obstaculos.add(pObs);
 					}
-					break;
-				default:
-					break;
 				}
 				j++;
 			}
-			entrada.close();
 		}
+		// fechar arquivo após terminar a leitura
+		entrada.close();
 	}//carregaCenario
 }
