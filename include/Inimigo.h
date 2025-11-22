@@ -30,7 +30,7 @@ namespace Entidades
 			virtual void executar()= 0;
 			virtual void danificar() = 0;
 			virtual void colidir(Jogador* pJog, std::string direcao = "") = 0;
-			virtual void colidir(Obstaculos::Obstaculo* pObs, std::string direcao = "") = 0;
+			void colidir(Obstaculos::Obstaculo* pObs, std::string direcao = "");
 			void mover();
 			void movimentoaleatorio();
 			void persegue(sf::Vector2f posJogador, sf::Vector2f posInimigo);

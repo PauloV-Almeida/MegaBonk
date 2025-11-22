@@ -20,7 +20,6 @@ namespace Entidades
 			void executar();
 			void danificar();
 			void colidir(Jogador* pJog, std::string direcao = "");
-			void colidir(Obstaculos::Obstaculo* pObs, std::string direcao = "");
 		};
 	}
 }

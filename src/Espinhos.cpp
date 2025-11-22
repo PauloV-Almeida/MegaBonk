@@ -1,4 +1,4 @@
-#include "../include/Plataforma.h"
+#include "../include/Espinhos.h"
 #include "../include/Jogador.h"
 #include "../include/Inimigo.h"
 
@@ -6,7 +6,7 @@ namespace Entidades
 {
     namespace Obstaculos
     {
-        Plataforma::Plataforma(sf::Vector2f pos, bool veri) :
+        Espinhos::Espinhos(sf::Vector2f pos, bool veri) :
             Obstaculo(11, pos),
             pVerifica(veri)
         {
@@ -18,15 +18,15 @@ namespace Entidades
                 corpo.setTexture(texturas);
             }
         }
-        Plataforma:: ~Plataforma()
+        Espinhos:: ~Espinhos()
         {
 
         }
-        void Plataforma::executar()
+        void Espinhos::executar()
         {
             mover();
         }
-        void Plataforma::mover()
+        void Espinhos::mover()
         {
             if (pVerifica)
             {
@@ -44,8 +44,9 @@ namespace Entidades
                 vel = sf::Vector2f(0.f, 0.f);
             }
         }
-        void Plataforma::obstaculizar(Entidades::Personagens::Jogador* p)
+        void Espinhos::obstaculizar(Entidades::Personagens::Jogador* p)
         {
+            outro->
         }
     }
-}
+} 
