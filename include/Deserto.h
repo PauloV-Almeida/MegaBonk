@@ -4,7 +4,8 @@
 
 #define TEMPOFIM 1000
 
-#define ARQUIVO_CENARIO_1 ".\salvar\fase1\cenario.dat"
+#define ARQUIVO_CENARIO_1 "./salvar/fase1/cenario.dat"
+#define SALVAR_CENARIO_1 "./salvar/fase1/seed.dat"
 
 namespace Fases
 {
@@ -19,6 +20,9 @@ namespace Fases
 		~Deserto();
 
 		void executar();
+		void salvar();
+		void carregar();
+		void resetar();
 
 	};
 }
