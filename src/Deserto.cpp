@@ -1,4 +1,5 @@
 ﻿#include "../include/Deserto.h"
+
 namespace Fases
 {
 	Deserto::Deserto() :
@@ -6,40 +7,9 @@ namespace Fases
 		fim(0)
 	{
 		corpo.setSize(sf::Vector2f(900.f, 600.f));
-		corpo.setOrigin(sf::Vector2f(0.f, 0.f));
 		texturas = pGG->carregar_texturas("./assets/Deserto.png");
 		corpo.setTexture(texturas);
 
-		Entidades::Personagens::Jogador* p1 = new Entidades::Personagens::Jogador(1, sf::Vector2f(200.f, 450.f), sf::Vector2f(0.f, 0.f), sf::Vector2f(50.f, 50.f));
-		p1->set_GerenciadorColisao(&gColisoes);
-		jogadores.add(p1);
-
-		// cria chão como uma linha de tiles-obstáculo e registra em obstaculos
-		float largura = corpo.getSize().x;
-		int cols = static_cast<int>(std::ceil(largura / OBSTACULO_TAMANHO));
-		float groundY = corpo.getSize().y - (OBSTACULO_TAMANHO / 2.f); // posição central dos tiles
-
-		for (int k = 0; k < cols; ++k)
-		{
-			Entidades::Obstaculos::Plataforma* tile = new Entidades::Obstaculos::Plataforma(sf::Vector2f(k * OBSTACULO_TAMANHO + (OBSTACULO_TAMANHO / 2.f), groundY));
-			tile->set_GerenciadorColisao(&gColisoes);
-			Entidades::Entidade* pObs = static_cast<Entidades::Entidade*>(tile);
-			obstaculos.add(pObs);
-		}
-
-		// REGISTRA obstáculos no gerenciador *após* tê-los criado
-		gColisoes.incluirObstaculos(&obstaculos);
-		// cria e adiciona um inimigo (Esqueleto) que cairá e colidirá com o chão
-		const float esqW = 50.f, esqH = 50.f;
-		int spawnCol = cols / 2;
-		float spawnX = spawnCol * OBSTACULO_TAMANHO + (OBSTACULO_TAMANHO / 2.f);
-		// plataforma está centrada em groundY; para colocar o esqueleto sobre ela:
-		float spawnY = groundY - (OBSTACULO_TAMANHO / 2.f) - (esqH / 2.f);
-		Entidades::Personagens::Esqueleto* esq = new Entidades::Personagens::Esqueleto(true, 3, sf::Vector2f(spawnX, spawnY), sf::Vector2f(0.f, 0.f), 1.f, sf::Vector2f(esqW, esqH), 0);
-		esq->set_GerenciadorColisao(&gColisoes);
-		inimigos.add(static_cast<Entidades::Entidade*>(esq));
-		// registra inimigos no gerenciador agora que foi adicionado
-		gColisoes.incluirInimigos(&inimigos);
 	}
 
 	Deserto::Deserto(int n_jogadores) :
@@ -47,66 +17,230 @@ namespace Fases
 		fim(TEMPOFIM)
 	{
 		corpo.setSize(sf::Vector2f(900.f, 600.f));
-		corpo.setOrigin(sf::Vector2f(0.f, 0.f));
 		texturas = pGG->carregar_texturas("./assets/Deserto.png");
 		corpo.setTexture(texturas);
 
-		for (int i = 0; i < n_jogadores; ++i)
-		{
-			float x = 150.f + i * 120.f;
-			float y = 450.f;
-			Entidades::Personagens::Jogador* p = new Entidades::Personagens::Jogador(i + 1, sf::Vector2f(x, y), sf::Vector2f(0.f, 0.f), sf::Vector2f(50.f, 50.f));
-			p->set_GerenciadorColisao(&gColisoes);
-			jogadores.add(p);
-		}
-
-		// cria chão como uma linha de tiles-obstáculo e registra em obstaculos
-		float largura = corpo.getSize().x;
-		int cols = static_cast<int>(std::ceil(largura / OBSTACULO_TAMANHO));
-		float groundY = corpo.getSize().y - (OBSTACULO_TAMANHO / 2.f); // posição central dos tiles
-
-		for (int k = 0; k < cols; ++k)
-		{
-			Entidades::Obstaculos::Plataforma* tile = new Entidades::Obstaculos::Plataforma(sf::Vector2f(k * OBSTACULO_TAMANHO + (OBSTACULO_TAMANHO / 2.f), groundY));
-			tile->set_GerenciadorColisao(&gColisoes);
-			Entidades::Entidade* pObs = static_cast<Entidades::Entidade*>(tile);
-			obstaculos.add(pObs);
-		}
-
-		// REGISTRA obstáculos no gerenciador *após* tê-los criado
-		gColisoes.incluirObstaculos(&obstaculos);
-
-		// cria e adiciona um inimigo (Esqueleto) que cairá e colidirá com o chão
-		const float esqW = 50.f, esqH = 50.f;
-		int spawnCol = cols / 2;
-		float spawnX = spawnCol * OBSTACULO_TAMANHO + (OBSTACULO_TAMANHO / 2.f);
-		// plataforma está centrada em groundY; para colocar o esqueleto sobre ela:
-		float spawnY = groundY - (OBSTACULO_TAMANHO / 2.f) - (esqH / 2.f);
-		Entidades::Personagens::Esqueleto* esq = new Entidades::Personagens::Esqueleto(true, 3, sf::Vector2f(spawnX, spawnY), sf::Vector2f(0.f, 0.f), 1.f, sf::Vector2f(esqW, esqH), 0);
-		esq->set_GerenciadorColisao(&gColisoes);
-		inimigos.add(static_cast<Entidades::Entidade*>(esq));
-		// registra inimigos no gerenciador agora que foi adicionado
-		gColisoes.incluirInimigos(&inimigos);
 	}
 
 	Deserto::~Deserto()
 	{
+		if (carregado)
+		{
+			salvar();
+		}
 	}
 
 	void Deserto::executar()
 	{
-		// atualiza entidades (gravidade, movimento, etc.)
-		jogadores.executar();
-		inimigos.executar();
-		obstaculos.executar();
+		if (!carregado)
+		{
+			carregar();
+		}
 
-		// processa colisões (importante: deve ser feito após mover as entidades e antes de desenhar)
+		jogadores.executar();
+		obstaculos.executar();
+		inimigos.executar();
+
 		gColisoes.executar();
 
-		// desenha background e entidades (plataformas primeiro, depois jogadores para ficarem por cima)
 		desenhar();
-		obstaculos.desenhar();
+
+		if (pEG->get_AtualEstadoID() == id_estado)
+		{
+			Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> it = jogadores.get_Primeiro();
+			Entidades::Personagens::Jogador* p1 = dynamic_cast<Entidades::Personagens::Jogador*>(*it);
+			it++;
+			/*if (jogadores.get_tamanho() == 1)
+			{
+				pEG->set_AtualEstado(2);
+				pEG->reseta_AtualEstado();
+				
+			}
+			else
+			{
+				Entidades::Personagens::Jogador* p2 = dynamic_cast<Entidades::Personagens::Jogador*>(*it);
+				if (fim < 0)
+				{
+					pEG->set_AtualEstado(5);
+					pEG->reseta_AtualEstado();
+				}
+				if (fim < TEMPOFIM)
+					fim--;
+			}*/
+		}
 		jogadores.desenhar();
 		inimigos.desenhar();
+		obstaculos.desenhar();
+	}//executar
+
+	void Deserto::salvar()
+	{
+		std::ofstream jogadoresArq;
+		std::ofstream inimigosArq;
+
+		if (id_estado == 1)
+		{
+			jogadoresArq.open(ARQ_JOGADOR11);
+			inimigosArq.open(ARQ_INIMIGOS11);
+		}else if(id_estado == 6)
+		{
+			jogadoresArq.open(ARQ_JOGADOR12);
+			inimigosArq.open(ARQ_INIMIGOS12);
+		}
+
+		if (!jogadoresArq)
+		{
+			std::cerr << "ERRO ARQUIVO JOGADOR\n";
+			exit(1);
+		}
+
+		jogadoresArq << jogadores.get_tamanho() << std::endl;
+		//jogadores.salvar(jogadoresArq);
+		jogadoresArq.close();
+
+		if (!inimigosArq)
+		{
+			std::cerr << "ERRO ARQUIVO INIMIGOS\n";
+			exit(1);
+		}
+		inimigosArq << inimigos.get_tamanho() << std::endl;
+		//inimigos.salvar(inimigosArq);
+		inimigosArq.close();
+	}
+	void Deserto::carregar()
+	{
+		carregaCenario(SALVAR_CENARIO_1);
+
+		int n, vivo, dano, vida;
+		float vx, vy, px, py, tamx, tamy;
+		std::string linha;
+		std::ifstream jogadoresArq;
+		std::ifstream inimigosArq;
+
+		if (id_estado == 1)
+		{
+			jogadoresArq.open(ARQ_JOGADOR11);
+			inimigosArq.open(ARQ_INIMIGOS11);
+		}
+		else if (id_estado == 6)
+		{
+			jogadoresArq.open(ARQ_JOGADOR12);
+			inimigosArq.open(ARQ_INIMIGOS12);
+		}
+		if (!jogadoresArq)
+		{
+			std::cerr << "ERRO ARQUIVO JOGADOR\n";
+			exit(1);
+		}
+		jogadoresArq >> n;
+
+		// Se não há mais dados no arquivo além do número, criar jogadores padrão
+		jogadoresArq >> std::ws;
+		if (jogadoresArq.peek() == EOF)
+		{
+			for (int i = 0; i < n; i++)
+			{
+				// valores padrão — ajuste conforme necessário
+				vivo = 1;
+				vida = 100;
+				px = 50.f + i * 50.f;
+				py = 50.f;
+				vx = 0.f; vy = 0.f;
+				tamx = 32.f; tamy = 32.f;
+
+				Entidades::Personagens::Jogador* pJog = new Entidades::Personagens::Jogador(i + 1, vivo, vida, sf::Vector2f(px, py), sf::Vector2f(vx, vy), sf::Vector2f(tamx, tamy));
+				Entidades::Entidade* jogador = pJog;
+
+				if (jogador)
+				{
+					jogadores.add(jogador);
+					jogador->set_GerenciadorColisao(&gColisoes);
+				}
+			}
+		}
+		else
+		{
+			for (int i = 0; i < n; i++)
+			{
+				if (!(jogadoresArq >> vivo >> vida >> px >> py >> vx >> vy >> tamx >> tamy))
+				{
+					// leitura falhou — criar restando com padrão
+					vivo = 1; vida = 100; px = 50.f + i * 50.f; py = 50.f; vx = vy = 0.f; tamx = tamy = 32.f;
+				}
+				Entidades::Personagens::Jogador* pJog = new Entidades::Personagens::Jogador(i + 1, vivo, vida, sf::Vector2f(px, py), sf::Vector2f(vx, vy), sf::Vector2f(tamx, tamy));
+				Entidades::Entidade* jogador = pJog;
+
+				if (jogador)
+				{
+					jogadores.add(jogador);
+					jogador->set_GerenciadorColisao(&gColisoes);
+				}
+			}
+		}
+
+		if (!inimigosArq)
+		{
+			std::cerr << "ERRO ARQUIVO INIMIGOS\n";
+			exit(1);
+		}
+		inimigosArq >> n;
+		for (int i = 0; i < n; i++)
+		{
+			criarEsqueleto(inimigosArq);
+		}
+		carregado = true;
+	}
+	void Deserto::resetar()
+	{
+		criarCenario(ARQUIVO_CENARIO_1, SALVAR_CENARIO_1);
+		if(carregado)
+			jogadores.limpar();
+		if(carregado)
+			inimigos.limpar();
+
+		int n, vivo, dano, vida, vx, vy, px, py, tamx, tamy;
+		std::string linha;
+
+		std::ifstream jogadoresArq;
+		std::ifstream inimigosArq;
+		if (id_estado == 1)
+		{
+			jogadoresArq.open(RESET_ARQ_JOG11);
+			inimigosArq.open(RESET_ARQ_INI11);
+		}
+		else if (id_estado == 6)
+		{
+			jogadoresArq.open(RESET_ARQ_JOG12);
+			inimigosArq.open(RESET_ARQ_INI12);
+		}
+		if (!jogadoresArq)
+		{
+			std::cerr << "ERRO ARQUIVO JOGADOR\n";
+			exit(1);
+		}
+		jogadoresArq >> n;
+		for (int i = 0; i < n; i++)
+		{
+			jogadoresArq >> vivo >> vida >> px >> py >> vx >> vy >> tamx >> tamy;
+			Entidades::Personagens::Jogador* pJog = new Entidades::Personagens::Jogador(i + 1, vivo, vida, sf::Vector2f(px, py), sf::Vector2f(vx, vy), sf::Vector2f(tamx, tamy));
+			Entidades::Entidade* jogador = pJog;
+			if (jogador)
+			{
+				jogadores.add(jogador);
+				jogador->set_GerenciadorColisao(&gColisoes);
+			}
+		}
+		if (!inimigosArq)
+		{
+			std::cerr << "ERRO ARQUIVO INIMIGOS\n";
+			exit(1);
+		}
+		inimigosArq >> n;
+		for (int i = 0; i < n; i++)
+		{
+			getline(inimigosArq, linha); // consumir a quebra de linha restante
+			criarEsqueleto(inimigosArq);
+		}
+		carregado = true;
 	}
 }

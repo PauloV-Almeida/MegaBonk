@@ -112,6 +112,15 @@
     <None Include="LICENSE" />
     <None Include="README.md" />
     <None Include="salvar\fase1\cenario.dat" />
+    <None Include="salvar\fase1\seed.dat" />
+    <None Include="salvar\fase1\inimigo_1jog.dat" />
+    <None Include="salvar\fase1\inimigo_2jog.dat" />
+    <None Include="salvar\fase1\jogador1.dat" />
+    <None Include="salvar\fase1\jogador2.dat" />
+    <None Include="salvar\fase1\reset_ini_1jog.dat" />
+    <None Include="salvar\fase1\reset_ini_2jog.dat" />
+    <None Include="salvar\fase1\reset_jog1.dat" />
+    <None Include="salvar\fase1\reset_jog2.dat" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx\stdafx.h">

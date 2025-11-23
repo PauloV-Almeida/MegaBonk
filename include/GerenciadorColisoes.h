@@ -19,9 +19,8 @@ namespace Gerenciadores
 		//std::set <Entidades::Projetil*> LPs;
 
 		Listas::ListaEntidades* LJogs;
-
-		static GerenciadorColisoes* instance;
-
+		Listas::ListaEntidades* LInisPtr;
+		Listas::ListaEntidades* LObsPtr;
 	private:
 		const bool verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2, std::string* direcao1 = nullptr, std::string* direcao2 = nullptr)const;
 		void colisor();
@@ -37,46 +36,41 @@ namespace Gerenciadores
 	public:
 		GerenciadorColisoes();
 		~GerenciadorColisoes();
-		static GerenciadorColisoes* get_instance();
-		void incluirJogadores(Listas::ListaEntidades* ListaJg) {if(ListaJg){ LJogs = ListaJg;}}
+		void incluirJogadores(Listas::ListaEntidades* ListaJg) { if (ListaJg) { LJogs = ListaJg; } }
 		Listas::ListaEntidades* get_ListaJogadores() { return LJogs; }
+
+		// MantÃ©m vector/list como requerido: guarda ponteiro para a fonte e popula inicialmente.
 		void incluirInimigos(Listas::ListaEntidades* ListaIni) {
 			if (!ListaIni) return;
-
-			// percorre todos os elementos
+			LInisPtr = ListaIni;
+			LIs.clear();
 			auto itr = ListaIni->get_Primeiro();
-
-			while (itr != NULL)
+			while (itr != nullptr)
 			{
 				Entidades::Entidade* e = *itr;
-
-				// tenta converter para inimigo
-				Entidades::Personagens::Inimigo* ini =
-					dynamic_cast<Entidades::Personagens::Inimigo*>(e);
-
-				if (ini)
+				Entidades::Personagens::Inimigo* ini = dynamic_cast<Entidades::Personagens::Inimigo*>(e);
+				if (ini && ini->get_vivo())
 				{
 					LIs.push_back(ini);
 				}
-
-				itr++; // avança
+				itr++;
 			}
 		}
+
 		void incluirObstaculos(Listas::ListaEntidades* ListaObs) {
 			if (!ListaObs) return;
-			// percorre todos os elementos
+			LObsPtr = ListaObs;
+			LOs.clear();
 			auto itr = ListaObs->get_Primeiro();
-			while (itr != NULL)
+			while (itr != nullptr)
 			{
 				Entidades::Entidade* e = *itr;
-				// tenta converter para obstaculo
-				Entidades::Obstaculos::Obstaculo* obs =
-					dynamic_cast<Entidades::Obstaculos::Obstaculo*>(e);
-				if (obs)
+				Entidades::Obstaculos::Obstaculo* obs = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(e);
+				if (obs && obs->get_vivo())
 				{
 					LOs.push_back(obs);
 				}
-				itr++; // avança
+				itr++;
 			}
 		}
 		//void incluirProjetil(Projetil* p);

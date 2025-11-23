@@ -4,14 +4,8 @@
 
 namespace Gerenciadores
 {
-	GerenciadorColisoes* GerenciadorColisoes::get_instance()
-	{
-		static GerenciadorColisoes instancia;
-		return &instancia;
-	}
-
 	GerenciadorColisoes::GerenciadorColisoes() :
-		LIs(), LOs(), LJogs(nullptr)
+		LIs(), LOs(), LJogs(nullptr), LInisPtr(nullptr), LObsPtr(nullptr)
 	{
 		LIs.clear();
 		LOs.clear();
@@ -21,7 +15,7 @@ namespace Gerenciadores
 		LIs.clear();
 		LOs.clear();
 	}
-	
+
 
 	const bool GerenciadorColisoes::verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2, std::string* direcao1, std::string* direcao2) const
 	{
@@ -92,22 +86,38 @@ namespace Gerenciadores
 			std::cout << "[Colisao] LJogs == nullptr\n";
 			return;
 		}
-		if (LOs.empty()) {
-			std::cout << "[Colisao] LOs está vazio\n";
-			return;
+
+		// Reconstruir coleÃ§Ãµes internas a cada execuÃ§Ã£o a partir das listas atuais
+		LIs.clear();
+		LOs.clear();
+
+		if (LInisPtr) {
+			auto itrIni = LInisPtr->get_Primeiro();
+			while (itrIni != nullptr)
+			{
+				Entidades::Entidade* e = *itrIni;
+				Entidades::Personagens::Inimigo* ini = dynamic_cast<Entidades::Personagens::Inimigo*>(e);
+				if (ini && ini->get_vivo())
+					LIs.push_back(ini);
+				itrIni++;
+			}
 		}
-		if (LIs.empty()) {
-			std::cout << "[Colisao] LIs está vazio\n";
-			return;
+
+		if (LObsPtr) {
+			auto itrObs = LObsPtr->get_Primeiro();
+			while (itrObs != nullptr)
+			{
+				Entidades::Entidade* e = *itrObs;
+				Entidades::Obstaculos::Obstaculo* obs = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(e);
+				if (obs && obs->get_vivo())
+					LOs.push_back(obs);
+				itrObs++;
+			}
 		}
-		/*if (LPs.empty()) {
-			std::cout << "[Colisao] LIs está vazio\n";
-			return;
-		}*/
 
 		int cntJ = 0;
 		auto itrCount = LJogs->get_Primeiro();
-		while (itrCount != NULL) 
+		while (itrCount != NULL)
 		{
 			cntJ++; itrCount++;
 		}
@@ -123,9 +133,11 @@ namespace Gerenciadores
 			for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin();
 				it != LOs.end(); ++it)
 			{
+				if (!jog || !(*it)) continue;
 				if (verificarColisao(jog, *it, &dir1, &dir2))
 					tratarColisoesJogsObstacs(jog, *it, &dir1);
 			}
+
 			for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin();
 				itI != LIs.end(); ++itI)
 			{
@@ -137,30 +149,6 @@ namespace Gerenciadores
 					tratarColisoesJogsInimigs(jog, ini, &dir1, &dir2);
 				}
 			}
-
-			// Projetéis (if you enable LPs as e.g. std::set<Entidades::Projetil*>)
-			// Uncomment and adapt if LPs exists in the class
-			/*
-			for (std::set<Entidades::Projetil*>::const_iterator itP = LPs.begin();
-				itP != LPs.end(); ++itP)
-			{
-				Entidades::Projetil* proj = *itP;
-				if (!proj || !proj->get_vivo()) continue;
-
-				if (verificarColisao(jog, proj, &dir1, &dir2))
-				{
-					// Example handling: stop player movement or apply damage
-					sf::Vector2f vel = jog->get_vel();
-					if (dir1 == "Emcima" || dir1 == "Embaixo")
-						vel.y = 0.f;
-					else
-						vel.x = 0.f;
-					jog->set_vel(vel);
-
-					// proj->set_vivo(false); // or proj->destruir();
-					// jog->sofrer_Dano(proj->get_dano());
-				}
-			}*/
 
 			for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin(); itI != LIs.end(); ++itI)
 			{
@@ -184,6 +172,8 @@ namespace Gerenciadores
 					}
 				}
 			}
+
+			itr++;
 		}
 
 	}
