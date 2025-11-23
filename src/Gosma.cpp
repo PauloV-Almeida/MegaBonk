@@ -1,4 +1,4 @@
-#include "../include/Plataforma.h"
+#include "../include/Gosma.h"
 #include "../include/Jogador.h"
 #include "../include/Inimigo.h"
 
@@ -6,7 +6,7 @@ namespace Entidades
 {
     namespace Obstaculos
     {
-        Plataforma::Plataforma(sf::Vector2f pos, bool veri) :
+        Gosma::Gosma(sf::Vector2f pos, bool veri) :
             Obstaculo(11, pos),
             pVerifica(veri)
         {
@@ -18,15 +18,15 @@ namespace Entidades
                 corpo.setTexture(texturas);
             }
         }
-        Plataforma:: ~Plataforma()
+        Gosma:: ~Gosma()
         {
 
         }
-        void Plataforma::executar()
+        void Gosma::executar()
         {
             mover();
         }
-        void Plataforma::mover()
+        void Gosma::mover()
         {
             if (pVerifica)
             {
@@ -44,8 +44,9 @@ namespace Entidades
                 vel = sf::Vector2f(0.f, 0.f);
             }
         }
-        void Plataforma::obstaculizar(Entidades::Personagens::Jogador* p)
+        void Gosma::obstaculizar(Entidades::Personagens::Jogador* p)
         {
+            p->set_vel(sf::Vector2f(p->get_vel.x * 0.7, p->get_vel.y));
         }
     }
 }

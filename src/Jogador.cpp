@@ -193,6 +193,8 @@ namespace Entidades
 
 		void Jogador::colidir(Obstaculos::Obstaculo* pObs, std::string direcao)
 		{
+			if(pObs->get_danoso())
+				receber_dano(pObs->get_dano());
 			if (direcao == "Embaixo")
 			{
 				noChao = true;
@@ -287,5 +289,5 @@ namespace Entidades
 			dano = 0;
 		}
 
-	}//Personagens
+	}
 }

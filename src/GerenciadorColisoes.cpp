@@ -87,7 +87,7 @@ namespace Gerenciadores
 			return;
 		}
 
-		// Reconstruir coleções internas a cada execução a partir das listas atuais
+		// Reconstruir coleÃ§Ãµes internas a cada execuÃ§Ã£o a partir das listas atuais
 		LIs.clear();
 		LOs.clear();
 
@@ -135,7 +135,7 @@ namespace Gerenciadores
 			{
 				if (!jog || !(*it)) continue;
 				if (verificarColisao(jog, *it, &dir1, &dir2))
-					tratarColisoesJogsObstacs(jog, *it, &dir1, &dir2);
+					tratarColisoesJogsObstacs(jog, *it, &dir1);
 			}
 
 			for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin();
@@ -168,6 +168,7 @@ namespace Gerenciadores
 						else
 							vel.x = 0.f;
 						ini->set_vel(vel);
+
 					}
 				}
 			}
@@ -177,10 +178,36 @@ namespace Gerenciadores
 
 	}
 
-	void GerenciadorColisoes::tratarColisoesJogsObstacs(Entidades::Personagens::Jogador* pJog, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1, std::string* dir2)const
+	void GerenciadorColisoes::verificarAtaqueJogadorInimigo(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni)
+	{
+		sf::FloatRect ataqueRect;
+		sf::FloatRect inimigoRect;
+
+		for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin(); itI != LIs.end(); ++itI)
+		{
+			Entidades::Personagens::Inimigo* ini = *itI;
+			if (ini->get_vivo())
+				continue;
+			ataqueRect = sf::FloatRect(
+				pJog->get_ataque_posicao(),
+				pJog->get_ataque_tamanho()
+			);
+			inimigoRect = sf::FloatRect(
+				ini->get_posicao(),
+				ini->get_tamanho()
+			);
+
+			if(ataqueRect.intersects(inimigoRect))
+			{
+				ini->danificar();
+			}
+		}
+	}
+
+	void GerenciadorColisoes::tratarColisoesJogsObstacs(Entidades::Personagens::Jogador* pJog, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1)const
 	{
 		pJog->colidir(pObs, *dir1);
-		pObs->obstaculizar(pJog, *dir2);
+		pObs->obstaculizar(pJog);
 	}
 
 	void GerenciadorColisoes::tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni, std::string * dir1, std::string * dir2)const
@@ -189,11 +216,11 @@ namespace Gerenciadores
 		pIni->colidir(pJog, *dir2);
 	}
 
-	void GerenciadorColisoes::tratarColisoesInimigsObstacs(Entidades::Personagens::Inimigo* pIni, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1, std::string* dir2)const
+	/*void GerenciadorColisoes::tratarColisoesInimigsObstacs(Entidades::Personagens::Inimigo* pIni, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1)const
 	{
 		pIni->colidir(pObs, *dir1);
 		pObs->obstaculizar(pIni, *dir2);
-	}
+	}*/
 
 	/*
 	* void GerenciadorColisoes::tratarColisoesJogsProjeteis()

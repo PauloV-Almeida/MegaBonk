@@ -108,5 +108,28 @@ namespace Entidades
 			if (!encontrou)
 				movimentoaleatorio();
 		}
+		
+		void Inimigo::colidir(Obstaculos::Obstaculo* pObs, std::string direcao)
+		{
+			if(pObs->get_danoso())
+				receber_dano(dano);
+			if (direcao == "Embaixo")
+			{
+				noChao = true;
+				vel.y = 0.0f;
+			}
+			else if (direcao == "Cima")
+			{
+				vel.y = 0.0f;
+			}
+			else if (direcao == "Esquerda")
+			{
+				vel.x = 0.0f;
+			}
+			else if (direcao == "Direita")
+			{
+				vel.x = 0.0f;
+			}
+		}
 	}
 }

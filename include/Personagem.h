@@ -18,7 +18,11 @@ namespace Entidades
 			virtual ~Personagem();
 			virtual void executar() = 0;
 			
-			void receber_dano(int dmg) { n_vidas -= dmg; }
+			void receber_dano(int dmg) {
+				n_vidas -= dmg;
+				if (n_vidas <= 0) set_vivo = false;
+			}
+
 			void set_vivo(bool a) { vivo = a; }
 			virtual void desenhar();
 			sf::Vector2f get_posicao() { return corpo.getPosition(); }

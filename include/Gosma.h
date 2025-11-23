@@ -12,13 +12,13 @@ namespace Entidades
 
     namespace Obstaculos
     {
-        class Plataforma : public Obstaculo
+        class Gosma : public Obstaculo
         {
         private:
             bool pVerifica;
         public:
-            Plataforma(sf::Vector2f pos = sf::Vector2f(0.f, 0.f), bool veri = false);
-            ~Plataforma();
+            Gosma(sf::Vector2f pos = sf::Vector2f(0.f, 0.f), bool veri = false);
+            ~Gosma();
             void obstaculizar(Entidades::Personagens::Jogador* p);
             void executar();
             void mover();

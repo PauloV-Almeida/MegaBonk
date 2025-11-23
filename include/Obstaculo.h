@@ -6,6 +6,12 @@
 
 namespace Entidades
 {
+
+    namespace Personagens
+    {
+        class Jogador;
+	}
+
     namespace Obstaculos
     {
         class Obstaculo : public Entidade
@@ -29,7 +35,7 @@ namespace Entidades
             void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
 			void set_danoso(bool d) { danoso = d; }
             const bool get_danoso() const { return danoso; }
-			virtual void obstaculizar(Entidades::Entidade* outro, std::string  direcao = "") = 0;
+			virtual void obstaculizar(Entidades::Personagens::Jogador* p) = 0;
         };
     }
 

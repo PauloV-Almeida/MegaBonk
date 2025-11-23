@@ -1,40 +1,40 @@
-#include "../include/Esqueleto.h"
+#include "../include/Goblin.h"
 
 namespace Entidades
 {
 	namespace Personagens
 	{
-		
-		Esqueleto::Esqueleto(bool viv, int nV, sf::Vector2f pos, sf::Vector2f velo, float dmg, sf::Vector2f tam, float emp) :
+
+		Goblin::Goblin(bool viv, int nV, sf::Vector2f pos, sf::Vector2f velo, float dmg, sf::Vector2f tam, float fur):
 			Inimigo(1, pos, velo, tam),
-			empurrar(emp)
+			furia(fur)
 		{
 			dano = dmg;
 			n_vidas = nV;
 			texturas = pGG->carregar_texturas("./assets/Esqueleto.png");
 			corpo.setTexture(texturas);
 			vivo = viv;
-			
+
 		}
-		Esqueleto::~Esqueleto()
+		Goblin::~Goblin()
 		{
 		}
-		void Esqueleto::executar()
+		void Goblin::executar()
 		{
 			mover();
 			desenhar();
 		}
-		void Esqueleto::danificar()
+		void Goblin::danificar()
 		{
 			if (velocidade > 0)
 			{
 				vel.y -= 5.f;
 				corpo.setPosition(corpo.getPosition() + sf::Vector2f(velocidade * vel.x / 10, velocidade * vel.y / 10));
 			}
-			
+
 
 		}
-		void Esqueleto::colidir(Jogador* pJog, std::string direcao)
+		void Goblin::colidir(Jogador* pJog, std::string direcao)
 		{
 			pJog->receber_dano(dano);
 			if (direcao == "Embaixo")
@@ -49,16 +49,15 @@ namespace Entidades
 			else if (direcao == "Esquerda")
 			{
 				vel.x = 0.0f;
-				pJog->set_vel(pJog->get_vel() + sf::Vector2f(-empurrar, 0.f));
 			}
 			else if (direcao == "Direita")
 			{
 				vel.x = 0.0f;
-				pJog->set_vel(pJog->get_vel() + sf::Vector2f(empurrar, 0.f));
 			}
+			dano *= furia;
 		}
 
-		void Esqueleto::desenhar()
+		void Goblin::desenhar()
 		{
 			pGG->desenhar(&corpo);
 		}
