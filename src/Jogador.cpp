@@ -116,11 +116,11 @@ namespace Entidades
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 					vel.x -= VELOCIDADE;
-					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-direita.png"));
+					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
 				}
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 					vel.x += VELOCIDADE;
-					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
+					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-direita.png"));
 				}
 				else
 					vel.x *= 0.8f;
@@ -132,7 +132,7 @@ namespace Entidades
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && noChao)
 				{
-					vel.y -= 8.0;
+					vel.y -= 6.0;
 					noChao = false;
 				}
 				corpo.move(vel.x, vel.y);
@@ -163,7 +163,7 @@ namespace Entidades
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
 				{
-					vel.y -= 8.0;
+					vel.y -= 6.0;
 					noChao = false;
 				}
 				corpo.move(vel.x, vel.y);
