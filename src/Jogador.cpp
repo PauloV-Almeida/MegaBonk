@@ -13,9 +13,11 @@ namespace Entidades
 			venceu(false),
 			dano_ataque(0),
 			id_jogador(indice),
-			direita(true)
+			direita(true),
+			speedModifier(1.0f),
+			slowTimer(0)
 		{
-			
+
 			ataque_corpo.setOrigin(ataque_corpo.getSize().x / 2, ataque_corpo.getSize().y / 2);
 			ataque_corpo.setTexture(pGG->carregar_texturas("./assets/ataque.png"));
 			n_vidas = 20;
@@ -40,9 +42,11 @@ namespace Entidades
 			dano_ataque(0),
 			id_jogador(indice),
 			direita(true),
-			ataque_direcao("Acima")
+			ataque_direcao("Acima"),
+			speedModifier(1.0f),
+			slowTimer(0)
 		{
-			
+
 			vivo = viv;
 			n_vidas = nV;
 
@@ -107,6 +111,15 @@ namespace Entidades
 			if (n_vidas <= 0)
 				vivo = false;
 
+			// atualiza duração do efeito de lentidão
+			if (slowTimer > 0) {
+				--slowTimer;
+				if (slowTimer <= 0) {
+					speedModifier = 1.0f;
+					slowTimer = 0;
+				}
+			}
+
 			mover();
 			ataque();
 
@@ -120,22 +133,33 @@ namespace Entidades
 				if (!noChao)
 					vel.y += GRAVIDADE;
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-					vel.x -= VELOCIDADE;
+				// leitura das teclas com comportamento "imediato": define velocidade fixa,
+				// e zera quando nenhuma tecla estiver pressionada.
+				bool moveEsq = sf::Keyboard::isKeyPressed(sf::Keyboard::A);
+				bool moveDir = sf::Keyboard::isKeyPressed(sf::Keyboard::D);
+
+				if (moveEsq && !moveDir) {
+					vel.x = -VELOCIDADE * speedModifier;
 					if (direita)
 					{
 						corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
 						direita = false;
 					}
 				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-					vel.x += VELOCIDADE;
-					if(!direita)
+				else if (moveDir && !moveEsq) {
+					vel.x = VELOCIDADE * speedModifier;
+					if (!direita)
 					{
 						corpo.setTexture(pGG->carregar_texturas("./assets/jogador1.png"));
 						direita = true;
 					}
 				}
+				else
+				{
+					// nenhuma tecla horizontal -> parar imediatamente
+					vel.x = 0.f;
+				}
+
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && noChao)
 				{
 					vel.y -= 6.0;
@@ -143,6 +167,7 @@ namespace Entidades
 				}
 				corpo.move(vel.x, vel.y);
 
+				// noChao controlado pelo GerenciadorColisoes (colisões setam true para o próximo frame)
 				noChao = false;
 			}
 
@@ -151,22 +176,30 @@ namespace Entidades
 				if (!noChao)
 					vel.y += GRAVIDADE;
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-					vel.x -= VELOCIDADE;
+				bool moveEsq = sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+				bool moveDir = sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
+
+				if (moveEsq && !moveDir) {
+					vel.x = -VELOCIDADE * speedModifier;
 					if (direita)
 					{
 						corpo.setTexture(pGG->carregar_texturas("./assets/jogador2-esquerda.png"));
 						direita = false;
 					}
 				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-					vel.x += VELOCIDADE;
+				else if (moveDir && !moveEsq) {
+					vel.x = VELOCIDADE * speedModifier;
 					if (!direita)
 					{
 						corpo.setTexture(pGG->carregar_texturas("./assets/jogador2.png"));
 						direita = true;
 					}
 				}
+				else
+				{
+					vel.x = 0.f;
+				}
+
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
 				{
 					vel.y -= 6.0;
@@ -186,9 +219,10 @@ namespace Entidades
 			case 1:
 				if (direcao == "Acima")
 				{
-					vel.y = 40* VELOCIDADE;
+					vel.y = 40 * VELOCIDADE;
 					outra->set_vel(sf::Vector2f(outra->get_vel().x, -5 * VELOCIDADE));
-				}else if (direcao == "Abaixo")
+				}
+				else if (direcao == "Abaixo")
 				{
 					parado = true;
 					vel.y *= -1;
@@ -202,7 +236,7 @@ namespace Entidades
 				else if (direcao == "Direita")
 				{
 					vel = sf::Vector2f(-10 * VELOCIDADE, vel.y);
-					outra->set_vel(sf::Vector2f(5*VELOCIDADE, outra->get_vel().y));
+					outra->set_vel(sf::Vector2f(5 * VELOCIDADE, outra->get_vel().y));
 				}
 				mover();
 				break;
@@ -242,7 +276,7 @@ namespace Entidades
 				}
 				else if (direcao == "Direita")
 				{
-					vel = sf::Vector2f( vel.x, vel.y);
+					vel = sf::Vector2f(vel.x, vel.y);
 				}
 				break;
 			case 13:
@@ -267,7 +301,7 @@ namespace Entidades
 				break;
 			}
 		}
-		
+
 		void Jogador::ataque()
 		{
 			if ((id_jogador == 1 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ||
@@ -306,7 +340,7 @@ namespace Entidades
 					}
 					else
 					{
-						if(vel.x >= 0)
+						if (vel.x >= 0)
 						{
 							direcao = "Direita";
 							ataque_direcao = "Direita";
@@ -373,7 +407,7 @@ namespace Entidades
 				}
 				pGG->desenhar(&ataque_corpo);
 				gColisoes->colidir_ataque(static_cast<Jogador*>(this), direcao);
-				
+
 			}
 			dano_ataque = 0;
 		}
@@ -402,7 +436,8 @@ namespace Entidades
 			if (vivo)
 			{
 				arquivo << 1 << std::endl;
-			}else
+			}
+			else
 			{
 				arquivo << 0 << std::endl;
 				arquivo << n_vidas << std::endl
@@ -414,6 +449,15 @@ namespace Entidades
 					<< corpo.getSize().y << std::endl;
 
 			}
+		}
+
+		void Jogador::aplicar_lentidao(float factor, int duracaoFrames)
+		{
+			if (factor <= 0.f) return;
+			speedModifier = 1.0f / factor;
+			if (speedModifier < 0.05f) speedModifier = 0.05f; // limite mínimo
+			if (duracaoFrames <= 0) duracaoFrames = 120;
+			slowTimer = duracaoFrames;
 		}
 
 	}

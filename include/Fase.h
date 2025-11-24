@@ -6,6 +6,7 @@
 #include "Jogador.h"
 #include "Esqueleto.h"
 #include "Plataforma.h"
+#include "Gosma.h"
 #include "ListaEntidades.h"
 #include "GerenciadorGrafico.h"
 #include "GerenciadorColisoes.h"

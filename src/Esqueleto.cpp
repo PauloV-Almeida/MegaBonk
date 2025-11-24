@@ -21,16 +21,21 @@ namespace Entidades
 		}
 		void Esqueleto::executar()
 		{
-			if(velocidade > 0)
+			if (velocidade > 0 )
 			{
-				vel.y += GRAVIDADE;
+				if (parado) {
+					vel.y -= 5.f;
+				}
+				else 
+					vel.y += GRAVIDADE;
 				if (empurrar > 0)
-					vel.x += VELOCIDADE/4;
+					vel.x += VELOCIDADE / 4;
 				else
 					vel.x -= VELOCIDADE / 4;
 				corpo.setPosition(corpo.getPosition() + sf::Vector2f(velocidade * vel.x / 10, velocidade * vel.y / 10));
 			}
 		}
+		
 		
 		void Esqueleto::danificar(Entidade* outra, std::string direcao)
 		{
@@ -44,12 +49,87 @@ namespace Entidades
 				if (!static_cast<Entidades::Personagens::Jogador*>(outra)->get_dano())
 				{
 					if(direcao == "Direita")
-					{ }
+					{ 
+						outra->infligir_dano(nivel_maldade);
+						vel.x -= empurrar;
+
+					}else if(direcao == "Esquerda")
+					{
+						outra->infligir_dano(nivel_maldade);
+						vel.x += empurrar;
+					}
+					else if (direcao == "Acima")
+					{
+						outra->infligir_dano(nivel_maldade);
+						vel.y += empurrar;
+					}
+					else if (direcao == "Abaixo")
+					{
+						outra->infligir_dano(nivel_maldade);
+						vel.y -= empurrar;
+					}
 				}
+				else
+				{
+					if (direcao == "Direita")
+					{
+						outra->infligir_dano(nivel_maldade);
+						vel.x -= empurrar;
+
+					}
+					else if (direcao == "Esquerda")
+					{
+						outra->infligir_dano(nivel_maldade);
+						vel.x += empurrar;
+					}
+					else if (direcao == "Acima")
+					{
+						outra->infligir_dano(nivel_maldade);
+						vel.y += empurrar;
+					}
+					else if (direcao == "Abaixo")
+					{
+						outra->infligir_dano(nivel_maldade);
+						vel.y -= empurrar;
+					}
+				}
+				break;
+			case 11:
+				if (direcao == "Direita")
+				{
+					vel.x = -VELOCIDADE;
+					empurrar = -EMPURRAR_JOGADOR;
+				}
+				else if(direcao == "Esquerda")
+				{
+					vel.x = VELOCIDADE;
+					empurrar = EMPURRAR_JOGADOR;
+				}
+				break;
 			default:
 				break;
 			}
+			executar();
 		}
-
+	void Esqueleto::salvar(std::ofstream& arquivo)
+	{
+		if (!arquivo.is_open())
+		{
+			std::cout << "Error: Cannot open enemy file!" << std::endl;
+			return;
+		}
+		arquivo << id << std::endl;
+		if (vivo)
+			arquivo << 1 << std::endl;
+		else
+			arquivo << 0 << std::endl;
+		arquivo << n_vidas << std::endl << nivel_maldade << std::endl
+			<< corpo.getPosition().x << std::endl << corpo.getPosition().y << std::endl
+			<< vel.x << std::endl << vel.y << std::endl
+			<< corpo.getSize().x << std::endl << corpo.getSize().y << std::endl
+			<< empurrar << std::endl << std::endl;
 	}
+	
+
+	}//Personagens
 }

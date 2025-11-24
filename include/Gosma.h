@@ -12,7 +12,7 @@ namespace Entidades
         private:
             float lentidao;
         public:
-            Gosma(sf::Vector2f pos, float len = 4);
+            Gosma(sf::Vector2f pos, float len = 2);
             ~Gosma();
             void obstaculizar(Entidades::Entidade* outra, std::string direcao = "");
             void executar();

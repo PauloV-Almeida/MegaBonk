@@ -3,7 +3,7 @@
 #include "Inimigo.h"
 #include "Jogador.h"
 
-#define EMPURRAR_ESQUELETO 50
+#define EMPURRAR_JOGADOR 50
 
 namespace Entidades
 {

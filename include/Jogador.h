@@ -26,6 +26,11 @@ namespace Entidades
 			bool direita;
 			std::string ataque_direcao;
 			int dano_ataque;
+
+			// modificadores para efeitos (ex: gosma)
+			float speedModifier; // multiplicador aplicado a VELOCIDADE horizontal (1.0 = normal)
+			int slowTimer;       // frames restantes do efeito de lentidão
+
 		public:
 			Jogador(int indice = 1, sf::Vector2f pos = sf::Vector2f(10.f, 0.f), sf::Vector2f vel = sf::Vector2f(0.f, 0.f), sf::Vector2f tam = sf::Vector2f(50.f, 50.f));
 			Jogador(int indice, bool viv, int nV, sf::Vector2f pos, sf::Vector2f velo, sf::Vector2f tam);
@@ -37,7 +42,7 @@ namespace Entidades
 			void colidir_ataque(Entidade* outra, std::string direcao = "");
 			void ataque();
 			void set_venceu(bool v) { venceu = v; };
-			bool get_venceu() const  { return venceu; };
+			bool get_venceu() const { return venceu; };
 
 			sf::Vector2f get_ataque_posicao() { return ataque_corpo.getPosition(); }
 			sf::Vector2f get_ataque_tamanho() { return ataque_corpo.getSize(); }
@@ -47,6 +52,8 @@ namespace Entidades
 			void desenhar();
 			void salvar(std::ofstream& arquivo);
 
+			// Aplica lentidão: 'factor' é o divisor (2 => metade da velocidade), 'duracaoFrames' duração em frames
+			void aplicar_lentidao(float factor, int duracaoFrames = 120);
 		};
 	}
 }

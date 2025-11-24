@@ -1,4 +1,6 @@
 #include "../include/Fase.h"
+#include <sstream>
+#include <iostream>
 
 namespace Fases
 {
@@ -30,43 +32,100 @@ namespace Fases
 
 	Entidades::Entidade* Fase::criarEsqueleto(std::ifstream& arquivo)
 	{
-		Entidades::Entidade* aux = nullptr;
-		int indice, vivo, vida;
+		// lê uma linha inteira do arquivo e faz parsing com istringstream -> mais robusto que >> isolado
 		std::string linha;
-		float px, py, vx, vy, dano, sx, sy;
-		arquivo >> indice >> vivo >> vida >> dano >> px >> py >> vx >> vy;
-
-		std::srand(std::time(nullptr));//aleatoriedade
-		if (vivo != 0 && vivo != 1)
-		{
-			vivo = std::rand() % vivo;
+		if (!std::getline(arquivo, linha)) {
+			std::cerr << "[Fase::criarEsqueleto] falha ao ler linha (EOF ou erro de I/O)\n";
+			return nullptr;
 		}
+
+		// ignora linhas vazias
+		if (linha.empty()) {
+			std::cerr << "[Fase::criarEsqueleto] linha vazia lida\n";
+			return nullptr;
+		}
+
+		std::istringstream iss(linha);
+		Entidades::Entidade* aux = nullptr;
+
+		int indice;
+		int vivo;
+		int vida;
+		float dano, px, py, vx, vy;
+
+		if (!(iss >> indice >> vivo >> vida >> dano >> px >> py >> vx >> vy)) {
+			std::cerr << "[Fase::criarEsqueleto] parse inicial falhou. linha: \"" << linha << "\"\n";
+			return nullptr;
+		}
+
 		switch (indice)
 		{
 		case 1:
+		{
+			float sx, sy;
 			int emp;
-			arquivo >> sx >> sy >> emp;
-			aux = new Entidades::Personagens::Esqueleto(((bool)vivo), vida, sf::Vector2f(px, py), sf::Vector2f(vx, vy), dano, sf::Vector2f(sx, sy), emp);
-			break;
-		default:
+			if (!(iss >> sx >> sy >> emp)) {
+				std::cerr << "[Fase::criarEsqueleto] parse params esqueleto (sx,sy,emp) falhou. linha: \"" << linha << "\"\n";
+				// ainda assim podemos tentar criar com tamanhos/padrões para não perder o spawn
+				sx = 32.f; sy = 32.f; emp = 0;
+			}
+			aux = new Entidades::Personagens::Esqueleto(
+				static_cast<bool>(vivo),
+				vida,
+				sf::Vector2f(px, py),
+				sf::Vector2f(vx, vy),
+				dano,
+				sf::Vector2f(sx, sy),
+				emp
+			);
 			break;
 		}
-		
+		default:
+			std::cerr << "[Fase::criarEsqueleto] indice desconhecido lido: " << indice << " linha: \"" << linha << "\"\n";
+			break;
+		}
+
 		if (aux)
 		{
-			Entidades::Entidade* pIni = nullptr;
-			pIni = static_cast<Entidades::Entidade*>(aux);
-			inimigos.add(pIni);
-		}
-		aux->set_GerenciadorColisoes(&gColisoes);
-		Entidades::Entidade* inimigo = aux;
-		if (inimigo) {
-			inimigo->set_GerenciadorColisoes(&gColisoes);
-			inimigos.add(inimigo);
-		}
-		return aux;
+			// Forçar inicialização segura: posição, velocidade zero, vivo = true e parado para evitar movimento indesejado.
+			// Essas chamadas assumem que as implementações concretas (Esqueleto/Inimigo) expõem esses setters.
+			try {
+				aux->set_GerenciadorColisoes(&gColisoes);
 
+				// Garanta posição inicial coerente
+				aux->set_posicao(sf::Vector2f(px, py));
+
+				// Zera velocidade e marca como parado (evita gravidade/movimento automático)
+				aux->set_vel(sf::Vector2f(0.f, 0.f));
+				aux->set_parado(true);
+
+				// Garante que está vivo para ser desenhado
+				aux->set_vivo(true);
+			}
+			catch (...) {
+				// Caso alguma implementação não exponha os métodos esperados, apenas continue.
+				// Não interrompe criação; deixamos logs para inspeção.
+				std::cerr << "[Fase::criarEsqueleto] warning: não foi possível aplicar valores seguros a aux=" << aux << std::endl;
+			}
+
+			Entidades::Entidade* inimigo = static_cast<Entidades::Entidade*>(aux);
+			inimigos.add(inimigo);
+
+			Entidades::Personagens::Inimigo* pIni = dynamic_cast<Entidades::Personagens::Inimigo*>(aux);
+			if (pIni) {
+				gColisoes.adicionarInimigo(pIni);
+			}
+			else {
+				std::cerr << "[Fase::criarEsqueleto] dynamic_cast<Inimigo*> falhou para ptr=" << aux << std::endl;
+			}
+		}
+		else {
+			std::cerr << "[Fase::criarEsqueleto] nenhum inimigo criado para linha: \"" << linha << "\"\n";
+		}
+
+		return aux;
 	}
+
 	void Fase::criarCenario(std::string arquivo, std::string save)
 	{
 		std::ifstream entrada(arquivo);
@@ -103,9 +162,30 @@ namespace Fases
 					{
 						Entidades::Entidade* pObs = nullptr;
 						pObs = static_cast<Entidades::Entidade*>(aux);
-						obstaculos.add(pObs);
+						if (pObs) {
+							pObs->set_GerenciadorColisoes(&gColisoes);
+							obstaculos.add(pObs);
+							Entidades::Obstaculos::Obstaculo* pob = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(pObs);
+							if (pob) gColisoes.adicionarObstaculo(pob);
+						}
+
 					}
 					saida << '0';
+					break;
+				case '1':
+					aux = new Entidades::Obstaculos::Gosma(sf::Vector2f(j * OBSTACULO_TAMANHO, i * OBSTACULO_TAMANHO));
+					if (aux)
+					{
+						Entidades::Entidade* pObs = nullptr;
+						pObs = static_cast<Entidades::Entidade*>(aux);
+						if (pObs) {
+							pObs->set_GerenciadorColisoes(&gColisoes);
+							obstaculos.add(pObs);
+							Entidades::Obstaculos::Obstaculo* pob = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(pObs);
+							if (pob) gColisoes.adicionarObstaculo(pob);
+						}
+					}
+					saida << '1';
 					break;
 				default:
 					saida << ' ';
@@ -122,8 +202,12 @@ namespace Fases
 
 	void Fase::carregaCenario(std::string saveCenarioArq)
 	{
+		// remove obstáculos antigos da lista de entidades e do gerenciador de colisões
 		if (obstaculos.get_tamanho() > 0)
+		{
 			obstaculos.limpar();
+			gColisoes.limparObstaculos(); // requer método limparObstaculos no GerenciadorColisoes
+		}
 
 		std::ifstream entrada(saveCenarioArq);
 
@@ -141,14 +225,38 @@ namespace Fases
 			j = 0;
 			for (char character : linha)
 			{
-				if (character == '0')
+				switch (character)
 				{
+				case '0':
 					aux = new Entidades::Obstaculos::Plataforma(sf::Vector2f(j * OBSTACULO_TAMANHO, i * OBSTACULO_TAMANHO));
 					if (aux)
 					{
-						Entidades::Entidade* pObs = static_cast<Entidades::Entidade*>(aux);
-						obstaculos.add(pObs);
+						Entidades::Entidade* pObs = nullptr;
+						pObs = static_cast<Entidades::Entidade*>(aux);
+						if (pObs) {
+							pObs->set_GerenciadorColisoes(&gColisoes);
+							obstaculos.add(pObs);
+							Entidades::Obstaculos::Obstaculo* pob = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(pObs);
+							if (pob) gColisoes.adicionarObstaculo(pob);
+						}
 					}
+					break;
+				case '1':
+					aux = new Entidades::Obstaculos::Gosma(sf::Vector2f(j * OBSTACULO_TAMANHO, i * OBSTACULO_TAMANHO));
+					if (aux)
+					{
+						Entidades::Entidade* pObs = nullptr;
+						pObs = static_cast<Entidades::Entidade*>(aux);
+						if (pObs) {
+							pObs->set_GerenciadorColisoes(&gColisoes);
+							obstaculos.add(pObs);
+							Entidades::Obstaculos::Obstaculo* pob = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(pObs);
+							if (pob) gColisoes.adicionarObstaculo(pob);
+						}
+					}
+					break;
+				default:
+					break;
 				}
 				j++;
 			}

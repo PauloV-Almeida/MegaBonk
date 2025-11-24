@@ -20,6 +20,7 @@ namespace Entidades
 			void executar();
 			void danificar(Jogador* p);
 			void colidir(Jogador* pJog, std::string direcao = "");
+			void salvar(std::ofstream& arquivo);
 		};
 	}
 }

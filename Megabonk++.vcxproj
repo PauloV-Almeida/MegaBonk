@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ArvoreMonstro.cpp" />
     <ClCompile Include="src\Botao.cpp" />
     <ClCompile Include="src\Entidades.cpp" />
     <ClCompile Include="src\Espinhos.cpp" />
@@ -29,7 +28,6 @@
     <ClCompile Include="src\Deserto.cpp" />
     <ClCompile Include="src\GerenciadorColisoes.cpp" />
     <ClCompile Include="src\GerenciadorEstado.cpp" />
-    <ClCompile Include="src\Goblin.cpp" />
     <ClCompile Include="src\Gosma.cpp" />
     <ClCompile Include="src\Inimigo.cpp" />
     <ClCompile Include="src\Jogador.cpp" />
@@ -46,7 +44,6 @@
     <ClCompile Include="src\Obstaculo.cpp" />
     <ClCompile Include="src\Personagem.cpp" />
     <ClCompile Include="src\Plataforma.cpp" />
-    <ClCompile Include="src\Projetil.cpp" />
     <ClCompile Include="src\Subject.cpp" />
     <ClCompile Include="src\Texto.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
@@ -68,7 +65,6 @@
     <None Include="salvar\fase1\seed.dat" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ArvoreMonstro.h" />
     <ClInclude Include="include\Botao.h" />
     <ClInclude Include="include\Ente.h" />
     <ClInclude Include="include\Entidades.h" />
@@ -81,7 +77,6 @@
     <ClInclude Include="include\GerenciadorEstado.h" />
     <ClInclude Include="include\GerenciadorEventos.h" />
     <ClInclude Include="include\GerenciadorGrafico.h" />
-    <ClInclude Include="include\Goblin.h" />
     <ClInclude Include="include\Gosma.h" />
     <ClInclude Include="include\Inimigo.h" />
     <ClInclude Include="include\Jogador.h" />
@@ -95,7 +90,6 @@
     <ClInclude Include="include\Obstaculo.h" />
     <ClInclude Include="include\Personagem.h" />
     <ClInclude Include="include\Plataforma.h" />
-    <ClInclude Include="include\Projetil.h" />
     <ClInclude Include="include\Subject.h" />
     <ClInclude Include="include\Texto.h" />
     <ClInclude Include="src\Gosma.h" />

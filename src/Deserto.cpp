@@ -1,4 +1,5 @@
 ﻿#include "../include/Deserto.h"
+#include <limits>
 
 namespace Fases
 {
@@ -50,25 +51,73 @@ namespace Fases
 			Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> it = jogadores.get_Primeiro();
 			Entidades::Personagens::Jogador* p1 = dynamic_cast<Entidades::Personagens::Jogador*>(*it);
 			it++;
-			/*if (jogadores.get_tamanho() == 1)
+
+			if (jogadores.get_tamanho() == 1)
 			{
-				pEG->set_AtualEstado(2);
-				pEG->reseta_AtualEstado();
-				
+				if (p1->get_venceu())
+				{
+					p1->set_venceu(false);
+					pEG->set_AtualEstado(2);
+					pEG->reseta_AtualEstado();
+				}
+				if ((*jogadores.get_Primeiro())->get_vivo())
+				{
+					(*jogadores.get_Primeiro())->get_posicao();
+				}
+				else
+				{
+					pEG->set_AtualEstado(3);
+					pEG->reseta_AtualEstado();
+				}
 			}
 			else
 			{
 				Entidades::Personagens::Jogador* p2 = dynamic_cast<Entidades::Personagens::Jogador*>(*it);
+				if (p1->get_venceu() || p2->get_venceu())
+				{
+					if (fim == 400)
+					{
+						p1->set_venceu(false);
+						p2->set_venceu(false);
+
+					}
+					fim--;
+				}
 				if (fim < 0)
 				{
-					pEG->set_AtualEstado(5);
+					pEG->set_AtualEstado(2);
 					pEG->reseta_AtualEstado();
 				}
+				else
+				{
+					if (!(*jogadores.get_Primeiro())->get_vivo() && !(*it)->get_vivo())
+					{
+						pEG->set_AtualEstado(3);
+						pEG->reseta_AtualEstado();
+					}
+				}
+
 				if (fim < TEMPOFIM)
 					fim--;
-			}*/
+			}
+
 		}
 		jogadores.desenhar();
+		std::cerr << "[Deserto::executar] inimigos.get_tamanho()=" << inimigos.get_tamanho() << std::endl;
+		auto it = inimigos.get_Primeiro();
+		int idx = 0;
+		while (it != nullptr) {
+			Entidades::Entidade* e = *it;
+			std::cerr << "  inimigo[" << idx++ << "] ptr=" << e;
+			auto pini = dynamic_cast<Entidades::Personagens::Inimigo*>(e);
+			std::cerr << " isInimigo=" << (pini != nullptr);
+			if (e) {
+				std::cerr << " pos=(" << e->get_posicao().x << "," << e->get_posicao().y << ") tam=(" << e->get_tamanho().x << "," << e->get_tamanho().y << ")";
+				std::cerr << " vivo=" << (e->get_vivo() ? 1 : 0);
+			}
+			std::cerr << std::endl;
+			it++;
+		}
 		inimigos.desenhar();
 		obstaculos.desenhar();
 	}//executar
@@ -82,7 +131,8 @@ namespace Fases
 		{
 			jogadoresArq.open(ARQ_JOGADOR11);
 			inimigosArq.open(ARQ_INIMIGOS11);
-		}else if(id_estado == 6)
+		}
+		else if (id_estado == 6)
 		{
 			jogadoresArq.open(ARQ_JOGADOR12);
 			inimigosArq.open(ARQ_INIMIGOS12);
@@ -109,6 +159,7 @@ namespace Fases
 	}
 	void Deserto::carregar()
 	{
+		// carrega cenário (obstáculos) primeiro
 		carregaCenario(SALVAR_CENARIO_1);
 
 		int n, vivo, dano, vida;
@@ -134,23 +185,15 @@ namespace Fases
 		}
 		jogadoresArq >> n;
 
-		// Se não há mais dados no arquivo além do número, criar jogadores padrão
+		// Carregar jogadores (como antes) ...
 		jogadoresArq >> std::ws;
 		if (jogadoresArq.peek() == EOF)
 		{
 			for (int i = 0; i < n; i++)
 			{
-				// valores padrão — ajuste conforme necessário
-				vivo = 1;
-				vida = 100;
-				px = 50.f + i * 50.f;
-				py = 50.f;
-				vx = 0.f; vy = 0.f;
-				tamx = 32.f; tamy = 32.f;
-
+				vivo = 1; vida = 100; px = 50.f + i * 50.f; py = 50.f; vx = vy = 0.f; tamx = tamy = 32.f;
 				Entidades::Personagens::Jogador* pJog = new Entidades::Personagens::Jogador(i + 1, vivo, vida, sf::Vector2f(px, py), sf::Vector2f(vx, vy), sf::Vector2f(tamx, tamy));
 				Entidades::Entidade* jogador = pJog;
-
 				if (jogador)
 				{
 					jogadores.add(jogador);
@@ -164,12 +207,10 @@ namespace Fases
 			{
 				if (!(jogadoresArq >> vivo >> vida >> px >> py >> vx >> vy >> tamx >> tamy))
 				{
-					// leitura falhou — criar restando com padrão
 					vivo = 1; vida = 100; px = 50.f + i * 50.f; py = 50.f; vx = vy = 0.f; tamx = tamy = 32.f;
 				}
 				Entidades::Personagens::Jogador* pJog = new Entidades::Personagens::Jogador(i + 1, vivo, vida, sf::Vector2f(px, py), sf::Vector2f(vx, vy), sf::Vector2f(tamx, tamy));
 				Entidades::Entidade* jogador = pJog;
-
 				if (jogador)
 				{
 					jogadores.add(jogador);
@@ -183,20 +224,63 @@ namespace Fases
 			std::cerr << "ERRO ARQUIVO INIMIGOS\n";
 			exit(1);
 		}
+
+		// lê número de inimigos
 		inimigosArq >> n;
+		std::cerr << "[Deserto::carregar] n lido do arquivo de inimigos = " << n
+			<< " fail=" << std::boolalpha << inimigosArq.fail() << std::noboolalpha << std::endl;
+
+		// debug: se n <= 0, mostre conteúdo do arquivo para entender formato
+		if (n <= 0)
+		{
+			std::cerr << "[Deserto::carregar] arquivo de inimigos vazio ou formato diferente. Conteúdo do arquivo:" << std::endl;
+			// reposiciona no início e imprime linhas
+			inimigosArq.clear();
+			inimigosArq.seekg(0);
+			while (std::getline(inimigosArq, linha))
+			{
+				std::cerr << "  '" << linha << "'" << std::endl;
+			}
+
+			// fallback de teste: criar um esqueleto de exemplo para validar desenho
+			Entidades::Personagens::Esqueleto* fallback = new Entidades::Personagens::Esqueleto(true, 10, sf::Vector2f(200.f, 200.f), sf::Vector2f(0.f, 0.f), 1.0f, sf::Vector2f(32.f, 32.f), 0);
+			if (fallback)
+			{
+				fallback->set_GerenciadorColisoes(&gColisoes);
+				inimigos.add(static_cast<Entidades::Entidade*>(fallback));
+				gColisoes.adicionarInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(fallback));
+				std::cerr << "[Deserto::carregar] adicionado fallback Esqueleto ptr=" << fallback << std::endl;
+			}
+			carregado = true;
+			return;
+		}
+
+		// consumir newline pendente antes de getline em criarEsqueleto
+		inimigosArq.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		// limpar listas e recriar
+		inimigos.limpar();
+		gColisoes.limparInimigos();
+
 		for (int i = 0; i < n; i++)
 		{
 			criarEsqueleto(inimigosArq);
 		}
+
+		// garantir registro dos inimigos
+		gColisoes.incluirInimigos(&inimigos);
+
 		carregado = true;
 	}
 	void Deserto::resetar()
 	{
 		criarCenario(ARQUIVO_CENARIO_1, SALVAR_CENARIO_1);
-		if(carregado)
-			jogadores.limpar();
-		if(carregado)
-			inimigos.limpar();
+
+		// limpar sempre antes de repopular para evitar resíduos
+		jogadores.limpar();
+		inimigos.limpar();
+		gColisoes.limparInimigos();
+		gColisoes.limparObstaculos();
 
 		int n, vivo, dano, vida, vx, vy, px, py, tamx, tamy;
 		std::string linha;
@@ -241,6 +325,9 @@ namespace Fases
 			getline(inimigosArq, linha); // consumir a quebra de linha restante
 			criarEsqueleto(inimigosArq);
 		}
+
+		// garantir registro dos inimigos no gerenciador de colisões
+		gColisoes.incluirInimigos(&inimigos);
 		carregado = true;
 	}
 }

@@ -7,7 +7,10 @@
 #include "Inimigo.h"
 #include "ListaEntidades.h"
 #include "Plataforma.h"
-
+#include "Projetil.h"
+#include <vector>
+#include <list>
+#include <algorithm>
 
 namespace Gerenciadores
 {
@@ -19,8 +22,6 @@ namespace Gerenciadores
 		//std::set <Entidades::Projetil*> LPs;
 
 		Listas::ListaEntidades* LJogs;
-		Listas::ListaEntidades* LInisPtr;
-		Listas::ListaEntidades* LObsPtr;
 
 
 	private:
@@ -30,45 +31,23 @@ namespace Gerenciadores
 		void tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni, std::string* dir1 = nullptr, std::string* dir2 = nullptr)const;
 
 		//void tratarColisoesJogsProjeteis();
-		
+
 	public:
 		GerenciadorColisoes();
 		~GerenciadorColisoes();
-		void incluirJogadores(Listas::ListaEntidades* ListaJg) {if(ListaJg){ LJogs = ListaJg;}}
-		void incluirInimigos(Listas::ListaEntidades* ListaIni) {
-			if (!ListaIni) return;
-			LInisPtr = ListaIni;
-			LIs.clear();
-			auto itr = ListaIni->get_Primeiro();
-			while (itr != nullptr)
-			{
-				Entidades::Entidade* e = *itr;
-				Entidades::Personagens::Inimigo* ini = dynamic_cast<Entidades::Personagens::Inimigo*>(e);
-				if (ini && ini->get_vivo())
-				{
-					LIs.push_back(ini);
-				}
-				itr++;
-			}
-		}
+		void incluirJogadores(Listas::ListaEntidades* ListaJg) { if (ListaJg) { LJogs = ListaJg; } }
+		void incluirInimigos(Listas::ListaEntidades* ListaIni);
+		void incluirObstaculos(Listas::ListaEntidades* ListaObs);
+		// métodos para Fase atualizar explicitamente as coleções internas:
+		void adicionarInimigo(Entidades::Personagens::Inimigo* ini);
+		void removerInimigo(Entidades::Personagens::Inimigo* ini);
+		void limparInimigos();
 
-		void incluirObstaculos(Listas::ListaEntidades* ListaObs) {
-			if (!ListaObs) return;
-			LObsPtr = ListaObs;
-			LOs.clear();
-			auto itr = ListaObs->get_Primeiro();
-			while (itr != nullptr)
-			{
-				Entidades::Entidade* e = *itr;
-				Entidades::Obstaculos::Obstaculo* obs = dynamic_cast<Entidades::Obstaculos::Obstaculo*>(e);
-				if (obs && obs->get_vivo())
-				{
-					LOs.push_back(obs);
-				}
-				itr++;
-			}
-		}
-		//void incluirProjetil(Projetil* p);
+		void adicionarObstaculo(Entidades::Obstaculos::Obstaculo* obs);
+		void removerObstaculo(Entidades::Obstaculos::Obstaculo* obs);
+		void limparObstaculos();
+
+		//void incluirProjetil(Listas::ListaEntidades* ListaProj);
 		void colidir_ataque(Entidades::Personagens::Jogador* ataque, std::string direcao);
 
 		void executar();
