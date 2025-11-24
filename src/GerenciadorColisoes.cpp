@@ -5,7 +5,7 @@
 namespace Gerenciadores
 {
 	GerenciadorColisoes::GerenciadorColisoes() :
-		LIs(), LOs(), LJogs(nullptr)
+		LIs(), LOs(), LJogs(nullptr), LInisPtr(nullptr), LObsPtr(nullptr)
 	{
 		LIs.clear();
 		LOs.clear();
@@ -15,7 +15,7 @@ namespace Gerenciadores
 		LIs.clear();
 		LOs.clear();
 	}
-	
+
 
 	const bool GerenciadorColisoes::verificarColisao(Entidades::Entidade* pe1, Entidades::Entidade* pe2, std::string* direcao1, std::string* direcao2) const
 	{
@@ -85,7 +85,7 @@ namespace Gerenciadores
 
 		int cntJ = 0;
 		auto itrCount = LJogs->get_Primeiro();
-		while (itrCount != NULL) 
+		while (itrCount != NULL)
 		{
 			cntJ++; itrCount++;
 		}
@@ -101,9 +101,11 @@ namespace Gerenciadores
 			for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin();
 				it != LOs.end(); ++it)
 			{
+				if (!jog || !(*it)) continue;
 				if (verificarColisao(jog, *it, &dir1, &dir2))
 					tratarColisoesJogsObstacs(jog, *it, &dir1);
 			}
+
 			for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin();
 				itI != LIs.end(); ++itI)
 			{
@@ -115,7 +117,6 @@ namespace Gerenciadores
 					tratarColisoesJogsInimigs(jog, ini, &dir1, &dir2);
 				}
 			}
-
 
 			for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin(); itI != LIs.end(); ++itI)
 			{
@@ -139,6 +140,8 @@ namespace Gerenciadores
 					}
 				}
 			}
+
+			itr++;
 		}
 
 	}
@@ -147,11 +150,11 @@ namespace Gerenciadores
 	{
 		if (!ataque) return;
 
-		// pega hitbox do ataque (posição e tamanho vindas do Jogador)
+		// pega hitbox do ataque (posiï¿½ï¿½o e tamanho vindas do Jogador)
 		sf::Vector2f posAtq = ataque->get_ataque_posicao();
 		sf::Vector2f tamAtq = ataque->get_ataque_tamanho();
 
-		// percorre a lista de inimigos (LIs é std::vector<Inimigo*>)
+		// percorre a lista de inimigos (LIs ï¿½ std::vector<Inimigo*>)
 		for (auto ini : LIs)
 		{
 			if (!ini || !ini->get_vivo()) continue;
@@ -161,18 +164,20 @@ namespace Gerenciadores
 
 			sf::Vector2f distancia = posAtq - posIni;
 
-			// AABB simples: verifica sobreposição pelos meios-sizes
+			// AABB simples: verifica sobreposiï¿½ï¿½o pelos meios-sizes
 			if (std::fabs(distancia.x) <= std::fabs((tamAtq.x + tamIni.x) / 2.f) &&
 				std::fabs(distancia.y) <= std::fabs((tamAtq.y + tamIni.y) / 2.f))
 			{
-				// encontrou colisão: delega ao Jogador para aplicar dano/recuo no inimigo
-				// Jogador::colidir_ataque espera Entidade* como alvo e já chama infligir_dano( ...)
+				// encontrou colisï¿½o: delega ao Jogador para aplicar dano/recuo no inimigo
+				// Jogador::colidir_ataque espera Entidade* como alvo e jï¿½ chama infligir_dano( ...)
 				ataque->colidir_ataque(static_cast<Entidades::Entidade*>(ini), direcao);
 
 				// se quiser que um ataque atinja apenas um inimigo, sai do loop
-				// se preferir atacar múltiplos inimigos, remova este break
+				// se preferir atacar mï¿½ltiplos inimigos, remova este break
 				break;
 			}
+
+			itJ++;
 		}
 		
 	}
@@ -192,8 +197,8 @@ namespace Gerenciadores
 		
 	void GerenciadorColisoes::executar()
 	{
-		
 		colisor();
+		verificarAtaqueJogadorInimigo();
 	}
 
 }

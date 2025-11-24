@@ -2,7 +2,7 @@
 
 #include "Entidades.h"
 
-#define OBSTACULO_TAMANHO 50
+#define OBSTACULO_TAMANHO 20
 
 namespace Entidades
 {

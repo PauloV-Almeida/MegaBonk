@@ -22,7 +22,7 @@ namespace Entidades
 
         void Gosma::obstaculizar(Entidades::Entidade* outra, std::string direcao = "")
         {
-            // Aplica lentidão ao jogador que colidiu com a gosma.
+            // Aplica lentidï¿½o ao jogador que colidiu com a gosma.
              // Usa dynamic_cast para identificar Jogador (tanto id 1 quanto 2).
             if(outra->get_id() == 1 || outra->get_id() == 2)
             {
@@ -37,7 +37,7 @@ namespace Entidades
                     }
                     else
                     {
-                        // Se por acaso lentidao for zero, zera velocidade para evitar divisão por zero.
+                        // Se por acaso lentidao for zero, zera velocidade para evitar divisï¿½o por zero.
                         v = sf::Vector2f(0.f, 0.f);
                     }
                     pJog->set_vel(v);

@@ -23,7 +23,7 @@ namespace Entidades
 			void projetar();
 			void desenhar();
 			void executar();
-			void danificar();
+			void danificar(Jogador* p);
 			void colidir(Jogador* pJog, std::string direcao = "");
 		};
 	}

@@ -137,7 +137,7 @@ namespace Entidades
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && noChao)
 				{
-					vel.y -= 20.0;
+					vel.y -= 6.0;
 					noChao = false;
 				}
 				corpo.move(vel.x, vel.y);
@@ -168,7 +168,7 @@ namespace Entidades
 				}
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
 				{
-					vel.y -= 20.0;
+					vel.y -= 6.0;
 					noChao = false;
 				}
 				corpo.move(vel.x, vel.y);

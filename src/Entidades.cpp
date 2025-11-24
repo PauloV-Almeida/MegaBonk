@@ -2,7 +2,6 @@
 
 
 int Entidades::Entidade::contar(0);
-float Entidades::Entidade::velocidade(2.f);
 
 sf::Vector2f Entidades::Entidade::posJogador(200.f, 200.f);
 
