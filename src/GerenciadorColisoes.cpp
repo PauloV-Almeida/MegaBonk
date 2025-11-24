@@ -183,7 +183,6 @@ namespace Gerenciadores
 		if (!LJogs)
 			return;
 
-		// percorre todos os jogadores
 		Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> itJ = LJogs->get_Primeiro();
 
 		while (itJ.get_atual() != NULL)
@@ -198,7 +197,6 @@ namespace Gerenciadores
 					pJog->get_ataque_tamanho()
 				);
 
-				// percorre inimigos já armazenados em LIs
 				for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin();
 					itI != LIs.end(); ++itI)
 				{
