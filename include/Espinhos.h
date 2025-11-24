@@ -5,23 +5,18 @@
 namespace Entidades
 {
 
-    namespace Personagens
-    {
-        class Jogador;
-    }
-
     namespace Obstaculos
     {
         class Espinhos : public Obstaculo
         {
         private:
-            bool pVerifica;
+			int dano_espinhos;
         public:
-            Espinhos(sf::Vector2f pos = sf::Vector2f(0.f, 0.f), bool veri = false);
+            Espinhos(sf::Vector2f pos = sf::Vector2f(0.f, 0.f), int dmg = 1);
             ~Espinhos();
-            void obstaculizar(Entidades::Personagens::Jogador* p);
+            void obstaculizar(Entidades::Entidade* outra, std::string direcao = "");
             void executar();
-            void mover();
+			void mover();
         };
     }
 }

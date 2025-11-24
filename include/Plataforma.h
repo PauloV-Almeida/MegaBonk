@@ -5,23 +5,20 @@
 namespace Entidades
 {
 
-    namespace Personagens
-    {
-        class Jogador;
-    }
-
     namespace Obstaculos
     {
         class Plataforma : public Obstaculo
         {
         private:
-            bool pVerifica;
+            bool verifica;
+            bool echao;
         public:
             Plataforma(sf::Vector2f pos = sf::Vector2f(0.f, 0.f), bool veri = false);
             ~Plataforma();
-            void obstaculizar(Entidades::Personagens::Jogador* p);
+            void obstaculizar(Entidades::Entidade* outra, std::string direcao = "");
             void executar();
             void mover();
+            
         };
     }
 }

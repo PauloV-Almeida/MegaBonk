@@ -48,12 +48,11 @@ namespace Fases
 		default:
 			break;
 		}
-		aux->set_GerenciadorColisao(&gColisoes);
+		
 		if (aux)
 		{
 			Entidades::Entidade* pIni = nullptr;
 			pIni = static_cast<Entidades::Entidade*>(aux);
-			pIni->set_GerenciadorColisao(&gColisoes);
 			inimigos.add(pIni);
 		}
 		return static_cast<Entidades::Entidade*>(aux);

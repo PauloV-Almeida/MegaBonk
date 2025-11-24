@@ -9,7 +9,7 @@ namespace Entidades
 			Inimigo(1, pos, velo, tam),
 			empurrar(emp)
 		{
-			dano = dmg;
+			nivel_maldade = dmg;
 			n_vidas = nV;
 			texturas = pGG->carregar_texturas("./assets/Esqueleto.png");
 			corpo.setTexture(texturas);
@@ -21,40 +21,32 @@ namespace Entidades
 		}
 		void Esqueleto::executar()
 		{
-			mover();
-			desenhar();
-		}
-		void Esqueleto::danificar()
-		{
-			if (velocidade > 0)
+			if(velocidade > 0)
 			{
-				vel.y -= 5.f;
+				vel.y += GRAVIDADE;
+				if (empurrar > 0)
+					vel.x += VELOCIDADE/4;
+				else
+					vel.x -= VELOCIDADE / 4;
 				corpo.setPosition(corpo.getPosition() + sf::Vector2f(velocidade * vel.x / 10, velocidade * vel.y / 10));
 			}
-			
-
 		}
-		void Esqueleto::colidir(Jogador* pJog, std::string direcao)
+		
+		void Esqueleto::danificar(Entidade* outra, std::string direcao)
 		{
-			pJog->receber_dano(dano);
-			if (direcao == "Embaixo")
+			int indice = outra->get_id();
+			sf::Vector2f pos = outra->get_posicao();
+			sf::Vector2f tam = outra->get_tamanho();
+
+			switch (indice)
 			{
-				noChao = true;
-				vel.y = 0.0f;
-			}
-			else if (direcao == "Cima")
-			{
-				vel.y = 0.0f;
-			}
-			else if (direcao == "Esquerda")
-			{
-				vel.x = 0.0f;
-				pJog->set_vel(pJog->get_vel() + sf::Vector2f(-empurrar, 0.f));
-			}
-			else if (direcao == "Direita")
-			{
-				vel.x = 0.0f;
-				pJog->set_vel(pJog->get_vel() + sf::Vector2f(empurrar, 0.f));
+			case 0:
+				if (!static_cast<Entidades::Personagens::Jogador*>(outra)->get_dano())
+				{
+					if(direcao == "Direita")
+				}
+			default:
+				break;
 			}
 		}
 

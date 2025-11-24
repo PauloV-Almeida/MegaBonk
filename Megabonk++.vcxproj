@@ -92,6 +92,8 @@
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\ataque.png" />
+    <Image Include="assets\ataqueJog1.png" />
     <Image Include="assets\Deserto.png" />
     <Image Include="assets\Esqueleto.png" />
     <Image Include="assets\Floresta.png" />
@@ -99,6 +101,8 @@
     <Image Include="assets\jogador1-direita.png" />
     <Image Include="assets\jogador1-esquerda.png" />
     <Image Include="assets\jogador1.png" />
+    <Image Include="assets\jogador2-esquerda.png" />
+    <Image Include="assets\jogador2.png" />
     <Image Include="assets\obstaculo3.png" />
     <Image Include="assets\plataform.png" />
   </ItemGroup>

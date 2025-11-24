@@ -1,26 +1,34 @@
 #include "../include/Espinhos.h"
 #include "../include/Jogador.h"
-#include "../include/Inimigo.h"
+
 
 namespace Entidades
 {
     namespace Obstaculos
     {
-        Espinhos::Espinhos(sf::Vector2f pos, bool veri) :
-            Obstaculo(11, pos),
-            pVerifica(veri)
+        Espinhos::Espinhos(sf::Vector2f pos, int dmg) :
+            Obstaculo(13, pos),
+			dano_espinhos(dmg)
         {
-            if (pVerifica)
-                corpo.setFillColor(sf::Color::Cyan);
-            else
-            {
-                texturas = pGG->carregar_texturas("./assets/obstaculo3.png");
-                corpo.setTexture(texturas);
-            }
+            
+            texturas = pGG->carregar_texturas("./assets/obstaculo3.png");
+            corpo.setTexture(texturas);
+           
         }
         Espinhos:: ~Espinhos()
         {
 
+        }
+        void Espinhos::obstaculizar(Entidades::Entidade* outra, std::string direcao = "")
+        {
+            if (outra->get_id() == 1 || outra->get_id() == 2)
+            {
+                auto pJog = dynamic_cast<Entidades::Personagens::Jogador*>(outra);
+                if (pJog)
+                {
+                    pJog->receber_dano(dano_espinhos);
+                }
+            }
         }
         void Espinhos::executar()
         {
@@ -28,26 +36,14 @@ namespace Entidades
         }
         void Espinhos::mover()
         {
-            if (pVerifica)
+			vel.y += GRAVIDADE;
+            if (parado)
             {
-                // plataforma móvel: aplica gravidade/movimento
-                vel.y += GRAVIDADE;
-                if (deCastigo)
-                {
-                    vel.y -= GRAVIDADE;
-                }
-                corpo.setPosition(corpo.getPosition() + vel);
+				vel.y -= GRAVIDADE;
             }
-            else
-            {
-                // plataforma fixa: garante velocidade zero (não cai)
-                vel = sf::Vector2f(0.f, 0.f);
-            }
+			corpo.setPosition(corpo.getPosition() + vel);
         }
-        void Espinhos::obstaculizar(Entidades::Personagens::Jogador* p)
-        {
-			p->receber_dano(dano);
-            p->set_vel(sf::Vector2f(0.f, -5.f));
-        }
+  
+        
     }
 } 

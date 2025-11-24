@@ -8,13 +8,15 @@ namespace Entidades
 			ataque_corpo(sf::Vector2f(tam.x * 2, tam.y * 2)),
 			atacando(false),
 			Personagem(0, pos, velo, tam),
+			delay_ataque(0),
 			venceu(false),
+			dano_ataque(0),
 			id_jogador(indice),
 			direita(true)
 		{
-			dano = DMG;
+			
 			ataque_corpo.setOrigin(ataque_corpo.getSize().x / 2, ataque_corpo.getSize().y / 2);
-			ataque_corpo.setTexture(pGG->carregar_texturas("./assets/jogador1.png"));
+			ataque_corpo.setTexture(pGG->carregar_texturas("./assets/ataque.png"));
 			n_vidas = 20;
 			if (id_jogador == 1)
 			{
@@ -22,7 +24,7 @@ namespace Entidades
 			}
 			else if (id_jogador == 2)
 			{
-				texturas = pGG->carregar_texturas("./assets/jogador1.png");
+				texturas = pGG->carregar_texturas("./assets/jogador2.png");
 			}
 
 			corpo.setTexture(texturas);
@@ -32,12 +34,14 @@ namespace Entidades
 			ataque_corpo(corpo.getSize() * 2.f),
 			atacando(false),
 			Personagem(0, pos, velo, tam),
+			delay_ataque(0),
 			venceu(false),
+			dano_ataque(0),
 			id_jogador(indice),
 			direita(true),
 			ataque_direcao("Acima")
 		{
-			dano = DMG;
+			
 			vivo = viv;
 			n_vidas = nV;
 
@@ -45,16 +49,16 @@ namespace Entidades
 			if (id_jogador == 1)
 			{
 				pGG->carregar_texturas("./assets/jogador1-esquerda.png");
-				texturas = pGG->carregar_texturas("./assets/jogador1-direita.png");
+				texturas = pGG->carregar_texturas("./assets/jogador1.png");
 			}
 			else if (id_jogador == 2)
 			{
-				pGG->carregar_texturas("./assets/jogador1-esquerda.png");
-				texturas = pGG->carregar_texturas("./assets/jogador1-direita.png");
+				pGG->carregar_texturas("./assets/jogador2-esquerda.png");
+				texturas = pGG->carregar_texturas("./assets/jogador2.png");
 			}
 			corpo.setTexture(texturas);
 
-			texturas = pGG->carregar_texturas("./assets/jogador1.png");
+			texturas = pGG->carregar_texturas("./assets/ataque.png");
 			ataque_corpo.setTexture(texturas);
 		}
 
@@ -103,8 +107,9 @@ namespace Entidades
 				vivo = false;
 
 			mover();
-
 			ataque();
+
+			delay_ataque--;
 		}
 
 		void Jogador::mover(char direcao)
@@ -116,20 +121,20 @@ namespace Entidades
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 					vel.x -= VELOCIDADE;
-					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-direita.png"));
+					if (direita)
+					{
+						corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
+						direita = false;
+					}
 				}
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 					vel.x += VELOCIDADE;
-					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
+					if(!direita)
+					{
+						corpo.setTexture(pGG->carregar_texturas("./assets/jogador1.png"));
+						direita = true;
+					}
 				}
-				else
-					vel.x *= 0.8f;
-
-				if (vel.x > VEL_MAX)
-					vel.x = VEL_MAX;
-				if (vel.x < -VEL_MAX)
-					vel.x = -VEL_MAX;
-
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && noChao)
 				{
 					vel.y -= 20.0;
@@ -147,21 +152,21 @@ namespace Entidades
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 					vel.x -= VELOCIDADE;
-					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-direita.png"));
+					if (direita)
+					{
+						corpo.setTexture(pGG->carregar_texturas("./assets/jogador2-esquerda.png"));
+						direita = false;
+					}
 				}
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 					vel.x += VELOCIDADE;
-					corpo.setTexture(pGG->carregar_texturas("./assets/jogador1-esquerda.png"));
+					if (!direita)
+					{
+						corpo.setTexture(pGG->carregar_texturas("./assets/jogador2.png"));
+						direita = true;
+					}
 				}
-				else
-					vel.x *= 0.8f;
-
-				if (vel.x > VEL_MAX)
-					vel.x = VEL_MAX;
-				if (vel.x < -VEL_MAX)
-					vel.x = -VEL_MAX;
-
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && noChao)
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && noChao)
 				{
 					vel.y -= 20.0;
 					noChao = false;
@@ -172,44 +177,96 @@ namespace Entidades
 			}
 		}
 
-		void Jogador::colidir(Inimigo* pIni, std::string direcao) 
+		void Jogador::colidir(Entidade* outra, std::string direcao = "")
 		{
-			receber_dano(pIni->get_dano());
+			int indice = outra->get_id();
+			switch (indice)
+			{
+			case 1:
+				if (direcao == "Acima")
+				{
+					vel.y = 40* VELOCIDADE;
+					outra->set_vel(sf::Vector2f(outra->get_vel().x, -5 * VELOCIDADE));
+				}else if (direcao == "Abaixo")
+				{
+					parado = true;
+					vel.y *= -1;
+					outra->set_vel(sf::Vector2f(outra->get_vel().x, 5 * VELOCIDADE));
+				}
+				else if (direcao == "Esquerda")
+				{
+					vel = sf::Vector2f(10 * VELOCIDADE, vel.y);
+					outra->set_vel(sf::Vector2f(-5 * VELOCIDADE, outra->get_vel().y));
+				}
+				else if (direcao == "Direita")
+				{
+					vel = sf::Vector2f(-10 * VELOCIDADE, vel.y);
+					outra->set_vel(sf::Vector2f(5*VELOCIDADE, outra->get_vel().y));
+				}
+				mover();
+				break;
+			case 11:
+				if (direcao == "Abaixo")
+				{
+					vel = sf::Vector2f(vel.x, 0.f);
+				}
+				else if (direcao == "Acima")
+				{
+					vel = sf::Vector2f(vel.x, 0.f);
+				}
+				else if (direcao == "Esquerda")
+				{
+					vel = sf::Vector2f(vel.x, vel.y);
 
-			if (direcao == "Embaixo")
-			{
-				noChao = true;
-				vel.y = 0.0f;
-			}
-			else if (direcao == "Cima")
-			{
-				vel.y = 0.0f;
-			}
-			else if (direcao == "Esquerda" || direcao == "Direita")
-			{
-				vel.x = 0.0f;
+				}
+				else if (direcao == "Direita")
+				{
+					vel = sf::Vector2f(vel.x, vel.y);
+				}
+				break;
+			case 12:
+
+				if (direcao == "Abaixo")
+				{
+					vel = sf::Vector2f(vel.x, 0.f);
+				}
+				else if (direcao == "Acima")
+				{
+					vel = sf::Vector2f(vel.x, 0.f);
+				}
+				else if (direcao == "Esquerda")
+				{
+					vel = sf::Vector2f(vel.x, vel.y);
+
+				}
+				else if (direcao == "Direita")
+				{
+					vel = sf::Vector2f( vel.x, vel.y);
+				}
+				break;
+			case 13:
+				if (direcao == "Abaixo")
+				{
+					vel = sf::Vector2f(vel.x, -5.f);
+				}
+				else if (direcao == "Acima")
+				{
+					vel = sf::Vector2f(vel.x, 5.f);
+				}
+				else if (direcao == "Esquerda")
+				{
+					vel = sf::Vector2f(5.f, vel.y);
+
+				}
+				else if (direcao == "Direita")
+				{
+					vel = sf::Vector2f(-5.f, vel.y);
+				}
+				mover();
+				break;
 			}
 		}
-
-		void Jogador::colidir(Obstaculos::Obstaculo* pObs, std::string direcao) 
-		{
-			if(pObs->get_danoso())
-				receber_dano(pObs->get_dano());
-			if (direcao == "Embaixo")
-			{
-				noChao = true;
-				vel.y = 0.0f;
-			}
-			else if (direcao == "Cima")
-			{
-				vel.y = 0.0f;
-			}
-			else if (direcao == "Esquerda" || direcao == "Direita")
-			{
-				vel.x = 0.0f;
-			}
-		}
-			
+		
 		void Jogador::ataque()
 		{
 			if ((id_jogador == 1 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ||
@@ -217,76 +274,145 @@ namespace Entidades
 			{
 				return;
 			}
-			dano = DMG;
+			dano_ataque = DMG;
 			atacando = true;
 
-			std::string direcao = "";
-			if (id_jogador == 1)
+			if (delay_ataque <= 0)
 			{
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+				delay_ataque = DELAY_ATAQUE;
+				std::string direcao = "";
+				if (id_jogador == 1)
 				{
-					direcao = "Acima";
-					ataque_direcao = "Acima";
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-				{
-					direcao = "Esquerda";
-					ataque_direcao = "Esquerda";
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				{
-					direcao = "Direita";
-					ataque_direcao = "Direita";
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				{
-					direcao = "Abaixo";
-					ataque_direcao = "Abaixo";
-				}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+					{
+						direcao = "Acima";
+						ataque_direcao = "Acima";
+					}
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+					{
+						direcao = "Esquerda";
+						ataque_direcao = "Esquerda";
+					}
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+					{
+						direcao = "Direita";
+						ataque_direcao = "Direita";
+					}
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+					{
+						direcao = "Abaixo";
+						ataque_direcao = "Abaixo";
+					}
+					else
+					{
+						if(vel.x >= 0)
+						{
+							direcao = "Direita";
+							ataque_direcao = "Direita";
+						}
+						else
+						{
+							direcao = "Esquerda";
+							ataque_direcao = "Esquerda";
+						}
+					}
 
+				}
+				else if (id_jogador == 2)
+				{
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+					{
+						direcao = "Acima";
+						ataque_direcao = "Acima";
+					}
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+					{
+						direcao = "Esquerda";
+						ataque_direcao = "Esquerda";
+					}
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+					{
+						direcao = "Direita";
+						ataque_direcao = "Direita";
+					}
+					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+					{
+						direcao = "Abaixo";
+						ataque_direcao = "Abaixo";
+					}
+					else
+					{
+						if (vel.x >= 0)
+						{
+							direcao = "Direita";
+							ataque_direcao = "Direita";
+						}
+						else
+						{
+							direcao = "Esquerda";
+							ataque_direcao = "Esquerda";
+						}
+					}
+				}
+				if (direcao == "Acima")
+				{
+					ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x, corpo.getPosition().y - corpo.getSize().y / 2 - ataque_corpo.getSize().y / 2));
+				}
+				else if (direcao == "Direita")
+				{
+					ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x + corpo.getSize().x / 2 + ataque_corpo.getSize().x / 2, corpo.getPosition().y));
+				}
+				if (direcao == "Abaixo")
+				{
+					ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x, corpo.getPosition().y + corpo.getSize().y / 2 + ataque_corpo.getSize().y / 2));
+				}
+				else if (direcao == "Esquerda")
+				{
+					ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x - corpo.getSize().x / 2 - ataque_corpo.getSize().x / 2, corpo.getPosition().y));
+				}
+				pGG->desenhar(&ataque_corpo);
+				gColisoes->colidir_ataque(static_cast<Jogador*>(this), direcao);
+				
 			}
-			else if (id_jogador == 2)
-			{
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-				{
-					direcao = "Acima";
-					ataque_direcao = "Acima";
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-				{
-					direcao = "Esquerda";
-					ataque_direcao = "Esquerda";
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-				{
-					direcao = "Direita";
-					ataque_direcao = "Direita";
-				}
-				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-				{
-					direcao = "Abaixo";
-					ataque_direcao = "Abaixo";
-				}
-			}
-			if (direcao == "Acima")
-			{
-				ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x, corpo.getPosition().y - corpo.getSize().y / 2 - ataque_corpo.getSize().y / 2));
-			}
+			dano_ataque = 0;
+		}
+
+		void Jogador::colidir_ataque(Entidade* outra, std::string direcao)
+		{
+			outra->infligir_dano(dano_ataque);
+			if (direcao == "Esquerda")
+				vel = sf::Vector2f(RECUO, vel.y);
 			else if (direcao == "Direita")
+				vel = sf::Vector2f(-RECUO, vel.y);
+			else if (direcao == "Acima")
+				vel = sf::Vector2f(vel.x, RECUO);
+			else if (direcao == "Abaixo")
 			{
-				ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x + corpo.getSize().x / 2 + ataque_corpo.getSize().x / 2, corpo.getPosition().y));
+				vel.y = -10.f;
 			}
-			if (direcao == "Abaixo")
+		}
+		void Jogador::salvar(std::ofstream& arquivo)
+		{
+			if (!arquivo.is_open())
 			{
-				ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x, corpo.getPosition().y + corpo.getSize().y / 2 + ataque_corpo.getSize().y / 2));
+				std::cout << "Erro ao salvar o ARQ jogador" << std::endl;
+				return;
 			}
-			else if (direcao == "Esquerda")
+			if (vivo)
 			{
-				ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x - corpo.getSize().x / 2 - ataque_corpo.getSize().x / 2, corpo.getPosition().y));
-			}
-			pGG->desenhar(&ataque_corpo);
+				arquivo << 1 << std::endl;
+			}else
+			{
+				arquivo << 0 << std::endl;
+				arquivo << n_vidas << std::endl
+					<< corpo.getPosition().x << std::endl
+					<< corpo.getPosition().y << std::endl
+					<< vel.x << std::endl
+					<< vel.y << std::endl
+					<< corpo.getSize().x << std::endl
+					<< corpo.getSize().y << std::endl;
 
-			dano = 0;
+			}
 		}
 
 	}

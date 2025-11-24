@@ -5,21 +5,16 @@
 namespace Entidades
 {
 
-    namespace Personagens
-    {
-        class Jogador;
-    }
-
     namespace Obstaculos
     {
         class Gosma : public Obstaculo
         {
         private:
-            bool pVerifica;
+            float lentidao;
         public:
-            Gosma(sf::Vector2f pos = sf::Vector2f(0.f, 0.f), bool veri = false);
+            Gosma(sf::Vector2f pos, float len = 4);
             ~Gosma();
-            void obstaculizar(Entidades::Personagens::Jogador* p);
+            void obstaculizar(Entidades::Entidade* outra, std::string direcao = "");
             void executar();
             void mover();
         };

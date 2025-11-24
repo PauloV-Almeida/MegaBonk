@@ -2,6 +2,9 @@
 
 #include "Inimigo.h"
 #include "Jogador.h"
+
+#define EMPURRAR_ESQUELETO 50
+
 namespace Entidades
 {
 	namespace Personagens
@@ -15,11 +18,11 @@ namespace Entidades
 			Esqueleto(bool viv, int nV,sf::Vector2f pos, sf::Vector2f velo, float dmg, sf::Vector2f tam, float emp);
 			~Esqueleto();
 
-			
-			void desenhar();
+			void danificar(Entidade* outra, std::string direcao = "");
 			void executar();
-			void danificar();
-			void colidir(Jogador* pJog, std::string direcao = "");
+			void salvar(std::ofstream& arquivo);
+			
+			
 		};
 	}
 }

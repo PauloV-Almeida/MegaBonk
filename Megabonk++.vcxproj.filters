@@ -239,6 +239,18 @@
     <Image Include="assets\Esqueleto.png">
       <Filter>Arquivos de Recurso</Filter>
     </Image>
+    <Image Include="assets\ataqueJog1.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="assets\ataque.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="assets\jogador2.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="assets\jogador2-esquerda.png">
+      <Filter>Arquivos de Recurso</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\PressStart2P-Regular.ttf" />

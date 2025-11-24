@@ -1,6 +1,6 @@
 #include "../include/Plataforma.h"
 #include "../include/Jogador.h"
-#include "../include/Inimigo.h"
+
 
 namespace Entidades
 {
@@ -8,9 +8,10 @@ namespace Entidades
     {
         Plataforma::Plataforma(sf::Vector2f pos, bool veri) :
             Obstaculo(11, pos),
-            pVerifica(veri)
+            verifica(veri),
+			echao(false)
         {
-            if (pVerifica)
+            if (verifica)
                 corpo.setFillColor(sf::Color::Cyan);
             else
             {
@@ -22,30 +23,33 @@ namespace Entidades
         {
 
         }
+
+        void Plataforma::obstaculizar(Entidades::Entidade* outra, std::string direcao = "")
+        {
+            if (verifica)
+            {
+                Entidades::Personagens::Jogador* pJog = dynamic_cast<Entidades::Personagens::Jogador*>(outra);
+                if (pJog != nullptr)
+                {
+                    pJog->set_venceu(true);
+                }
+            }
+        }
         void Plataforma::executar()
         {
             mover();
         }
         void Plataforma::mover()
         {
-            if (pVerifica)
+            
+            vel.y += GRAVIDADE;
+            if (parado)
             {
-                // plataforma móvel: aplica gravidade/movimento
-                vel.y += GRAVIDADE;
-                if (deCastigo)
-                {
-                    vel.y -= GRAVIDADE;
-                }
-                corpo.setPosition(corpo.getPosition() + vel);
+                vel.y -= GRAVIDADE;
             }
-            else
-            {
-                // plataforma fixa: garante velocidade zero (não cai)
-                vel = sf::Vector2f(0.f, 0.f);
-            }
-        }
-        void Plataforma::obstaculizar(Entidades::Personagens::Jogador* p)
-        {
-        }
+            corpo.setPosition(corpo.getPosition() + vel);
+            
+		}
+        
     }
 }

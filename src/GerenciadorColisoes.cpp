@@ -4,12 +4,6 @@
 
 namespace Gerenciadores
 {
-	GerenciadorColisoes* GerenciadorColisoes::get_instance()
-	{
-		static GerenciadorColisoes instancia;
-		return &instancia;
-	}
-
 	GerenciadorColisoes::GerenciadorColisoes() :
 		LIs(), LOs(), LJogs(nullptr)
 	{
@@ -88,22 +82,6 @@ namespace Gerenciadores
 	{
 		std::string dir1, dir2;
 
-		if (!LJogs) {
-			std::cout << "[Colisao] LJogs == nullptr\n";
-			return;
-		}
-		if (LOs.empty()) {
-			std::cout << "[Colisao] LOs está vazio\n";
-			return;
-		}
-		if (LIs.empty()) {
-			std::cout << "[Colisao] LIs está vazio\n";
-			return;
-		}
-		/*if (LPs.empty()) {
-			std::cout << "[Colisao] LIs está vazio\n";
-			return;
-		}*/
 
 		int cntJ = 0;
 		auto itrCount = LJogs->get_Primeiro();
@@ -138,29 +116,6 @@ namespace Gerenciadores
 				}
 			}
 
-			// Projetéis (if you enable LPs as e.g. std::set<Entidades::Projetil*>)
-			// Uncomment and adapt if LPs exists in the class
-			/*
-			for (std::set<Entidades::Projetil*>::const_iterator itP = LPs.begin();
-				itP != LPs.end(); ++itP)
-			{
-				Entidades::Projetil* proj = *itP;
-				if (!proj || !proj->get_vivo()) continue;
-
-				if (verificarColisao(jog, proj, &dir1, &dir2))
-				{
-					// Example handling: stop player movement or apply damage
-					sf::Vector2f vel = jog->get_vel();
-					if (dir1 == "Emcima" || dir1 == "Embaixo")
-						vel.y = 0.f;
-					else
-						vel.x = 0.f;
-					jog->set_vel(vel);
-
-					// proj->set_vivo(false); // or proj->destruir();
-					// jog->sofrer_Dano(proj->get_dano());
-				}
-			}*/
 
 			for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin(); itI != LIs.end(); ++itI)
 			{
@@ -188,30 +143,38 @@ namespace Gerenciadores
 
 	}
 
-	void GerenciadorColisoes::verificarAtaqueJogadorInimigo(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni)
+	void GerenciadorColisoes::colidir_ataque(Entidades::Personagens::Jogador* ataque, std::string direcao)
 	{
-		sf::FloatRect ataqueRect;
-		sf::FloatRect inimigoRect;
+		if (!ataque) return;
 
-		for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin(); itI != LIs.end(); ++itI)
+		// pega hitbox do ataque (posição e tamanho vindas do Jogador)
+		sf::Vector2f posAtq = ataque->get_ataque_posicao();
+		sf::Vector2f tamAtq = ataque->get_ataque_tamanho();
+
+		// percorre a lista de inimigos (LIs é std::vector<Inimigo*>)
+		for (auto ini : LIs)
 		{
-			Entidades::Personagens::Inimigo* ini = *itI;
-			if (ini->get_vivo())
-				continue;
-			ataqueRect = sf::FloatRect(
-				pJog->get_ataque_posicao(),
-				pJog->get_ataque_tamanho()
-			);
-			inimigoRect = sf::FloatRect(
-				ini->get_posicao(),
-				ini->get_tamanho()
-			);
+			if (!ini || !ini->get_vivo()) continue;
 
-			if(ataqueRect.intersects(inimigoRect))
+			sf::Vector2f posIni = ini->get_posicao();
+			sf::Vector2f tamIni = ini->get_tamanho();
+
+			sf::Vector2f distancia = posAtq - posIni;
+
+			// AABB simples: verifica sobreposição pelos meios-sizes
+			if (std::fabs(distancia.x) <= std::fabs((tamAtq.x + tamIni.x) / 2.f) &&
+				std::fabs(distancia.y) <= std::fabs((tamAtq.y + tamIni.y) / 2.f))
 			{
-				ini->danificar();
+				// encontrou colisão: delega ao Jogador para aplicar dano/recuo no inimigo
+				// Jogador::colidir_ataque espera Entidade* como alvo e já chama infligir_dano( ...)
+				ataque->colidir_ataque(static_cast<Entidades::Entidade*>(ini), direcao);
+
+				// se quiser que um ataque atinja apenas um inimigo, sai do loop
+				// se preferir atacar múltiplos inimigos, remova este break
+				break;
 			}
 		}
+		
 	}
 
 	void GerenciadorColisoes::tratarColisoesJogsObstacs(Entidades::Personagens::Jogador* pJog, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1)const
@@ -226,18 +189,6 @@ namespace Gerenciadores
 		pIni->colidir(pJog, *dir2);
 	}
 
-	/*void GerenciadorColisoes::tratarColisoesInimigsObstacs(Entidades::Personagens::Inimigo* pIni, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1)const
-	{
-		pIni->colidir(pObs, *dir1);
-		pObs->obstaculizar(pIni, *dir2);
-	}*/
-
-	/*
-	* void GerenciadorColisoes::tratarColisoesJogsProjeteis()
-	{
-		// Implement projectile collision handling if needed
-	}
-	*/
 		
 	void GerenciadorColisoes::executar()
 	{

@@ -12,7 +12,7 @@ namespace Entidades
         {
             corpo.setOrigin(corpo.getSize()/2.f);
             corpo.setPosition(pos);
-
+			parado = true;
 
         }
         Obstaculo::~Obstaculo()
@@ -24,12 +24,17 @@ namespace Entidades
             if (get_vivo())
                 pGG->desenhar(&corpo);
         }
+
         void Obstaculo::mover()
         {
-            vel.y += GRAVIDADE;
-
-            corpo.setPosition(corpo.getPosition() + vel);
-        }
+			vel.y += GRAVIDADE;
+            if (parado)
+            {
+				vel.y -= GRAVIDADE;
+            }
+			corpo.setPosition(corpo.getPosition() + vel);
+		}
+        
         
     }
 }
