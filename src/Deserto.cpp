@@ -1,5 +1,8 @@
 ﻿#include "../include/Deserto.h"
 #include <limits>
+#include <cstdlib>
+#include <ctime>
+#include <vector>
 
 namespace Fases
 {
@@ -43,6 +46,17 @@ namespace Fases
 		inimigos.executar();
 
 		gColisoes.executar();
+
+		// Transição automática para próxima fase quando não houver inimigos
+		// Ajuste NEXT_STATE_ID para o ID real da próxima fase, se necessário.
+		const int NEXT_STATE_ID = id_estado + 1;
+		if (inimigos.get_tamanho() == 0)
+		{
+			std::cerr << "[Deserto::executar] todos inimigos mortos -> mudando para fase ID=" << NEXT_STATE_ID << std::endl;
+			pEG->set_AtualEstado(NEXT_STATE_ID);
+			pEG->reseta_AtualEstado();
+			return; // evita continuar execução desta fase
+		}
 
 		desenhar();
 
@@ -241,18 +255,7 @@ namespace Fases
 			{
 				std::cerr << "  '" << linha << "'" << std::endl;
 			}
-
-			// fallback de teste: criar um esqueleto de exemplo para validar desenho
-			Entidades::Personagens::Esqueleto* fallback = new Entidades::Personagens::Esqueleto(true, 10, sf::Vector2f(200.f, 200.f), sf::Vector2f(0.f, 0.f), 1.0f, sf::Vector2f(32.f, 32.f), 0);
-			if (fallback)
-			{
-				fallback->set_GerenciadorColisoes(&gColisoes);
-				inimigos.add(static_cast<Entidades::Entidade*>(fallback));
-				gColisoes.adicionarInimigo(dynamic_cast<Entidades::Personagens::Inimigo*>(fallback));
-				std::cerr << "[Deserto::carregar] adicionado fallback Esqueleto ptr=" << fallback << std::endl;
-			}
-			carregado = true;
-			return;
+			// não retorna aqui: continuamos e, abaixo, garantimos fallback se lista final ficar vazia
 		}
 
 		// consumir newline pendente antes de getline em criarEsqueleto
@@ -270,8 +273,35 @@ namespace Fases
 		// garantir registro dos inimigos
 		gColisoes.incluirInimigos(&inimigos);
 
+		// SE AINDA NÃO HOUVE INIMIGOS, criar fallback em posições fixas no chão
+		if (inimigos.get_tamanho() == 0)
+		{
+			std::vector<sf::Vector2f> fixedPositions = {
+				sf::Vector2f(150.f, 400.f), // y perto do chão da cena (900x600 -> y ~600 - altura_sprite)
+				sf::Vector2f(300.f, 450.f),
+				sf::Vector2f(450.f, 300.f),
+				sf::Vector2f(600.f, 380.f),
+				sf::Vector2f(750.f, 600.f)
+			};
+
+			std::cerr << "[Deserto::carregar] fallback final: criando " << fixedPositions.size() << " esqueletos em posições fixas." << std::endl;
+			for (const auto& pos : fixedPositions)
+			{
+				Entidades::Personagens::Esqueleto* fallback = new Entidades::Personagens::Esqueleto(true, 10, pos, sf::Vector2f(0.f, 0.f), 1.0f, sf::Vector2f(32.f, 32.f), 1.0f);
+				if (fallback)
+				{
+					fallback->set_GerenciadorColisoes(&gColisoes);
+					inimigos.add(static_cast<Entidades::Entidade*>(fallback));
+					Entidades::Personagens::Inimigo* pIni = dynamic_cast<Entidades::Personagens::Inimigo*>(fallback);
+					if (pIni) gColisoes.adicionarInimigo(pIni);
+					std::cerr << "[Deserto::carregar] fallback esqueleto adicionado ptr=" << fallback << " pos=(" << pos.x << "," << pos.y << ")\n";
+				}
+			}
+		}
+
 		carregado = true;
 	}
+
 	void Deserto::resetar()
 	{
 		criarCenario(ARQUIVO_CENARIO_1, SALVAR_CENARIO_1);

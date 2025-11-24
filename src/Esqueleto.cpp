@@ -21,18 +21,17 @@ namespace Entidades
 		}
 		void Esqueleto::executar()
 		{
-			if (velocidade > 0 )
+			if (velocidade > 0)
 			{
-				if (parado) {
+				if (parado)
+				{
 					vel.y -= 5.f;
 				}
 				else 
 					vel.y += GRAVIDADE;
-				if (empurrar > 0)
-					vel.x += VELOCIDADE / 4;
-				else
-					vel.x -= VELOCIDADE / 4;
-				corpo.setPosition(corpo.getPosition() + sf::Vector2f(velocidade * vel.x / 10, velocidade * vel.y / 10));
+				if(vel.y>GRAVIDADE)
+					vel.y = GRAVIDADE;
+				mover();
 			}
 		}
 		
