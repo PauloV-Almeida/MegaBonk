@@ -58,10 +58,10 @@ namespace Fases
 			pIni = static_cast<Entidades::Entidade*>(aux);
 			inimigos.add(pIni);
 		}
-		aux->set_GerenciadorColisao(&gColisoes);
+		aux->set_GerenciadorColisoes(&gColisoes);
 		Entidades::Entidade* inimigo = aux;
 		if (inimigo) {
-			inimigo->set_GerenciadorColisao(&gColisoes);
+			inimigo->set_GerenciadorColisoes(&gColisoes);
 			inimigos.add(inimigo);
 		}
 		return aux;

@@ -154,7 +154,7 @@ namespace Fases
 				if (jogador)
 				{
 					jogadores.add(jogador);
-					jogador->set_GerenciadorColisao(&gColisoes);
+					jogador->set_GerenciadorColisoes(&gColisoes);
 				}
 			}
 		}
@@ -173,7 +173,7 @@ namespace Fases
 				if (jogador)
 				{
 					jogadores.add(jogador);
-					jogador->set_GerenciadorColisao(&gColisoes);
+					jogador->set_GerenciadorColisoes(&gColisoes);
 				}
 			}
 		}
@@ -227,7 +227,7 @@ namespace Fases
 			if (jogador)
 			{
 				jogadores.add(jogador);
-				jogador->set_GerenciadorColisao(&gColisoes);
+				jogador->set_GerenciadorColisoes(&gColisoes);
 			}
 		}
 		if (!inimigosArq)

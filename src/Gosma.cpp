@@ -20,7 +20,7 @@ namespace Entidades
 
         }
 
-        void Gosma::obstaculizar(Entidades::Entidade* outra, std::string direcao = "")
+        void Gosma::obstaculizar(Entidades::Entidade* outra, std::string direcao)
         {
             // Aplica lentid�o ao jogador que colidiu com a gosma.
              // Usa dynamic_cast para identificar Jogador (tanto id 1 quanto 2).

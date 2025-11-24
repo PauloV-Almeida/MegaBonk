@@ -50,9 +50,5 @@ namespace Entidades
 			}
 		}
 
-		void Esqueleto::desenhar()
-		{
-			pGG->desenhar(&corpo);
-		}
 	}
 }

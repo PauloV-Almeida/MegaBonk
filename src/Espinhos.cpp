@@ -19,14 +19,14 @@ namespace Entidades
         {
 
         }
-        void Espinhos::obstaculizar(Entidades::Entidade* outra, std::string direcao = "")
+        void Espinhos::obstaculizar(Entidades::Entidade* outra, std::string direcao)
         {
             if (outra->get_id() == 1 || outra->get_id() == 2)
             {
                 auto pJog = dynamic_cast<Entidades::Personagens::Jogador*>(outra);
                 if (pJog)
                 {
-                    pJog->receber_dano(dano_espinhos);
+                    pJog->infligir_dano(dano_espinhos);
                 }
             }
         }

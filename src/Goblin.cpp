@@ -26,7 +26,7 @@ namespace Entidades
 		}
 		void Goblin::danificar(Jogador* p)
 		{
-			receber_dano(p->get_dano());
+			infligir_dano(p->get_dano());
 
 			vel.y -= 5.f;
 			corpo.setPosition(corpo.getPosition() + sf::Vector2f(2.f * vel.x / 10, 2.f * vel.y / 10));
@@ -35,7 +35,7 @@ namespace Entidades
 
 		void Goblin::colidir(Jogador* pJog, std::string direcao)
 		{
-			pJog->receber_dano(dano);
+			pJog->infligir_dano(dano);
 			if (direcao == "Embaixo")
 			{
 				noChao = true;

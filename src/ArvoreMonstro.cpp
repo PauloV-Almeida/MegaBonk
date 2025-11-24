@@ -62,9 +62,6 @@ namespace Entidades
 			pGG->desenhar(&corpo);
 		}
 
-		void ArvoreMonstro::projetar()
-		{
-
-		}
+		
 	}
 }

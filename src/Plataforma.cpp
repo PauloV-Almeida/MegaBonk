@@ -24,7 +24,7 @@ namespace Entidades
 
         }
 
-        void Plataforma::obstaculizar(Entidades::Entidade* outra, std::string direcao = "")
+        void Plataforma::obstaculizar(Entidades::Entidade* outra, std::string direcao)
         {
             if (verifica)
             {

@@ -177,7 +177,7 @@ namespace Entidades
 			}
 		}
 
-		void Jogador::colidir(Entidade* outra, std::string direcao = "")
+		void Jogador::colidir(Entidade* outra, std::string direcao)
 		{
 			int indice = outra->get_id();
 			switch (indice)
