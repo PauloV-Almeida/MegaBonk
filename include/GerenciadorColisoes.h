@@ -28,11 +28,8 @@ namespace Gerenciadores
 		void tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni, std::string* dir1 = nullptr, std::string* dir2 = nullptr)const;
 		//void tratarColisoesInimigsObstacs(Entidades::Personagens::Inimigo* pIni, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1 = nullptr)const;
 		//void tratarColisoesJogsProjeteis();
-
-		void verificarAtaqueJogadorInimigo(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni);
-
-		
-		
+	
+		void verificarAtaqueJogadorInimigo();
 	public:
 		GerenciadorColisoes();
 		~GerenciadorColisoes();

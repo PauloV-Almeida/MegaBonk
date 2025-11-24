@@ -243,7 +243,6 @@ namespace Entidades
 					direcao = "Abaixo";
 					ataque_direcao = "Abaixo";
 				}
-
 			}
 			else if (id_jogador == 2)
 			{

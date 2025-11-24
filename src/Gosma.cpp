@@ -46,7 +46,7 @@ namespace Entidades
         }
         void Gosma::obstaculizar(Entidades::Personagens::Jogador* p)
         {
-            p->set_vel(sf::Vector2f(p->get_vel.x * 0.7, p->get_vel.y));
+            p->set_vel(sf::Vector2f(p->get_vel().x * 0.7, p->get_vel().y));
         }
     }
 }

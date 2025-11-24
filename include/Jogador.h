@@ -36,6 +36,8 @@ namespace Entidades
 			void ataque();
 			void set_venceu(bool v) { venceu = v; };
 			bool get_venceu() { return venceu; };
+			void set_atacando(bool a) { atacando = a; };
+			bool get_atacando() { return atacando; };
 
 			sf::Vector2f get_ataque_posicao() { return ataque_corpo.getPosition(); }
 			sf::Vector2f get_ataque_tamanho() { return ataque_corpo.getSize(); }

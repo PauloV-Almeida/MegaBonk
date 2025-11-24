@@ -20,7 +20,7 @@ namespace Entidades
 			
 			void receber_dano(int dmg) {
 				n_vidas -= dmg;
-				if (n_vidas <= 0) set_vivo = false;
+				if (n_vidas <= 0) set_vivo(false);
 			}
 
 			void set_vivo(bool a) { vivo = a; }

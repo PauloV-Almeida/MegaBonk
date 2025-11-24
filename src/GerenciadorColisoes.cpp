@@ -178,29 +178,48 @@ namespace Gerenciadores
 
 	}
 
-	void GerenciadorColisoes::verificarAtaqueJogadorInimigo(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni)
+	void GerenciadorColisoes::verificarAtaqueJogadorInimigo()
 	{
-		sf::FloatRect ataqueRect;
-		sf::FloatRect inimigoRect;
+		if (!LJogs)
+			return;
 
-		for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin(); itI != LIs.end(); ++itI)
+		// percorre todos os jogadores
+		Listas::Lista<Entidades::Entidade>::Iterator<Entidades::Entidade> itJ = LJogs->get_Primeiro();
+
+		while (itJ.get_atual() != NULL)
 		{
-			Entidades::Personagens::Inimigo* ini = *itI;
-			if (ini->get_vivo())
-				continue;
-			ataqueRect = sf::FloatRect(
-				pJog->get_ataque_posicao(),
-				pJog->get_ataque_tamanho()
-			);
-			inimigoRect = sf::FloatRect(
-				ini->get_posicao(),
-				ini->get_tamanho()
-			);
+			Entidades::Entidade* e = *itJ;
+			Entidades::Personagens::Jogador* pJog = dynamic_cast<Entidades::Personagens::Jogador*>(e);
 
-			if(ataqueRect.intersects(inimigoRect))
+			if (pJog)
 			{
-				ini->danificar();
+				sf::FloatRect ataqueRect(
+					pJog->get_ataque_posicao(),
+					pJog->get_ataque_tamanho()
+				);
+
+				// percorre inimigos já armazenados em LIs
+				for (std::vector<Entidades::Personagens::Inimigo*>::iterator itI = LIs.begin();
+					itI != LIs.end(); ++itI)
+				{
+					Entidades::Personagens::Inimigo* ini = *itI;
+
+					if (ini && ini->get_vivo())
+					{
+						sf::FloatRect inimigoRect(
+							ini->get_posicao(),
+							ini->get_tamanho()
+						);
+
+						if (ataqueRect.intersects(inimigoRect))
+						{
+							ini->danificar(pJog);
+						}
+					}
+				}
 			}
+
+			itJ++;
 		}
 	}
 
@@ -231,8 +250,8 @@ namespace Gerenciadores
 		
 	void GerenciadorColisoes::executar()
 	{
-		
 		colisor();
+		verificarAtaqueJogadorInimigo();
 	}
 
 }

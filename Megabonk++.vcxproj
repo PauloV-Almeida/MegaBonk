@@ -96,7 +96,6 @@
     <ClInclude Include="include\Plataforma.h" />
     <ClInclude Include="include\Subject.h" />
     <ClInclude Include="include\Texto.h" />
-    <ClInclude Include="src\Espinhos.h" />
     <ClInclude Include="src\Gosma.h" />
     <ClInclude Include="stdafx\stdafx.h" />
   </ItemGroup>

@@ -22,6 +22,7 @@ namespace Entidades
         static sf::Vector2f posJogador;
         int dano;
         Gerenciadores::GerenciadorColisoes* gColisao;
+        bool deCastigo = false;
 
     public:
         Entidade(int indice = -1, sf::Vector2f velo = sf::Vector2f(0.f, 0.f));
@@ -35,10 +36,10 @@ namespace Entidades
         void set_vel(sf::Vector2f v) { vel = v; }
         void set_GerenciadorColisao(Gerenciadores::GerenciadorColisoes* cm) { gColisao = cm; }
 
-        
+		
 
         sf::Vector2f get_vel() { return vel; }
-
+        
         virtual sf::Vector2f get_posicao() = 0;
         virtual sf::Vector2f get_tamanho() = 0;
         const int get_id() const { return id; }
