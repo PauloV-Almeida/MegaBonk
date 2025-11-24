@@ -44,6 +44,7 @@ namespace Entidades
 				if (!static_cast<Entidades::Personagens::Jogador*>(outra)->get_dano())
 				{
 					if(direcao == "Direita")
+					{ }
 				}
 			default:
 				break;

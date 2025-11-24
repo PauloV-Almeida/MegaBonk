@@ -35,7 +35,7 @@ namespace Entidades
 
 		void Goblin::colidir(Jogador* pJog, std::string direcao)
 		{
-			pJog->infligir_dano(dano);
+			pJog->infligir_dano(5);
 			if (direcao == "Embaixo")
 			{
 				noChao = true;

@@ -26,9 +26,9 @@ namespace Entidades
 			
 			desenhar();
 		}
-		void ArvoreMonstro::danificar(Jogador* p)
+		void ArvoreMonstro::danificar()
 		{
-			receber_dano(p->get_dano());
+			infligir_dano(p->get_dano());
 
 			vel.y -= 5.f;
 			corpo.setPosition(corpo.getPosition() + sf::Vector2f(2.f * vel.x / 10, 2.f * vel.y / 10));
