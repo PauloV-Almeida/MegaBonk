@@ -23,7 +23,7 @@ namespace Entidades
    
             void desenhar();
             virtual void obstaculizar(Entidades::Entidade* outra, std::string direcao = "") = 0;
-			virtual void salvar(std::ofstream& arquivo) override {}
+            virtual void salvar(std::ofstream& arquivo) override {};
 			void infligir_dano(int dmg) {}
             void set_vivo(bool a) { existir = a; }
             const bool get_vivo() const { return existir; }

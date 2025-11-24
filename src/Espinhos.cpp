@@ -26,7 +26,7 @@ namespace Entidades
                 auto pJog = dynamic_cast<Entidades::Personagens::Jogador*>(outra);
                 if (pJog)
                 {
-                    pJog->infligir_dano(dano_espinhos);
+                    pJog->receber_dano(dano_espinhos);
                 }
             }
         }

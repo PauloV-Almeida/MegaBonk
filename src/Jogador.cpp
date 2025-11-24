@@ -406,7 +406,6 @@ namespace Entidades
 					ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x - corpo.getSize().x / 2 - ataque_corpo.getSize().x / 2, corpo.getPosition().y));
 				}
 				pGG->desenhar(&ataque_corpo);
-				gColisoes->colidir_ataque(static_cast<Jogador*>(this), direcao);
 
 			}
 			dano_ataque = 0;
@@ -414,7 +413,16 @@ namespace Entidades
 
 		void Jogador::colidir_ataque(Entidade* outra, std::string direcao)
 		{
-			outra->infligir_dano(dano_ataque);
+
+			if (outra)
+			{
+				Personagem* alvo = dynamic_cast<Personagem*>(outra);
+				if (alvo)
+				{
+					alvo->receber_dano(dano_ataque);
+				}
+			}
+
 			if (direcao == "Esquerda")
 				vel = sf::Vector2f(RECUO, vel.y);
 			else if (direcao == "Direita")
@@ -426,6 +434,7 @@ namespace Entidades
 				vel.y = -10.f;
 			}
 		}
+
 		void Jogador::salvar(std::ofstream& arquivo)
 		{
 			if (!arquivo.is_open())

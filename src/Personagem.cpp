@@ -1,3 +1,4 @@
+
 #include "../include/Personagem.h"
 
 namespace Entidades
@@ -11,7 +12,7 @@ namespace Entidades
 			n_vidas(1),
 			noChao(false)
 		{
-			corpo.setOrigin(corpo.getSize()/2.f);
+			corpo.setOrigin(corpo.getSize() / 2.f);
 			corpo.setPosition(pos);
 		}
 

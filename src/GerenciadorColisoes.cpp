@@ -200,12 +200,20 @@ namespace Gerenciadores
 					if (verificarColisao(ini, obs, &dir1, &dir2))
 					{
 						sf::Vector2f vel = ini->get_vel();
-						if (dir1 == "Emcima" || dir1 == "Embaixo")
+						if (dir1 == "Abaixo" || dir1 == "Acima")
+						{
 							vel.y = 0.f;
-						else
-							vel.x = 0.f;
-						ini->set_vel(vel);
+							ini->set_vel(vel);
 
+							if (dir1 == "Abaixo")
+								ini->set_noChao(true);
+						}
+						else
+						{
+							vel.x = 0.f;
+							ini->set_vel(vel);
+						}
+						ini->colidir(obs, dir1);
 					}
 				}
 			}
@@ -264,7 +272,7 @@ namespace Gerenciadores
 	void GerenciadorColisoes::tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni, std::string* dir1, std::string* dir2)const
 	{
 		pJog->colidir(pIni, *dir1);
-		pIni->danificar(pJog, *dir2);
+		pIni->danificar(pJog);
 	}
 
 
