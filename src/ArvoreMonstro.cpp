@@ -10,7 +10,7 @@ namespace Entidades
 			pProjetil(nullptr),
 			delay_ataque(delay_ataque)
 		{
-			dano = dmg;
+			nivel_maldade = dmg;
 			n_vidas = nV;
 			texturas = pGG->carregar_texturas("./assets/Esqueleto.png");
 			corpo.setTexture(texturas);
@@ -26,18 +26,11 @@ namespace Entidades
 			
 			desenhar();
 		}
-		void ArvoreMonstro::danificar()
+		
+
+		void ArvoreMonstro::colidir(Entidade* outra, std::string direcao)
 		{
-			infligir_dano(p->get_dano());
-
-			vel.y -= 5.f;
-			corpo.setPosition(corpo.getPosition() + sf::Vector2f(2.f * vel.x / 10, 2.f * vel.y / 10));
-
-		}
-
-		void ArvoreMonstro::colidir(Jogador* pJog, std::string direcao)
-		{
-			pJog->receber_dano(dano);
+			outra->infligir_dano(nivel_maldade);
 			if (direcao == "Embaixo")
 			{
 				noChao = true;

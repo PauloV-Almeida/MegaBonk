@@ -27,7 +27,7 @@ namespace Entidades
 		sf::Vector2f get_posicao() { return corpo.getPosition(); }
 		void infligir_dano(int dmg) { tempoVida -= dmg; }
 		void set_vivo(bool a);
-		sf::Vector2f get_tamanho() { return sf::Vector2f(corpo.getRaio()*2, corpo.getRoio()*2); }
+		//sf::Vector2f get_tamanho() { return sf::Vector2f(corpo.getRaio()*2, corpo.getRoio()*2); }
 		void set_posicao(sf::Vector2f pos) { corpo.setPosition(pos); }
 		void set_ativo(bool a) { ativo = a; }
 		float get_tempoVida() const { return tempoVida; }

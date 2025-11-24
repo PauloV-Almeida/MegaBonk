@@ -9,7 +9,7 @@ namespace Entidades
 			Inimigo(1, pos, velo, tam),
 			furia(fur)
 		{
-			dano = dmg;
+			nivel_maldade = dmg;
 			n_vidas = nV;
 			texturas = pGG->carregar_texturas("./assets/Esqueleto.png");
 			corpo.setTexture(texturas);
@@ -35,7 +35,7 @@ namespace Entidades
 
 		void Goblin::colidir(Jogador* pJog, std::string direcao)
 		{
-			pJog->infligir_dano(5);
+			pJog->infligir_dano(nivel_maldade);
 			if (direcao == "Embaixo")
 			{
 				noChao = true;
@@ -53,7 +53,7 @@ namespace Entidades
 			{
 				vel.x = 0.0f;
 			}
-			dano *= furia;
+			nivel_maldade *= furia;
 		}
 
 		void Goblin::desenhar()
