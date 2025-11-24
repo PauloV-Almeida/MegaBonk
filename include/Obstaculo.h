@@ -7,11 +7,6 @@
 namespace Entidades
 {
 
-    namespace Personagens
-    {
-        class Jogador;
-	}
-
     namespace Obstaculos
     {
         class Obstaculo : public Entidade
@@ -21,7 +16,7 @@ namespace Entidades
             bool existir;
             bool danoso;
         public:
-            Obstaculo(int index = -1, sf::Vector2f pos);
+            Obstaculo(int index = -1, sf::Vector2f pos = sf::Vector2f(0.f, 0.f));
             ~Obstaculo();
             virtual void executar() = 0;
             virtual void mover();

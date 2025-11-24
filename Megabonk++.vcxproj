@@ -46,6 +46,7 @@
     <ClCompile Include="src\Obstaculo.cpp" />
     <ClCompile Include="src\Personagem.cpp" />
     <ClCompile Include="src\Plataforma.cpp" />
+    <ClCompile Include="src\Projetil.cpp" />
     <ClCompile Include="src\Subject.cpp" />
     <ClCompile Include="src\Texto.cpp" />
     <ClCompile Include="stdafx\stdafx.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="include\Obstaculo.h" />
     <ClInclude Include="include\Personagem.h" />
     <ClInclude Include="include\Plataforma.h" />
+    <ClInclude Include="include\Projetil.h" />
     <ClInclude Include="include\Subject.h" />
     <ClInclude Include="include\Texto.h" />
     <ClInclude Include="src\Gosma.h" />

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Personagem.h"
-#include "Jogador.h"
 #include "../stdafx/stdafx.h"
 
 
@@ -10,7 +9,7 @@ namespace Entidades
 	namespace Personagens
 	{
 
-		class Inimigo :public Personagem
+		class Inimigo : public Personagem
 		{
 		protected:
 			int nivel_maldade;
@@ -20,7 +19,7 @@ namespace Entidades
 			virtual void executar();
 			virtual int get_nivMaldade() const { return nivel_maldade; }
 			virtual void danificar(Entidade* outra, std::string direcao = "") = 0;
-			void mover();
+			virtual void mover();
 			virtual void salvar(std::ofstream& arquivo) = 0;
 			
 			

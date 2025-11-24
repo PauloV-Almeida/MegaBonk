@@ -5,7 +5,6 @@
 #include <string>
 
 #include "Personagem.h"
-#include "GerenciadorColisoes.h"
 
 #define DELAY_ATAQUE 30
 #define RECUO 5

@@ -150,11 +150,11 @@ namespace Gerenciadores
 	{
 		if (!ataque) return;
 
-		// pega hitbox do ataque (posi��o e tamanho vindas do Jogador)
+		// pega hitbox do ataque (posição e tamanho vindas do Jogador)
 		sf::Vector2f posAtq = ataque->get_ataque_posicao();
 		sf::Vector2f tamAtq = ataque->get_ataque_tamanho();
 
-		// percorre a lista de inimigos (LIs � std::vector<Inimigo*>)
+		// percorre a lista de inimigos (LIs é std::vector<Inimigo*>)
 		for (auto ini : LIs)
 		{
 			if (!ini || !ini->get_vivo()) continue;
@@ -164,22 +164,19 @@ namespace Gerenciadores
 
 			sf::Vector2f distancia = posAtq - posIni;
 
-			// AABB simples: verifica sobreposi��o pelos meios-sizes
+			// AABB simples: verifica sobreposição pelos meios-sizes
 			if (std::fabs(distancia.x) <= std::fabs((tamAtq.x + tamIni.x) / 2.f) &&
 				std::fabs(distancia.y) <= std::fabs((tamAtq.y + tamIni.y) / 2.f))
 			{
-				// encontrou colis�o: delega ao Jogador para aplicar dano/recuo no inimigo
-				// Jogador::colidir_ataque espera Entidade* como alvo e j� chama infligir_dano( ...)
+				// encontrou colisão: delega ao Jogador para aplicar dano/recuo no inimigo
+				// Jogador::colidir_ataque espera Entidade* como alvo e já chama infligir_dano( ...)
 				ataque->colidir_ataque(static_cast<Entidades::Entidade*>(ini), direcao);
 
 				// se quiser que um ataque atinja apenas um inimigo, sai do loop
-				// se preferir atacar m�ltiplos inimigos, remova este break
+				// se preferir atacar múltiplos inimigos, remova este break
 				break;
 			}
-
-			itJ++;
 		}
-		
 	}
 
 	void GerenciadorColisoes::tratarColisoesJogsObstacs(Entidades::Personagens::Jogador* pJog, Entidades::Obstaculos::Obstaculo* pObs, std::string* dir1)const
@@ -191,14 +188,13 @@ namespace Gerenciadores
 	void GerenciadorColisoes::tratarColisoesJogsInimigs(Entidades::Personagens::Jogador* pJog, Entidades::Personagens::Inimigo* pIni, std::string * dir1, std::string * dir2)const
 	{
 		pJog->colidir(pIni, *dir1);
-		pIni->colidir(pJog, *dir2);
+		pIni->danificar(pJog, *dir2);
 	}
 
 		
 	void GerenciadorColisoes::executar()
 	{
 		colisor();
-		verificarAtaqueJogadorInimigo();
 	}
 
 }

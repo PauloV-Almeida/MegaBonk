@@ -35,7 +35,7 @@ namespace Entidades
 
         void set_vel(sf::Vector2f v) { vel = v; }
         sf::Vector2f get_vel() { return vel; }
-		void set_GerenciadorColisao(Gerenciadores::GerenciadorColisoes* cm) { gColisoes = cm; }
+		void set_GerenciadorColisoes(Gerenciadores::GerenciadorColisoes* cm) { gColisoes = cm; }
         virtual void infligir_dano(int dmg) = 0;
         
         virtual sf::Vector2f get_posicao() = 0;

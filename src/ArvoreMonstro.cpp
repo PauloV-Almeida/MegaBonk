@@ -5,9 +5,10 @@ namespace Entidades
 	namespace Personagens
 	{
 
-		ArvoreMonstro::ArvoreMonstro(bool viv, int nV, sf::Vector2f pos, sf::Vector2f velo, float dmg, sf::Vector2f tam, float tempo) :
-			Inimigo(1, pos, velo, tam),
-			tempovinha(tempo)
+		ArvoreMonstro::ArvoreMonstro(bool viv, int nV, sf::Vector2f pos, sf::Vector2f velo, float dmg, sf::Vector2f tam, int delay_ataque) :
+			Inimigo(3, pos, velo, tam),
+			pProjetil(nullptr),
+			delay_ataque(delay_ataque)
 		{
 			dano = dmg;
 			n_vidas = nV;
@@ -22,7 +23,7 @@ namespace Entidades
 		void ArvoreMonstro::executar()
 		{
 			mover();
-			projetar();
+			
 			desenhar();
 		}
 		void ArvoreMonstro::danificar(Jogador* p)

@@ -19,6 +19,8 @@ namespace Gerenciadores
 		//std::set <Entidades::Projetil*> LPs;
 
 		Listas::ListaEntidades* LJogs;
+		Listas::ListaEntidades* LInisPtr;
+		Listas::ListaEntidades* LObsPtr;
 
 
 	private:
