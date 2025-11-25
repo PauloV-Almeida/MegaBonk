@@ -305,7 +305,7 @@ namespace Entidades
 		void Jogador::ataque()
 		{
 			if ((id_jogador == 1 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ||
-				(id_jogador == 2 && !sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)))
+				(id_jogador == 2 && !sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)))
 			{
 				return;
 			}
@@ -332,11 +332,6 @@ namespace Entidades
 					{
 						direcao = "Direita";
 						ataque_direcao = "Direita";
-					}
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-					{
-						direcao = "Abaixo";
-						ataque_direcao = "Abaixo";
 					}
 					else
 					{
@@ -370,11 +365,6 @@ namespace Entidades
 						direcao = "Direita";
 						ataque_direcao = "Direita";
 					}
-					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-					{
-						direcao = "Abaixo";
-						ataque_direcao = "Abaixo";
-					}
 					else
 					{
 						if (vel.x >= 0)
@@ -406,6 +396,7 @@ namespace Entidades
 					ataque_corpo.setPosition(sf::Vector2f(corpo.getPosition().x - corpo.getSize().x / 2 - ataque_corpo.getSize().x / 2, corpo.getPosition().y));
 				}
 				pGG->desenhar(&ataque_corpo);
+				gColisao->colidir_ataque(static_cast<Jogador*>(this), direcao);
 
 			}
 			dano_ataque = 0;

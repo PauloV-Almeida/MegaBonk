@@ -117,21 +117,6 @@ namespace Fases
 
 		}
 		jogadores.desenhar();
-		std::cerr << "[Deserto::executar] inimigos.get_tamanho()=" << inimigos.get_tamanho() << std::endl;
-		auto it = inimigos.get_Primeiro();
-		int idx = 0;
-		while (it != nullptr) {
-			Entidades::Entidade* e = *it;
-			std::cerr << "  inimigo[" << idx++ << "] ptr=" << e;
-			auto pini = dynamic_cast<Entidades::Personagens::Inimigo*>(e);
-			std::cerr << " isInimigo=" << (pini != nullptr);
-			if (e) {
-				std::cerr << " pos=(" << e->get_posicao().x << "," << e->get_posicao().y << ") tam=(" << e->get_tamanho().x << "," << e->get_tamanho().y << ")";
-				std::cerr << " vivo=" << (e->get_vivo() ? 1 : 0);
-			}
-			std::cerr << std::endl;
-			it++;
-		}
 		inimigos.desenhar();
 		obstaculos.desenhar();
 	}//executar
@@ -168,7 +153,7 @@ namespace Fases
 			exit(1);
 		}
 		inimigosArq << inimigos.get_tamanho() << std::endl;
-		//inimigos.salvar(inimigosArq);
+		///inimigos.salvar(inimigosArq);
 		inimigosArq.close();
 	}
 	void Deserto::carregar()
